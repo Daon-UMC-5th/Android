@@ -5,14 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/main_toolBar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="parent">
+
+    </LinearLayout>
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/main_frm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/main_toolBar"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/main_bnv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemIconSize="20dp"
+        app:itemIconTint="@drawable/btm_color_selector"
+        app:itemTextColor="@drawable/btm_color_selector"
+        app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:menu="@menu/bottom_menu" />
 </androidx.constraintlayout.widget.ConstraintLayout>

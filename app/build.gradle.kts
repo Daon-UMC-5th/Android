@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.daon"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.daon"
@@ -24,6 +24,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+        buildFeatures{
+            viewBinding = true
         }
     }
     compileOptions {
