@@ -4,24 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools">
     <item
         android:id="@+id/calendarFragment"
-        android:icon="@drawable/calendar_false"
+        android:icon="@drawable/calendar"
         app:showAsAction="always"
         android:enabled="true"
         android:title="캘린더"
         tools:ignore="AlwaysShowAction" />
     <item
         android:id="@+id/diaryFragment"
-        android:icon="@drawable/diary_false"
+        android:icon="@drawable/diary"
         app:showAsAction="always"
         android:title="일기" />
     <item
         android:id="@+id/communityFragment"
-        android:icon="@drawable/community_false"
+        android:icon="@drawable/community"
         app:showAsAction="always"
         android:title="커뮤니티" />
     <item
         android:id="@+id/mypageFragment"
-        android:icon="@drawable/mypage_false"
+        android:icon="@drawable/mypage"
         app:showAsAction="always"
         android:title="마이페이지" />
 </menu>
