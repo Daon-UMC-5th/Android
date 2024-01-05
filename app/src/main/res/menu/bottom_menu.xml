@@ -3,25 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <item
-        android:id="@+id/homeFragment"
+        android:id="@+id/calendarFragment"
         android:icon="@drawable/calendar_false"
         app:showAsAction="always"
         android:enabled="true"
         android:title="캘린더"
         tools:ignore="AlwaysShowAction" />
     <item
-        android:id="@+id/lookFragment"
+        android:id="@+id/diaryFragment"
         android:icon="@drawable/diary_false"
         app:showAsAction="always"
-        android:title="둘러보기" />
+        android:title="일기" />
     <item
-        android:id="@+id/searchFragment"
+        android:id="@+id/communityFragment"
         android:icon="@drawable/community_false"
         app:showAsAction="always"
-        android:title="검색" />
+        android:title="커뮤니티" />
     <item
-        android:id="@+id/lockerFragment"
+        android:id="@+id/mypageFragment"
         android:icon="@drawable/mypage_false"
         app:showAsAction="always"
-        android:title="보관함" />
+        android:title="마이페이지" />
 </menu>
