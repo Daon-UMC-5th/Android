@@ -3,12 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".CalendarFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+        android:id="@+id/calendarView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="calendar" />
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:mcv_selectionColor="#5a7fbf"
+        app:mcv_headerTextAppearance="@style/CalendarWidgetHeader"
+        app:mcv_weekDayTextAppearance="@style/CalendarWidgetWeek"
+        app:mcv_dateTextAppearance="@style/CalendarWidgetDay"
+        tools:ignore="MissingConstraints" />
+<!--        app:mcv_arrowColor="@color/white"-->
+
 
 </FrameLayout>
