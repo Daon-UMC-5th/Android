@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.daon.databinding.FragmentCalendarBinding
+import com.prolificinteractive.materialcalendarview.CalendarDay
 
 class CalendarFragment : Fragment() {
     private var _binding: FragmentCalendarBinding? = null
@@ -19,6 +20,8 @@ class CalendarFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentCalendarBinding.inflate(inflater, container, false)
+        binding.calendarView.selectedDate = CalendarDay.today()
+        binding.calendarView.addDecorators(SaturdayDecorator(), SundayDecorator())
         return binding.root
     }
 
