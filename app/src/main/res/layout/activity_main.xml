@@ -1,34 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-    <LinearLayout
-        android:id="@+id/main_toolBar"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="parent">
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/main_toolBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="parent">
 
-    </LinearLayout>
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/main_frm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/main_toolBar"
-        app:layout_constraintTop_toTopOf="parent"/>
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/main_bnv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:itemIconSize="20dp"
-        app:itemIconTint="@drawable/btm_color_selector"
-        app:itemTextColor="@drawable/btm_color_selector"
-        app:labelVisibilityMode="labeled"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_menu" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/main_frm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/main_toolBar"
+            app:layout_constraintTop_toTopOf="parent"/>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/main_bnv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:itemIconSize="20dp"
+            app:itemIconTint="@drawable/btm_color_selector"
+            app:itemTextColor="@drawable/btm_color_selector"
+            app:labelVisibilityMode="labeled"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/bottom_menu" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_marginBottom="100dp"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/vector"
+            app:tint="@android:color/white"
+            app:backgroundTint="#1C734D"/>
+<!--            app:elevation="@dimen/cardview_default_elevation"/>-->
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
