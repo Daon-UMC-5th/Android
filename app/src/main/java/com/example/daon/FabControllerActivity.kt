@@ -1,5 +1,6 @@
 package com.example.daon
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -15,7 +16,13 @@ class FabControllerActivity : AppCompatActivity() {
         binding = ActivityFabControllerBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initFragment()
+        clickListener()
     }
+
+    private fun clickListener() {
+        binding.backBtn.setOnClickListener{onBackPressed()}
+    }
+
     private fun initFragment(){
         when (intent.getStringExtra("fragment")) {
             "진료" -> {
@@ -33,5 +40,12 @@ class FabControllerActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_frm, fragment)
             .commit()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this,MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }
