@@ -5,7 +5,7 @@ import android.os.Bundle
 import com.example.daon.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityMainBinding;
+    private lateinit var binding : ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -19,33 +19,33 @@ class MainActivity : AppCompatActivity() {
         binding.mainBnv.setOnItemSelectedListener{ item ->
             when (item.itemId) {
                 R.id.calendarFragment -> {
-                    val homeFragment = CalendarFragment()
+                    val calendarFragment = CalendarFragment()
                     supportFragmentManager
                         .beginTransaction()
-                        .replace(R.id.main_frm, homeFragment)
+                        .replace(R.id.main_frm, calendarFragment)
                         .commit()
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.diaryFragment -> {
-                    val lookFragment = DiaryFragment()
+                    val diaryFragment = DiaryFragment()
                     supportFragmentManager
                         .beginTransaction()
-                        .replace(R.id.main_frm, lookFragment)
+                        .replace(R.id.main_frm, diaryFragment)
                         .commit()
                     return@setOnItemSelectedListener true
                 }
                 R.id.communityFragment -> {
-                    val searchFragment = CommunityFragment()
+                    val communityFragment = CommunityFragment()
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frm, searchFragment)
+                        .replace(R.id.main_frm, communityFragment)
                         .commitAllowingStateLoss()
                     return@setOnItemSelectedListener true
                 }
                 R.id.mypageFragment -> {
-                    val lockerFragment = MypageFragment()
+                    val mypageFragment = MypageFragment()
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frm, lockerFragment)
+                        .replace(R.id.main_frm, mypageFragment)
                         .commitAllowingStateLoss()
                     return@setOnItemSelectedListener true
                 }
