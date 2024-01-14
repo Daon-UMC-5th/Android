@@ -1,11 +1,12 @@
 package com.example.daon
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.daon.databinding.ActivityFabControllerBinding
-import com.example.daon.databinding.ActivityMainBinding
+import com.example.daon.fab.BodyFragment
+import com.example.daon.fab.ClinicFragment
+import com.example.daon.fab.DoseFragment
 
 class FabControllerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFabControllerBinding

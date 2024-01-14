@@ -3,6 +3,10 @@ package com.example.daon
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.daon.databinding.ActivityMainBinding
+import com.example.daon.main.CalendarFragment
+import com.example.daon.main.CommunityFragment
+import com.example.daon.main.DiaryFragment
+import com.example.daon.main.MypageFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding

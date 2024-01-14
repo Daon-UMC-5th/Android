@@ -1,19 +1,28 @@
-package com.example.daon
+package com.example.daon.main
 
+import android.animation.ObjectAnimator
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.lifecycleScope
+import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
+import com.example.daon.FabControllerActivity
+import com.example.daon.R
 import com.example.daon.databinding.FragmentCalendarBinding
 import com.prolificinteractive.materialcalendarview.CalendarDay
-import kotlinx.coroutines.launch
 
 class CalendarFragment : Fragment() {
     private var _binding: FragmentCalendarBinding? = null
     private val binding get() = _binding!!
+
+    private var isFabOpen = false
+
     private var noticeCnt: Int = 0
     private lateinit var selectedDate: String
     private var year: Int = 0
@@ -68,6 +77,48 @@ class CalendarFragment : Fragment() {
             }
             callList(year,month,day)
         }
+        binding.fabPlus.setOnClickListener {
+            toggleFab()
+        }
+        // 플로팅 버튼 클릭 이벤트 - 신체
+        binding.fabBody.setOnClickListener {
+            Toast.makeText(this.context, "신체 버튼 클릭!", Toast.LENGTH_SHORT).show()
+            changeIntent("신체")
+        }
+        // 플로팅 버튼 클릭 이벤트 - 진료
+        binding.fabClinic.setOnClickListener {
+            Toast.makeText(this.context, "진료 버튼 클릭!", Toast.LENGTH_SHORT).show()
+            changeIntent("진료")
+        }
+        // 플로팅 버튼 클릭 이벤트 - 복용
+        binding.fabDose.setOnClickListener{
+            Toast.makeText(this.context, "복용 버튼 클릭!", Toast.LENGTH_SHORT).show()
+            changeIntent("복용")
+        }
+
+    }
+    private fun changeIntent(selectFragment: String){
+        val intent = Intent(activity, FabControllerActivity::class.java)
+        intent.putExtra("fragment",selectFragment)
+        startActivity(intent)
+        activity?.finish()
+    }
+    private fun toggleFab() {
+        Toast.makeText(this.context, "메인 버튼 클릭!", Toast.LENGTH_SHORT).show()
+        // 플로팅 액션 버튼 닫기 - 열려있는 플로팅 버튼 집어넣는 애니메이션
+        if (isFabOpen) {
+            ObjectAnimator.ofFloat(binding.fabClinic, "translationY", 0f).apply { start() }
+            ObjectAnimator.ofFloat(binding.fabDose, "translationY", 0f).apply { start() }
+            ObjectAnimator.ofFloat(binding.fabBody, "translationY", 0f).apply { start() }
+            ObjectAnimator.ofFloat(binding.fabPlus, View.ROTATION, 45f, 0f).apply { start() }
+        } else { // 플로팅 액션 버튼 열기 - 닫혀있는 플로팅 버튼 꺼내는 애니메이션
+            ObjectAnimator.ofFloat(binding.fabClinic, "translationY", -540f).apply { start() }
+            ObjectAnimator.ofFloat(binding.fabDose, "translationY", -360f).apply { start() }
+            ObjectAnimator.ofFloat(binding.fabBody, "translationY", -180f).apply { start() }
+            ObjectAnimator.ofFloat(binding.fabPlus, View.ROTATION, 0f, 45f).apply { start() }
+        }
+        isFabOpen = !isFabOpen
+
     }
     private fun callList(year:Int,month:Int,day:Int){
         //백엔드에 날짜 보내주고 일정 리스트 받아오기
