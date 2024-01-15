@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp"
     android:background="#EEEEEE"
     android:orientation="vertical"
@@ -23,6 +24,66 @@
         android:maxLength="50"
         android:background="@drawable/edit_text"
         android:layout_marginBottom="16dp"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/notification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:background="@drawable/edit_text"
+        android:layout_marginBottom="16dp">
+        <TextView
+            android:id="@+id/noti_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="알림"
+            app:layout_constraintStart_toStartOf="parent"/>
+        <TextView
+            android:id="@+id/noti_time"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="없음"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        <TimePicker
+            android:id="@+id/tp_timepicker"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:timePickerMode="spinner"
+            app:layout_constraintTop_toBottomOf="@id/noti_text"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cycle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:background="@drawable/edit_text">
+        <TextView
+            android:id="@+id/cycle_text"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:text="반복"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/cycle_rv"/>
+        <TextView
+            android:id="@+id/day"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:text="안 함"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/cycle_rv"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cycle_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cycle_text"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/cycle_item"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </LinearLayout>
