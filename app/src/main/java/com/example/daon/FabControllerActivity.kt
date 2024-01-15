@@ -26,12 +26,15 @@ class FabControllerActivity : AppCompatActivity() {
     private fun initFragment(){
         when (intent.getStringExtra("fragment")) {
             "진료" -> {
+                binding.title.text = "진료"
                 selectFragment(ClinicFragment())
             }
             "복용" -> {
+                binding.title.text = "복용"
                 selectFragment(DoseFragment())
             }
             "신체" -> {
+                binding.title.text = "신체"
                 selectFragment(BodyFragment())
             }
         }

@@ -95,6 +95,10 @@ class CalendarFragment : Fragment() {
             Toast.makeText(this.context, "복용 버튼 클릭!", Toast.LENGTH_SHORT).show()
             changeIntent("복용")
         }
+        // 회색 배경 클릭 이벤트
+        binding.background.setOnClickListener{
+            toggleFab()
+        }
 
     }
     private fun changeIntent(selectFragment: String){
@@ -107,14 +111,28 @@ class CalendarFragment : Fragment() {
         Toast.makeText(this.context, "메인 버튼 클릭!", Toast.LENGTH_SHORT).show()
         // 플로팅 액션 버튼 닫기 - 열려있는 플로팅 버튼 집어넣는 애니메이션
         if (isFabOpen) {
+            binding.background.visibility = View.GONE
             ObjectAnimator.ofFloat(binding.fabClinic, "translationY", 0f).apply { start() }
+            ObjectAnimator.ofFloat(binding.clinicText, "translationY", 0f).apply { start() }
+            binding.clinicText.visibility = View.GONE
             ObjectAnimator.ofFloat(binding.fabDose, "translationY", 0f).apply { start() }
+            ObjectAnimator.ofFloat(binding.doseText, "translationY", 0f).apply { start() }
+            binding.doseText.visibility = View.GONE
             ObjectAnimator.ofFloat(binding.fabBody, "translationY", 0f).apply { start() }
+            ObjectAnimator.ofFloat(binding.bodyText, "translationY", 0f).apply { start() }
+            binding.bodyText.visibility = View.GONE
             ObjectAnimator.ofFloat(binding.fabPlus, View.ROTATION, 45f, 0f).apply { start() }
         } else { // 플로팅 액션 버튼 열기 - 닫혀있는 플로팅 버튼 꺼내는 애니메이션
+            binding.background.visibility = View.VISIBLE
             ObjectAnimator.ofFloat(binding.fabClinic, "translationY", -540f).apply { start() }
+            ObjectAnimator.ofFloat(binding.clinicText, "translationY", -540f).apply { start() }
+            binding.clinicText.visibility = View.VISIBLE
             ObjectAnimator.ofFloat(binding.fabDose, "translationY", -360f).apply { start() }
+            ObjectAnimator.ofFloat(binding.doseText, "translationY", -360f).apply { start() }
+            binding.doseText.visibility = View.VISIBLE
             ObjectAnimator.ofFloat(binding.fabBody, "translationY", -180f).apply { start() }
+            ObjectAnimator.ofFloat(binding.bodyText, "translationY", -180f).apply { start() }
+            binding.bodyText.visibility = View.VISIBLE
             ObjectAnimator.ofFloat(binding.fabPlus, View.ROTATION, 0f, 45f).apply { start() }
         }
         isFabOpen = !isFabOpen
