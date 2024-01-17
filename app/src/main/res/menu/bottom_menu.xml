@@ -13,15 +13,18 @@
         android:id="@+id/diaryFragment"
         android:icon="@drawable/diary"
         app:showAsAction="always"
+        android:enabled="true"
         android:title="일기" />
     <item
         android:id="@+id/communityFragment"
         android:icon="@drawable/community"
         app:showAsAction="always"
+        android:enabled="true"
         android:title="커뮤니티" />
     <item
         android:id="@+id/mypageFragment"
         android:icon="@drawable/mypage"
         app:showAsAction="always"
+        android:enabled="true"
         android:title="마이페이지" />
 </menu>
