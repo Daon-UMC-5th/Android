@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F8FAF5"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".main.CalendarFragment">
     <LinearLayout
@@ -20,7 +21,7 @@
         <com.prolificinteractive.materialcalendarview.MaterialCalendarView
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="400dp"
             android:layout_margin="10dp"
             app:mcv_selectionColor="#5a7fbf"
             app:mcv_headerTextAppearance="@style/CalendarWidgetHeader"
@@ -28,7 +29,8 @@
             app:mcv_dateTextAppearance="@style/CalendarWidgetDay"
             tools:ignore="MissingConstraints" />
         <!--        app:mcv_arrowColor="@color/white"-->
-
+        <include
+            layout="@layout/bottom_sheet" />
     </LinearLayout>
     <View
         android:id="@+id/background"
@@ -126,7 +128,6 @@
             app:layout_constraintEnd_toEndOf="parent" />
         <!--            app:elevation="@dimen/cardview_default_elevation"/>-->
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
