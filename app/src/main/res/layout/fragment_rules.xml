@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RulesFragment">
+
+    <TextView
+        android:layout_width="137dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="이용규칙"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/rules_back"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="TODO"
+        android:src="@drawable/backto"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <android.widget.Button
+        android:id="@+id/diary_btn"
+        android:layout_width="164dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="72dp"
+        android:background="@drawable/button_selector"
+        android:gravity="center"
+        android:text="일기"
+        android:textColor="#AAAAAA"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.widget.Button
+        android:id="@+id/community_btn"
+        android:layout_width="164dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="181dp"
+        android:layout_marginTop="72dp"
+        android:background="@drawable/button_selector"
+        android:gravity="center"
+        android:text="커뮤니티"
+        android:textColor="#AAAAAA"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/btn_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/community_btn"
+        tools:ignore="MissingConstraints" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

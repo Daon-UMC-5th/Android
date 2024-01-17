@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".AccessFragment">
+
+    <TextView
+        android:layout_width="137dp"
+        android:layout_height="24dp"
+        android:textSize="16sp"
+        android:text="계정"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="16dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/access_back"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/backto"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="TODO" />
+
+    <TextView
+        android:layout_width="89dp"
+        android:layout_height="20dp"
+        android:textSize="14sp"
+        android:text="아이디(이메일)"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="72dp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <EditText
+        android:layout_width="328dp"
+        android:layout_height="44dp"
+        android:hint="jung12342gmail.com"
+        android:textColorHint="#757575"
+        android:textSize="16sp"
+        android:backgroundTint="#E5E5E5"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="92dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:layout_width="53dp"
+        android:layout_height="20dp"
+        android:textSize="14sp"
+        android:text="비밀번호"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="152dp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <EditText
+        android:layout_width="328dp"
+        android:layout_height="43dp"
+        android:hint="*******"
+        android:textSize="16sp"
+        android:textColorHint="#757575"
+        android:backgroundTint="#E5E5E5"
+        android:inputType="textPassword"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="172dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/change_password"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:textSize="14sp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="284dp"
+        android:layout_marginTop="170dp"
+        android:text="변경"
+        android:textColor="#1C734D"/>
+
+    <TextView
+        android:layout_width="52dp"
+        android:layout_height="24dp"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="184dp"
+        android:layout_marginTop="241dp"
+        android:text="로그아웃"
+        android:textColor="#757575"/>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="12dp"
+        android:background="@drawable/rex1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="258dp"
+        android:layout_marginTop="246dp"
+        />
+
+    <TextView
+        android:layout_width="52dp"
+        android:layout_height="24dp"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="280dp"
+        android:layout_marginTop="241dp"
+        android:text="회원탈퇴"
+        android:textColor="#757575"/>
+
+</FrameLayout>
