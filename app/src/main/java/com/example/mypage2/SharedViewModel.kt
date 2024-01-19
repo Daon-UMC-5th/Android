@@ -5,13 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class SharedViewModel : ViewModel() {
-    private val _userInput = MutableLiveData<String>()
-    val userInput: LiveData<String> get() = _userInput
+    private val userInput = MutableLiveData<String>()
 
-    fun setUserInput(text: String) {
-        _userInput.value = text
+    fun setUserInput(input: String) {
+        userInput.value = input
     }
-    fun getUserInput(): String? {
-        return _userInput.value
+
+    fun getUserInput(): LiveData<String> {
+        return userInput
     }
 }

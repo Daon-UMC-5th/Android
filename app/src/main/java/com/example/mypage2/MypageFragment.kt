@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import com.example.mypage2.databinding.FragmentMypageBinding
 
@@ -22,11 +23,10 @@ class MypageFragment : Fragment() {
         _binding = FragmentMypageBinding.inflate(inflater, container, false)
 
         binding.mypageNext.setOnClickListener {
-            val nextFragment = EditProfileFragment()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.main_frm, nextFragment)
-                .addToBackStack(null)
-                .commitAllowingStateLoss()
+            activity?.let{
+                val intent = Intent(context, Edit_ProfileActivity::class.java)
+                startActivity(intent)
+            }
         }
         binding.alarmNext.setOnClickListener {
             activity?.let{
@@ -55,12 +55,13 @@ class MypageFragment : Fragment() {
                 .addToBackStack(null)
                 .commitAllowingStateLoss()
         }
-        sharedViewModel.userInput.observe(viewLifecycleOwner) { userInputText ->
+        sharedViewModel.getUserInput().observe(viewLifecycleOwner) { userInputText ->
             binding.profileName.text = userInputText
         }
-        sharedViewModel2.userInput2.observe(viewLifecycleOwner) { userInputText2 ->
+        sharedViewModel2.getUserInput2().observe(viewLifecycleOwner) { userInputText2 ->
             binding.profileIntro.text = userInputText2
         }
+
         return binding.root
     }
 

@@ -105,6 +105,7 @@
         tools:ignore="LabelFor" />
 
     <android.widget.Button
+        android:id="@+id/save"
         android:layout_width="328dp"
         android:layout_height="56dp"
         android:background="@drawable/btn_01"
