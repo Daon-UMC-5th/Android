@@ -35,11 +35,10 @@ class MypageFragment : Fragment() {
             }
         }
         binding.accessNext.setOnClickListener {
-            val nextFragment = AccessFragment()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.main_frm, nextFragment)
-                .addToBackStack(null)
-                .commitAllowingStateLoss()
+            activity?.let{
+                val intent = Intent(context, AccessActivity::class.java)
+                startActivity(intent)
+            }
         }
         binding.rule.setOnClickListener {
             val nextFragment = RulesFragment()
