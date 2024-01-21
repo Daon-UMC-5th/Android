@@ -41,18 +41,22 @@ class MypageFragment : Fragment() {
             }
         }
         binding.rule.setOnClickListener {
-            val nextFragment = RulesFragment()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.main_frm, nextFragment)
-                .addToBackStack(null)
-                .commitAllowingStateLoss()
+            activity?.let{
+                val intent = Intent(context, RulesActivity::class.java)
+                startActivity(intent)
+            }
         }
         binding.rule2.setOnClickListener {
-            val nextFragment = Rules2Fragment()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.main_frm, nextFragment)
-                .addToBackStack(null)
-                .commitAllowingStateLoss()
+            activity?.let{
+                val intent = Intent(context, RulesActivity2::class.java)
+                startActivity(intent)
+            }
+        }
+        binding.postCount.setOnClickListener {
+            activity?.let{
+                val intent = Intent(context, Posts_ViewActivity::class.java)
+                startActivity(intent)
+            }
         }
         sharedViewModel.getUserInput().observe(viewLifecycleOwner) { userInputText ->
             binding.profileName.text = userInputText

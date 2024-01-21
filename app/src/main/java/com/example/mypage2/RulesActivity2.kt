@@ -1,34 +1,27 @@
 package com.example.mypage2
 
 import android.graphics.Color
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
-import com.example.mypage2.databinding.FragmentRules2Binding
-import com.example.mypage2.databinding.FragmentRulesBinding
+import com.example.mypage2.databinding.ActivityAccessBinding
+import com.example.mypage2.databinding.ActivityRules2Binding
 
-
-class Rules2Fragment : Fragment() {
-
-    private var _binding: FragmentRules2Binding? = null
-    private val binding get() = _binding!!
+class RulesActivity2 : AppCompatActivity() {
+    private lateinit var binding: ActivityRules2Binding
 
     private var isrule1BtnSelected = false
     private var isrule2BtnSelected = false
     private var isrule3BtnSelected = false
     private var isrule4BtnSelected = false
-    
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentRules2Binding.inflate(inflater, container, false)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityRules2Binding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         binding.rulesBack.setOnClickListener {
-            parentFragmentManager.popBackStack()
+            onBackPressedDispatcher.onBackPressed()
         }
 
         updateButtonState(binding.rule1,isrule1BtnSelected)
@@ -48,8 +41,7 @@ class Rules2Fragment : Fragment() {
         binding.rule4.setOnClickListener {
             handleButtonClick(binding.rule4,isrule4BtnSelected)
         }
-        
-        return binding.root
+
     }
 
     private fun handleButtonClick(button: Button, isSelected: Boolean) {
@@ -73,7 +65,7 @@ class Rules2Fragment : Fragment() {
             else -> null
         }
         fragment?.let {
-            parentFragmentManager.beginTransaction()
+            supportFragmentManager.beginTransaction()
                 .replace(R.id.btn_frame2, it)
                 .commit()
         }

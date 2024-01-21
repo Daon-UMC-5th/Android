@@ -1,32 +1,27 @@
 package com.example.mypage2
 
 import android.graphics.Color
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
-import androidx.fragment.app.Fragment
-import com.example.mypage2.databinding.FragmentRulesBinding
+import com.example.mypage2.databinding.ActivityAccessBinding
+import com.example.mypage2.databinding.ActivityRulesBinding
 
-
-class RulesFragment : Fragment() {
-
-    private var _binding: FragmentRulesBinding? = null
-    private val binding get() = _binding!!
+class RulesActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityRulesBinding
 
     private var isCommunityBtnSelected = false
     private var isDiaryBtnSelected = false
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentRulesBinding.inflate(inflater, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityRulesBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         binding.rulesBack.setOnClickListener {
-            parentFragmentManager.popBackStack()
+            onBackPressedDispatcher.onBackPressed()
         }
+
         updateButtonState(binding.communityBtn, isCommunityBtnSelected)
         updateButtonState(binding.diaryBtn, isDiaryBtnSelected)
 
@@ -38,9 +33,7 @@ class RulesFragment : Fragment() {
             handleButtonClick(binding.diaryBtn, isDiaryBtnSelected)
         }
 
-        return binding.root
     }
-
     private fun handleButtonClick(button: Button, isSelected: Boolean) {
 
         updateButtonState(binding.communityBtn, false)
@@ -59,7 +52,7 @@ class RulesFragment : Fragment() {
             else -> null
         }
         fragment?.let {
-            parentFragmentManager.beginTransaction()
+            supportFragmentManager.beginTransaction()
                 .replace(R.id.btn_frame, it)
                 .commit()
         }
