@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FabControllerActivity">
+    tools:context=".fab.FabControllerActivity">
     <FrameLayout
         android:id="@+id/toolBar"
         android:layout_width="match_parent"
@@ -33,7 +33,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="right"
-            android:src="@drawable/check"/>
+            android:src="@drawable/check_false"/>
     </FrameLayout>
 
     <androidx.fragment.app.FragmentContainerView

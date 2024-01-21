@@ -29,9 +29,15 @@
             app:mcv_dateTextAppearance="@style/CalendarWidgetDay"
             tools:ignore="MissingConstraints" />
         <!--        app:mcv_arrowColor="@color/white"-->
-        <include
-            layout="@layout/bottom_sheet" />
+
     </LinearLayout>
+    <include
+        android:clickable="true"
+        android:id="@+id/bottom_sheet_layout"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        layout = "@layout/bottom_sheet"/>
+
+
     <View
         android:id="@+id/background"
         android:layout_width="match_parent"

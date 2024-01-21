@@ -2,24 +2,28 @@ package com.example.daon.main
 
 import android.animation.ObjectAnimator
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.annotation.RequiresApi
-import androidx.core.view.isVisible
-import com.example.daon.FabControllerActivity
 import com.example.daon.R
 import com.example.daon.databinding.FragmentCalendarBinding
+import com.example.daon.fab.ClinicActivity
+import com.example.daon.fab.FabControllerActivity
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.prolificinteractive.materialcalendarview.CalendarDay
 
 class CalendarFragment : Fragment() {
     private var _binding: FragmentCalendarBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var bottomSheetLayout: LinearLayout
+
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
 
     private var isFabOpen = false
 
@@ -37,14 +41,19 @@ class CalendarFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentCalendarBinding.inflate(inflater, container, false)
+        val view = inflater.inflate(R.layout.fragment_calendar,container,false)
+        bottomSheetLayout = view.findViewById(R.id.bottom_sheet_layout)
         initNotice()
         initCalendar()
         clickListener()
+//        initializePersistentBottomSheet()
+//        persistentBottomSheetEvent()
         year = binding.calendarView.selectedDate!!.year
         month = binding.calendarView.selectedDate!!.month + 1
         day = binding.calendarView.selectedDate!!.day
         selectedDate = "$year-$month-$day"
         Log.i(TAG,selectedDate)
+        Log.i(TAG,bottomSheetLayout.toString())
 
         return binding.root
     }
@@ -95,6 +104,21 @@ class CalendarFragment : Fragment() {
             Toast.makeText(this.context, "복용 버튼 클릭!", Toast.LENGTH_SHORT).show()
             changeIntent("복용")
         }
+//        // 플로팅 버튼 클릭 이벤트 - 신체
+//        binding.fabBody.setOnClickListener {
+//            Toast.makeText(this.context, "신체 버튼 클릭!", Toast.LENGTH_SHORT).show()
+//            changeIntent(BodyActivity::class.java)
+//        }
+//        // 플로팅 버튼 클릭 이벤트 - 진료
+//        binding.fabClinic.setOnClickListener {
+//            Toast.makeText(this.context, "진료 버튼 클릭!", Toast.LENGTH_SHORT).show()
+//            changeIntent(ClinicActivity::class.java)
+//        }
+//        // 플로팅 버튼 클릭 이벤트 - 복용
+//        binding.fabDose.setOnClickListener{
+//            Toast.makeText(this.context, "복용 버튼 클릭!", Toast.LENGTH_SHORT).show()
+//            changeIntent(DoseActivity::class.java)
+//        }
         // 회색 배경 클릭 이벤트
         binding.background.setOnClickListener{
             toggleFab()
@@ -107,6 +131,11 @@ class CalendarFragment : Fragment() {
         startActivity(intent)
         activity?.finish()
     }
+//    private fun changeIntent(selectActivity: Class<ClinicActivity>){
+//        val intent = Intent(activity, selectActivity)
+//        startActivity(intent)
+//        activity?.finish()
+//    }
     private fun toggleFab() {
         Toast.makeText(this.context, "메인 버튼 클릭!", Toast.LENGTH_SHORT).show()
         // 플로팅 액션 버튼 닫기 - 열려있는 플로팅 버튼 집어넣는 애니메이션
@@ -138,6 +167,75 @@ class CalendarFragment : Fragment() {
         isFabOpen = !isFabOpen
 
     }
+//    private fun initializePersistentBottomSheet() {
+//
+//        // BottomSheetBehavior에 layout 설정
+//        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetLayout!!)
+//        val initialPeekHeight = resources.getDimensionPixelSize(R.dimen.peek_height) // 초기 peekHeight
+//        val maxSheetHeight = resources.getDimensionPixelSize(R.dimen.max_height) // 최대 높이
+//
+//        bottomSheetBehavior.peekHeight = initialPeekHeight
+//        bottomSheetBehavior.maxHeight = maxSheetHeight
+//
+//        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+//            override fun onStateChanged(bottomSheet: View, newState: Int) {
+//                Log.i(TAG,newState.toString())
+//                // BottomSheetBehavior state에 따른 이벤트
+//                when (newState) {
+//                    BottomSheetBehavior.STATE_HIDDEN -> {
+//                        Log.d(TAG, "state: hidden")
+//                    }
+//                    BottomSheetBehavior.STATE_EXPANDED -> {
+//                        Log.d(TAG, "state: expanded")
+//
+//                    }
+//                    BottomSheetBehavior.STATE_COLLAPSED -> {
+//                        Log.d(TAG, "state: collapsed")
+//                    }
+//                    BottomSheetBehavior.STATE_DRAGGING -> {
+//                        Log.d(TAG, "state: dragging")
+//                    }
+//                    BottomSheetBehavior.STATE_SETTLING -> {
+//                        Log.d(TAG, "state: settling")
+//                    }
+//                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {
+//                        Log.d(TAG, "state: half expanded")
+//                    }
+//                }
+//
+//            }
+//
+//            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+//                Log.i(TAG,slideOffset.toString())
+//            }
+//
+//        })
+//
+//    }
+//    private fun persistentBottomSheetEvent() {
+//        binding.bottomSheetLayout.bottomSheetDate.setOnClickListener{
+//            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+//            initializePersistentBottomSheet()
+//            Log.i(TAG,"dateclick")
+//        }
+////        bottomSheetLayout.setOnDragListener{
+////            bttomSheet
+////        }
+////        bottomSheetExpandPersistentButton.setOnClickListener {
+////            // BottomSheet의 최대 높이만큼 보여주기
+////            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+////        }
+////
+////        bottomSheetHidePersistentButton.setOnClickListener {
+////            // BottomSheet 숨김
+////            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+////        }
+////
+////        bottomSheetShowModalButton.setOnClickListener {
+////            // 추후 modal bottomSheet 띄울 버튼
+////        }
+//
+//    }
     private fun callList(year:Int,month:Int,day:Int){
         //백엔드에 날짜 보내주고 일정 리스트 받아오기
     }
