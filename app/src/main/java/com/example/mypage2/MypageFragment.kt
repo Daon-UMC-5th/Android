@@ -2,6 +2,7 @@ package com.example.mypage2
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,7 @@ import androidx.fragment.app.activityViewModels
 import com.example.mypage2.databinding.FragmentMypageBinding
 
 class MypageFragment : Fragment() {
-    private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val sharedViewModel by activityViewModels<SharedViewModel>()
     private val sharedViewModel2: SharedViewModel2 by activityViewModels()
     private var _binding: FragmentMypageBinding? = null
     private val binding get() = _binding!!
@@ -58,18 +59,30 @@ class MypageFragment : Fragment() {
                 startActivity(intent)
             }
         }
-        sharedViewModel.getUserInput().observe(viewLifecycleOwner) { userInputText ->
-            binding.profileName.text = userInputText
-        }
-        sharedViewModel2.getUserInput2().observe(viewLifecycleOwner) { userInputText2 ->
-            binding.profileIntro.text = userInputText2
-        }
 
+        val nicknameFromIntent = arguments?.getString("nickname")
+        val introFromIntent = arguments?.getString("intro")
+        Log.d("asdsad",nicknameFromIntent.toString())
+        if (!nicknameFromIntent.isNullOrEmpty() && !introFromIntent.isNullOrEmpty()) {
+            binding.profileName.text = nicknameFromIntent
+            binding.profileIntro.text = introFromIntent
+        }
         return binding.root
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("MypageFragment_resume", "resume")
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun setData(dataFromEditProfile: String?) {
+        if (dataFromEditProfile != null) {
+            binding.profileName.text = dataFromEditProfile
+        }
     }
 }

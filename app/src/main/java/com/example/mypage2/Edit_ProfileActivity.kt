@@ -1,17 +1,18 @@
 package com.example.mypage2
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import com.example.mypage2.databinding.ActivityEditProfileBinding
 import com.example.mypage2.databinding.ActivityMainBinding
 
 class Edit_ProfileActivity : AppCompatActivity() {
-    private val sharedViewModel: SharedViewModel by viewModels()
-    private val sharedViewModel2: SharedViewModel2 by viewModels()
     private lateinit var binding: ActivityEditProfileBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,23 +24,19 @@ class Edit_ProfileActivity : AppCompatActivity() {
 
         binding.backBtn.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
-
         }
 
         binding.save.setOnClickListener {
             val nickname = binding.editNickname.text.toString()
             val intro = binding.editIntro.text.toString()
 
-            sharedViewModel.setUserInput(nickname)
-            sharedViewModel2.setUserInput2(intro)
+            val intent = Intent(this, MainActivity::class.java).apply {
+                putExtra("nickname", nickname)
+                putExtra("intro",intro)
+                Log.d("Edit", nickname)
+            }
+            startActivity(intent)
             finish()
         }
-    }
-    private fun navigateToMypageFragment() {
-        val nextFragment = MypageFragment()
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.main_frm, nextFragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
     }
 }
