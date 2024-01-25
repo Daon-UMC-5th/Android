@@ -34,8 +34,8 @@
     <include
         android:clickable="true"
         android:id="@+id/bottom_sheet_layout"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
         layout = "@layout/bottom_sheet"/>
+<!--    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"-->
 
 
     <View

@@ -26,6 +26,7 @@ class ClinicFragment : Fragment(), TimePicker.OnTimeChangedListener, FabControll
     private val binding get() = _binding!!
 
     private var eventListener: OnEventListener? = null
+    private var selectTime: String = ""
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnEventListener) {
@@ -40,7 +41,7 @@ class ClinicFragment : Fragment(), TimePicker.OnTimeChangedListener, FabControll
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentClinicBinding.inflate(inflater, container, false)
-
+        initCalendar()
         clickListener()
         changeListener()
         binding.tpTimepicker.setOnTimeChangedListener(this)
@@ -50,6 +51,7 @@ class ClinicFragment : Fragment(), TimePicker.OnTimeChangedListener, FabControll
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as? FabControllerActivity)?.setOnSomeEventListener(this)
+
     }
     inner class MyEditWatcher: TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int){
@@ -57,10 +59,14 @@ class ClinicFragment : Fragment(), TimePicker.OnTimeChangedListener, FabControll
         // 값 변경 시 실행되는 함수
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             // 버튼 활성화 여부
-            activateRegisterBtn()
+
         }
         override fun afterTextChanged(s: Editable?) {
+            activateRegisterBtn()
         }
+    }
+    private fun initCalendar(){
+
     }
     private fun changeListener(){
         with(binding) {
@@ -79,10 +85,10 @@ class ClinicFragment : Fragment(), TimePicker.OnTimeChangedListener, FabControll
         }
     }
     private fun hospital(): Boolean {
-        return !binding.clinicHospital.text.equals("")
+        return !binding.clinicHospital.text.equals(null)
     }
     private fun content(): Boolean{
-        return !binding.clinicContent.text.equals("")
+        return !binding.clinicContent.text.equals(null)
     }
     private fun clickListener(){
         binding.time.setOnClickListener{
@@ -102,6 +108,7 @@ class ClinicFragment : Fragment(), TimePicker.OnTimeChangedListener, FabControll
     }
     override fun onTimeChanged(view: TimePicker?, hourOfDay: Int, minute: Int) {
 //        binding.notiTime.text = "$hourOfDay:$minute"
+        selectTime = "$hourOfDay:$minute"
     }
     override fun onDestroyView() {
         _binding = null
@@ -121,6 +128,7 @@ class ClinicFragment : Fragment(), TimePicker.OnTimeChangedListener, FabControll
         intent.putExtra("title","clinic")
         intent.putExtra("hospital",binding.clinicHospital.text.toString())
         intent.putExtra("context",binding.clinicContent.text.toString())
+        intent.putExtra("time",selectTime)
         startActivity(intent)
         activity?.finish()
     }
