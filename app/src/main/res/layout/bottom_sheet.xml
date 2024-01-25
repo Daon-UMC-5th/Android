@@ -6,14 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="776dp"
     android:background="@drawable/background_bottom_sheet"
-    app:behavior_hideable="true"
-    app:behavior_peekHeight="50dp"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="180dp"
     android:orientation="vertical"
     android:padding="10dp"
     android:clickable="true"
     android:focusable="true"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
     <ImageView
+        android:id="@+id/bar"
         android:layout_width="60dp"
         android:layout_height="2dp"
         android:src="@drawable/bar"
@@ -21,6 +22,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginBottom="39dp"/>
     <TextView
+        android:id="@+id/bottom_sheet_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="12월 25일 토요일"
@@ -50,6 +52,7 @@
                     android:layout_marginBottom="4dp"
                     android:src="@drawable/clinic_title"/>
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/clinic_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:overScrollMode="never"
@@ -78,6 +81,7 @@
                     android:layout_marginBottom="4dp"
                     android:src="@drawable/dose_title"/>
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/dose_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:overScrollMode="never"
@@ -106,6 +110,7 @@
                     android:layout_marginBottom="4dp"
                     android:src="@drawable/body_title"/>
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/body_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:overScrollMode="never"
