@@ -7,15 +7,15 @@ class PreferenceUtil(context: Context) {
     private val preferences: SharedPreferences = context.getSharedPreferences("prefs_name", Context.MODE_PRIVATE)
 
     //remove 함수는 splash에서 사용하여 초기화
-    fun setStatement(key:String, defValue: String){
-        preferences.edit().putString(key,defValue).apply()
-    }
-    fun getStatement(key:String,defValue: String):String{
-        return preferences.getString(key,defValue).toString()
-    }
-    fun removeStatement(key:String){
-        preferences.edit().remove(key).apply()
-    }
+//    fun setStatement(key:String, defValue: String){
+//        preferences.edit().putString(key,defValue).apply()
+//    }
+//    fun getStatement(key:String,defValue: String):String{
+//        return preferences.getString(key,defValue).toString()
+//    }
+//    fun removeStatement(key:String){
+//        preferences.edit().remove(key).apply()
+//    }
 //    fun setDate(key:String, defValue: String){
 //        preferences.edit().putString(key,defValue).apply()
 //    }
@@ -52,13 +52,13 @@ class PreferenceUtil(context: Context) {
 //    fun removeDiaryCalendarStatement(key:String){
 //        preferences.edit().remove(key).apply()
 //    }
-//    fun setDiaryStatement(key:String, defValue: String){
-//        preferences.edit().putString(key,defValue).apply()
-//    }
-//    fun getDiaryStatement(key: String,defValue: String):String{
-//        return preferences.getString(key,defValue).toString()
-//    }
-//    fun removeDiaryStatement(key:String){
-//        preferences.edit().remove(key).apply()
-//    }
+    fun setDiaryStatement(key:String, defValue: String){
+        preferences.edit().putString(key,defValue).apply()
+    }
+    fun getDiaryStatement(key: String,defValue: String):String{
+        return preferences.getString(key,defValue).toString()
+    }
+    fun removeDiaryStatement(key:String){
+        preferences.edit().remove(key).apply()
+    }
 }

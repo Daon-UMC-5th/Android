@@ -27,6 +27,7 @@
                     android:orientation="horizontal"
                     android:background="@drawable/switch_track">
                     <TextView
+                        android:id="@+id/unselected_private"
                         android:layout_width="70dp"
                         android:layout_height="32dp"
                         android:gravity="center"
@@ -39,6 +40,7 @@
                         android:paddingTop="4dp"
                         android:paddingBottom="4dp"/>
                     <TextView
+                        android:id="@+id/unselected_share"
                         android:layout_width="70dp"
                         android:layout_height="32dp"
                         android:gravity="center"
@@ -51,6 +53,7 @@
                         android:paddingBottom="4dp"/>
                 </LinearLayout>
                 <TextView
+                    android:id="@+id/switch_selected"
                     android:layout_width="70dp"
                     android:layout_height="32dp"
                     android:background="@drawable/switch_thumb"

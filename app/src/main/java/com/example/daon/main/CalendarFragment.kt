@@ -35,7 +35,6 @@ class CalendarFragment : Fragment() {
     private var day: Int = 0
 
     private var noticeCnt: Int = 0
-    private lateinit var selectedDate: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -68,7 +67,6 @@ class CalendarFragment : Fragment() {
         day = MyApplication.preferences.getDate(CALENDAR_DAY,CalendarDay.today().month-3)
         var dateString: String = "$year-$month-$day"//MyApplication.preferences.getDate(CALENDAR_DATE,CalendarDay.today().toString())
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        println(dateFormat.toString())
         val date: Date = dateFormat.parse(dateString)
         binding.calendarView.selectedDate = CalendarDay.from(date)
         binding.calendarView.setCurrentDate(CalendarDay.from(date), true)
@@ -92,7 +90,6 @@ class CalendarFragment : Fragment() {
             MyApplication.preferences.removeDate(CALENDAR_YEAR)
             MyApplication.preferences.removeDate(CALENDAR_MONTH)
             MyApplication.preferences.removeDate(CALENDAR_DAY)
-            MyApplication.preferences.removeDate(CALENDAR_DATE)
         }
         binding.calendarView.setOnDateChangedListener { _, date, _ ->
             year = date.year
@@ -103,7 +100,7 @@ class CalendarFragment : Fragment() {
                         (CalendarDay.today().month+1).toString()+ "-" +
                         CalendarDay.today().day.toString()
             Log.i(TAG,today)
-            selectedDate = "$year-$month-$day"
+            val selectedDate = "$year-$month-$day"
 
             if(selectedDate == today){
                 // 오늘 색깔로 바꾸는 코드
@@ -273,7 +270,6 @@ class CalendarFragment : Fragment() {
     }
     companion object{
         const val TAG = "CalendarFragment"
-        const val CALENDAR_DATE = "calendarDate"
         const val CALENDAR_YEAR = "calendarYear"
         const val CALENDAR_MONTH = "calendarMonth"
         const val CALENDAR_DAY = "calendarDay"
