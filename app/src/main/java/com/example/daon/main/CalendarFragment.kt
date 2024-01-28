@@ -10,11 +10,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
+import com.example.daon.MyApplication
 import com.example.daon.R
 import com.example.daon.databinding.FragmentCalendarBinding
 import com.example.daon.fab.FabControllerActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.prolificinteractive.materialcalendarview.CalendarDay
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 class CalendarFragment : Fragment() {
     private var _binding: FragmentCalendarBinding? = null
@@ -25,12 +30,12 @@ class CalendarFragment : Fragment() {
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
 
     private var isFabOpen = false
-
-    private var noticeCnt: Int = 0
-    private lateinit var selectedDate: String
     private var year: Int = 0
     private var month: Int = 0
     private var day: Int = 0
+
+    private var noticeCnt: Int = 0
+    private lateinit var selectedDate: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -47,18 +52,27 @@ class CalendarFragment : Fragment() {
         clickListener()
         initializePersistentBottomSheet()
         persistentBottomSheetEvent()
-        year = binding.calendarView.selectedDate!!.year
-        month = binding.calendarView.selectedDate!!.month + 1
-        day = binding.calendarView.selectedDate!!.day
-        selectedDate = "$year-$month-$day"
-        Log.i(TAG,selectedDate)
-        Log.i(TAG,bottomSheetLayout.toString())
+//        year = binding.calendarView.selectedDate!!.year
+//        month = binding.calendarView.selectedDate!!.month + 1
+//        day = binding.calendarView.selectedDate!!.day
+//        selectedDate = "$year-$month-$day"
+//        Log.i(TAG,selectedDate)
+//        Log.i(TAG,bottomSheetLayout.toString())
 
         return binding.root
     }
     //캘린더 UI 초기 설정 함수
     private fun initCalendar(){
-            binding.calendarView.selectedDate = CalendarDay.today()
+        year = MyApplication.preferences.getDate(CALENDAR_YEAR,CalendarDay.today().year)
+        month = MyApplication.preferences.getDate(CALENDAR_MONTH,CalendarDay.today().month+2)
+        day = MyApplication.preferences.getDate(CALENDAR_DAY,CalendarDay.today().month-3)
+        var dateString: String = "$year-$month-$day"//MyApplication.preferences.getDate(CALENDAR_DATE,CalendarDay.today().toString())
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        println(dateFormat.toString())
+        val date: Date = dateFormat.parse(dateString)
+        binding.calendarView.selectedDate = CalendarDay.from(date)
+        binding.calendarView.setCurrentDate(CalendarDay.from(date), true)
+//            binding.calendarView.selectedDate = CalendarDay.today()
 //            binding.calendarView.addDecorators(SaturdayDecorator(), SundayDecorator())
     }
     //알림 UI 초기 설정 함수
@@ -66,8 +80,20 @@ class CalendarFragment : Fragment() {
         if (noticeCnt==0) binding.notice.setImageResource(R.drawable.notice)
         else binding.notice.setImageResource(R.drawable.notice_true)
     }
+    private fun calendarStatementSave(year:Int,month: Int,day: Int){
+        MyApplication.preferences.setDate(CALENDAR_YEAR,year)
+        MyApplication.preferences.setDate(CALENDAR_MONTH,month)
+        MyApplication.preferences.setDate(CALENDAR_DAY,day)
+    }
     //클릭 이벤트 종합 함수
     private fun clickListener(){
+        //임시로 내부저장소 비우기
+        binding.notice.setOnClickListener{
+            MyApplication.preferences.removeDate(CALENDAR_YEAR)
+            MyApplication.preferences.removeDate(CALENDAR_MONTH)
+            MyApplication.preferences.removeDate(CALENDAR_DAY)
+            MyApplication.preferences.removeDate(CALENDAR_DATE)
+        }
         binding.calendarView.setOnDateChangedListener { _, date, _ ->
             year = date.year
             month = date.month + 1
@@ -78,11 +104,13 @@ class CalendarFragment : Fragment() {
                         CalendarDay.today().day.toString()
             Log.i(TAG,today)
             selectedDate = "$year-$month-$day"
+
             if(selectedDate == today){
                 // 오늘 색깔로 바꾸는 코드
             }else{
                 // 다른 색깔로 바꾸는 코드
             }
+            calendarStatementSave(year,month,day)
             callList(year,month,day)
         }
         binding.fabPlus.setOnClickListener {
@@ -240,9 +268,14 @@ class CalendarFragment : Fragment() {
     }
     override fun onDestroyView() {
         _binding = null
+        Log.i(TAG,"onDestroy")
         super.onDestroyView()
     }
     companion object{
         const val TAG = "CalendarFragment"
+        const val CALENDAR_DATE = "calendarDate"
+        const val CALENDAR_YEAR = "calendarYear"
+        const val CALENDAR_MONTH = "calendarMonth"
+        const val CALENDAR_DAY = "calendarDay"
     }
 }

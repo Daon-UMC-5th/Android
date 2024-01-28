@@ -11,10 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Daon"
-        tools:targetApi="31">
-        <activity
-            android:name=".fab.ClinicActivity"
-            android:exported="false" />
+        tools:targetApi="31"
+        android:name=".MyApplication">
         <activity
             android:name=".fab.FabControllerActivity"
             android:exported="false" />
