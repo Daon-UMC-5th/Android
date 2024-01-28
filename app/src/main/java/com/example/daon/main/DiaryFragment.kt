@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.daon.DiaryEditActivity
 import com.example.daon.MyApplication
 import com.example.daon.R
 import com.example.daon.databinding.FragmentDiaryBinding
@@ -132,7 +133,7 @@ class DiaryFragment : Fragment() {
             callList(year,month,day)
         }
         binding.fabPlus.setOnClickListener{
-            val intent = Intent(activity, FabControllerActivity::class.java)
+            val intent = Intent(activity, DiaryEditActivity::class.java)
             intent.putExtra("year",year)
             intent.putExtra("month",month)
             intent.putExtra("day",day)
