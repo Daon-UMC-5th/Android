@@ -40,6 +40,7 @@ class BodyFragment : Fragment(), FabControllerActivity.OnSaveEventListener {
     }
     inner class MyEditWatcher: TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int){
+            activateRegisterBtn()
         }
         // 값 변경 시 실행되는 함수
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -47,6 +48,7 @@ class BodyFragment : Fragment(), FabControllerActivity.OnSaveEventListener {
             activateRegisterBtn()
         }
         override fun afterTextChanged(s: Editable?) {
+            activateRegisterBtn()
         }
     }
     private fun changeListener(){
@@ -63,6 +65,7 @@ class BodyFragment : Fragment(), FabControllerActivity.OnSaveEventListener {
         }
     }
     private fun activateRegisterBtn(){
+        //액티비티 <-> 프래그먼트 이벤트 처리가 안되는 느낌
         if (temperature()||weight()||bloodSugar()||content()){
             trueEvent()
         }else{
@@ -70,16 +73,16 @@ class BodyFragment : Fragment(), FabControllerActivity.OnSaveEventListener {
         }
     }
     private fun temperature(): Boolean {
-        return !binding.bodyTemperature.text.equals("")
+        return binding.bodyTemperature.text.toString().trim().isNotEmpty()
     }
     private fun weight(): Boolean{
-        return !binding.bodyWeight.text.equals("")
+        return binding.bodyWeight.text.toString().trim().isNotEmpty()
     }
     private fun bloodSugar(): Boolean{
-        return !binding.bodyBloodSugar.text.equals("")
+        return binding.bodyBloodSugar.toString().trim().isNotEmpty()
     }
     private fun content(): Boolean{
-        return !binding.content.text.equals("")
+        return binding.content.text.toString().trim().isNotEmpty()
     }
     private fun trueEvent() {
         eventListener?.onEventOccurred("true")
