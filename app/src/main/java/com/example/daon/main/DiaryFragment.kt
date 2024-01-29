@@ -59,8 +59,8 @@ class DiaryFragment : Fragment() {
     }
     private fun initPrivateCalendar(){
         year = MyApplication.preferences.getDate(DIARY_PRIVATE_YEAR,CalendarDay.today().year)
-        month = MyApplication.preferences.getDate(DIARY_PRIVATE_MONTH,CalendarDay.today().month+2)
-        day = MyApplication.preferences.getDate(DIARY_PRIVATE_DAY,CalendarDay.today().month-3)
+        month = MyApplication.preferences.getDate(DIARY_PRIVATE_MONTH,CalendarDay.today().month+1)
+        day = MyApplication.preferences.getDate(DIARY_PRIVATE_DAY,CalendarDay.today().day)
         var dateString: String = "$year-$month-$day"//MyApplication.preferences.getDate(CALENDAR_DATE,CalendarDay.today().toString())
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val date: Date = dateFormat.parse(dateString)
@@ -71,8 +71,8 @@ class DiaryFragment : Fragment() {
     }
     private fun initShareCalendar(){
         year = MyApplication.preferences.getDate(DIARY_SHARE_YEAR,CalendarDay.today().year)
-        month = MyApplication.preferences.getDate(DIARY_SHARE_MONTH,CalendarDay.today().month+2)
-        day = MyApplication.preferences.getDate(DIARY_SHARE_DAY,CalendarDay.today().month-3)
+        month = MyApplication.preferences.getDate(DIARY_SHARE_MONTH,CalendarDay.today().month+1)
+        day = MyApplication.preferences.getDate(DIARY_SHARE_DAY,CalendarDay.today().day)
         var dateString: String = "$year-$month-$day"//MyApplication.preferences.getDate(CALENDAR_DATE,CalendarDay.today().toString())
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val date: Date = dateFormat.parse(dateString)
@@ -86,7 +86,7 @@ class DiaryFragment : Fragment() {
             if(diaryStatement== PRIVATE){
                 diaryStatement = SHARE
                 MyApplication.preferences.setDiaryStatement(DIARY_STATEMENT, SHARE)
-                ObjectAnimator.ofFloat(binding.switchSelected, "translationX", 240f).apply { start() }
+                ObjectAnimator.ofFloat(binding.switchSelected, "translationX", 180f).apply { start() }
                 binding.switchSelected.text = "공유"
                 binding.unselectedShare.visibility = View.INVISIBLE
                 binding.unselectedPrivate.visibility = View.VISIBLE
@@ -145,7 +145,7 @@ class DiaryFragment : Fragment() {
         if(diaryStatement== SHARE){
             diaryStatement = SHARE
             MyApplication.preferences.setDiaryStatement(DIARY_STATEMENT, SHARE)
-            ObjectAnimator.ofFloat(binding.switchSelected, "translationX", 240f).apply { start() }
+            ObjectAnimator.ofFloat(binding.switchSelected, "translationX", 180f).apply { start() }
             binding.switchSelected.text = "공유"
             binding.unselectedShare.visibility = View.INVISIBLE
             binding.unselectedPrivate.visibility = View.VISIBLE
