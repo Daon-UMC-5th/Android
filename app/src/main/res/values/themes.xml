@@ -17,4 +17,7 @@
     <style name="CalendarWidgetDay">
         <item name="android:textColor">@color/white</item>
     </style>
+    <style name="NavigationViewStyle">
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>
