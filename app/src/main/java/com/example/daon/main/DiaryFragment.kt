@@ -87,20 +87,38 @@ class DiaryFragment : Fragment() {
                 diaryStatement = SHARE
                 MyApplication.preferences.setDiaryStatement(DIARY_STATEMENT, SHARE)
                 ObjectAnimator.ofFloat(binding.switchSelected, "translationX", 180f).apply { start() }
-                binding.switchSelected.text = "공유"
-                binding.unselectedShare.visibility = View.INVISIBLE
-                binding.unselectedPrivate.visibility = View.VISIBLE
+                binding.unselectedPrivate.setTextColor(Color.parseColor("#AAAAAA"))
+                binding.unselectedShare.setTextColor(Color.parseColor("#FFFFFF"))
+
                 initShareCalendar()
             }else if(diaryStatement== SHARE){
                 diaryStatement = PRIVATE
                 MyApplication.preferences.setDiaryStatement(DIARY_STATEMENT, PRIVATE)
                 ObjectAnimator.ofFloat(binding.switchSelected, "translationX", 0f).apply { start() }
-                binding.switchSelected.text = "개인"
-                binding.unselectedPrivate.visibility = View.INVISIBLE
-                binding.unselectedShare.visibility = View.VISIBLE
+                binding.unselectedPrivate.setTextColor(Color.parseColor("#FFFFFF"))
+                binding.unselectedShare.setTextColor(Color.parseColor("#AAAAAA"))
                 initPrivateCalendar()
             }
         }
+//        binding.diarySwitch.setOnClickListener{
+//            if(diaryStatement== PRIVATE){
+//                diaryStatement = SHARE
+//                MyApplication.preferences.setDiaryStatement(DIARY_STATEMENT, SHARE)
+//                ObjectAnimator.ofFloat(binding.switchSelected, "translationX", 180f).apply { start() }
+//                binding.switchSelected.text = "공유"
+//                binding.unselectedShare.visibility = View.INVISIBLE
+//                binding.unselectedPrivate.visibility = View.VISIBLE
+//                initShareCalendar()
+//            }else if(diaryStatement== SHARE){
+//                diaryStatement = PRIVATE
+//                MyApplication.preferences.setDiaryStatement(DIARY_STATEMENT, PRIVATE)
+//                ObjectAnimator.ofFloat(binding.switchSelected, "translationX", 0f).apply { start() }
+//                binding.switchSelected.text = "개인"
+//                binding.unselectedPrivate.visibility = View.INVISIBLE
+//                binding.unselectedShare.visibility = View.VISIBLE
+//                initPrivateCalendar()
+//            }
+//        }
         binding.searchBtn.setOnClickListener{
 
         }
@@ -146,18 +164,33 @@ class DiaryFragment : Fragment() {
             diaryStatement = SHARE
             MyApplication.preferences.setDiaryStatement(DIARY_STATEMENT, SHARE)
             ObjectAnimator.ofFloat(binding.switchSelected, "translationX", 180f).apply { start() }
-            binding.switchSelected.text = "공유"
-            binding.unselectedShare.visibility = View.INVISIBLE
-            binding.unselectedPrivate.visibility = View.VISIBLE
+            binding.unselectedPrivate.setTextColor(Color.parseColor("#AAAAAA"))
+            binding.unselectedShare.setTextColor(Color.parseColor("#FFFFFF"))
         }else if(diaryStatement== PRIVATE){
             diaryStatement = PRIVATE
             MyApplication.preferences.setDiaryStatement(DIARY_STATEMENT, PRIVATE)
-            ObjectAnimator.ofFloat(binding.switchSelected, "translationX", 0f).apply { start() }
-            binding.switchSelected.text = "개인"
-            binding.unselectedPrivate.visibility = View.INVISIBLE
-            binding.unselectedShare.visibility = View.VISIBLE
+            ObjectAnimator.ofFloat(binding.switchSelected, "translationX", 0f).apply {start() }
+            binding.unselectedPrivate.setTextColor(Color.parseColor("#FFFFFF"))
+            binding.unselectedShare.setTextColor(Color.parseColor("#AAAAAA"))
         }
     }
+//    private fun movingSwitch(){
+//        if(diaryStatement== SHARE){
+//            diaryStatement = SHARE
+//            MyApplication.preferences.setDiaryStatement(DIARY_STATEMENT, SHARE)
+//            ObjectAnimator.ofFloat(binding.switchSelected, "translationX", 180f).apply { start() }
+//            binding.switchSelected.text = "공유"
+//            binding.unselectedShare.visibility = View.INVISIBLE
+//            binding.unselectedPrivate.visibility = View.VISIBLE
+//        }else if(diaryStatement== PRIVATE){
+//            diaryStatement = PRIVATE
+//            MyApplication.preferences.setDiaryStatement(DIARY_STATEMENT, PRIVATE)
+//            ObjectAnimator.ofFloat(binding.switchSelected, "translationX", 0f).apply { start() }
+//            binding.switchSelected.text = "개인"
+//            binding.unselectedPrivate.visibility = View.INVISIBLE
+//            binding.unselectedShare.visibility = View.VISIBLE
+//        }
+//    }
     private fun calendarStatementSave(year:Int,month: Int,day: Int){
         if(diaryStatement== PRIVATE){
             MyApplication.preferences.setDate(DIARY_PRIVATE_YEAR,year)

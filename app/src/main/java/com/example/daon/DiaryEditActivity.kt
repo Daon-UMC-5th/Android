@@ -65,12 +65,12 @@ class DiaryEditActivity : AppCompatActivity() {
         binding.privateLock.setOnClickListener{lockSelect("private")}
         binding.shareLock.setOnClickListener{lockSelect("share")}
         binding.editBtn.setOnClickListener{
-            if(sharedPosition=="private"){
-                saveSharedPosition="private"
+            saveSharedPosition = if(sharedPosition=="private"){
+                "private"
             }else if(sharedPosition=="share"){
-                saveSharedPosition="share"
+                "share"
             }else{
-                saveSharedPosition=null
+                null
             }
         }
     }
@@ -82,10 +82,12 @@ class DiaryEditActivity : AppCompatActivity() {
         if(select=="private"){
             binding.shareRadioBtn.setImageResource(R.drawable.radio_false)
             binding.privateRadioBtn.setImageResource(R.drawable.radio_true)
+            binding.editBtn.setImageResource(R.drawable.edit_btn_true)
             sharedPosition = "private"
         }else if(select=="share"){
             binding.shareRadioBtn.setImageResource(R.drawable.radio_true)
             binding.privateRadioBtn.setImageResource(R.drawable.radio_false)
+            binding.editBtn.setImageResource(R.drawable.edit_btn_true)
             sharedPosition = "share"
         }
     }
@@ -189,6 +191,7 @@ class DiaryEditActivity : AppCompatActivity() {
         super.onBackPressed()
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra("title","diary")
+        intent.putExtra("type","private")
         startActivity(intent)
         finish()
     }
