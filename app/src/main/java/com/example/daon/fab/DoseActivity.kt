@@ -1,53 +1,32 @@
 package com.example.daon.fab
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.TimePicker
 import com.example.daon.MainActivity
-import com.example.daon.OnEventListener
 import com.example.daon.R
-import com.example.daon.databinding.FragmentDoseBinding
+import com.example.daon.databinding.ActivityDoseBinding
 
-class DoseFragment : Fragment(), TimePicker.OnTimeChangedListener,FabControllerActivity.OnSaveEventListener {
-    private var _binding: FragmentDoseBinding? = null
-    private val binding get() = _binding!!
-    private var eventListener: OnEventListener? = null
+class DoseActivity : AppCompatActivity(),TimePicker.OnTimeChangedListener {
+    private lateinit var binding: ActivityDoseBinding
+
+    private lateinit var selectDate : String
+    private lateinit var selectTime : String
 
     private var selectedBtn: String = "breakfast"
     private var selectedColor: String = "#FFFFFF"
     private var unselectedColor: String = "#757575"
-
-    private lateinit var selectDate : String
-    private lateinit var selectTime : String
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnEventListener) {
-            eventListener = context
-        } else {
-            throw RuntimeException("$context must implement OnEventListener")
-        }
-    }
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentDoseBinding.inflate(inflater, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityDoseBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        changeListener()
         clickListener()
-//        changeListener()
-        return binding.root
-    }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        (activity as? FabControllerActivity)?.setOnSomeEventListener(this)
     }
     inner class MyEditWatcher: TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int){
@@ -55,37 +34,34 @@ class DoseFragment : Fragment(), TimePicker.OnTimeChangedListener,FabControllerA
         // 값 변경 시 실행되는 함수
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             // 버튼 활성화 여부
-//            activateRegisterBtn()
         }
         override fun afterTextChanged(s: Editable?) {
+            activateRegisterBtn()
         }
     }
-//    private fun changeListener(){
-//        with(binding) {
-//            val watcher = MyEditWatcher()
-//            // 삼시세끼 버튼
-//            breakfast.setOnClickListener{
-//                breakfast.setBackgroundResource()
-//                activateRegisterBtn()
-//            }
-//            lunch.setOnClickListener()
-//            dinner.setOnClickListener()
-//            // 약
-//            medicine.addTextChangedListener(watcher)
-//            // 시간
-//            notification.setOnClickListener()
-//            // 반복
-//
-//        }
-//    }
-//    private fun activateRegisterBtn(){
-//        if (()||content()){
-//            trueEvent()
-//        }else{
-//            falseEvent()
-//        }
-//    }
+
+    private fun changeListener(){
+        with(binding) {
+            val watcher = MyEditWatcher()
+
+            medicine.addTextChangedListener(watcher)
+        }
+    }
+    private fun activateRegisterBtn(){
+        if (medicine()){
+            binding.saveBtn.setImageResource(R.drawable.check_true)
+            binding.saveBtn.isEnabled = true
+        }else{
+            binding.saveBtn.setImageResource(R.drawable.check_false)
+            binding.saveBtn.isEnabled = false
+        }
+    }
+    private fun medicine(): Boolean{
+        return binding.medicine.text.toString().trim().isNotEmpty()
+    }
     private fun clickListener(){
+        binding.backBtn.setOnClickListener{onBackPressed()}
+        binding.saveBtn.setOnClickListener{save()}
         binding.breakfast.setOnClickListener(onClickListener)
         binding.lunch.setOnClickListener(onClickListener)
         binding.dinner.setOnClickListener(onClickListener)
@@ -137,24 +113,21 @@ class DoseFragment : Fragment(), TimePicker.OnTimeChangedListener,FabControllerA
             }
         }
     }
+    private fun save(){
+        saveDose()
+        onBackPressed()
+    }
+    private fun saveDose(){
+        //서버에게 전달
+    }
     override fun onTimeChanged(view: TimePicker?, hourOfDay: Int, minute: Int) {
         selectTime = "$hourOfDay:$minute"
     }
-    override fun onDestroyView() {
-        _binding = null
-        super.onDestroyView()
-    }
-
-    override fun onSaveEventOccurred(data: String) {
-        Log.i("clinic",binding.medicine.text.toString())
-        val intent = Intent(activity, MainActivity::class.java)
-        intent.putExtra("title","dose")
-        intent.putExtra("date",selectDate)
-        intent.putExtra("medicine",binding.medicine.text.toString())
-        intent.putExtra("time",selectTime)
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("title","calendar")
         startActivity(intent)
-        activity?.finish()
+        finish()
     }
-
-
 }
