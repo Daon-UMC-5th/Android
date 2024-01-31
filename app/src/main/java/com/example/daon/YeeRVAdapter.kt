@@ -1,5 +1,6 @@
 package com.example.daon
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -26,6 +27,7 @@ class YeeRVAdapter(private val dataList: ArrayList<YeeData>) : RecyclerView.Adap
     }
 
     override fun onBindViewHolder(holder: YeeRVAdapter.ViewHolder, position: Int) {
+        Log.d("dassad","dasgkgfab")
         holder.nickname_.text = dataList[position].nickname
         val titleText = dataList[position].title
         if (titleText.length >= 15) {
