@@ -15,8 +15,14 @@ class RVAdapter_post(private val dataList: ArrayList<Post>) : RecyclerView.Adapt
         val nickname_: TextView = binding.nickname
         val title_: TextView = binding.title
         val detail_: TextView = binding.detail
+        val timeAgo_ = binding.timeAgo
         val Image_: ImageView = binding.profile
-
+        val favorIcon_ = binding.favorIcon
+        val favorCount_ = binding.favorCount
+        val commentIcon_ = binding.commentIcon
+        val commentCount_ = binding.commentCount
+        val bookmarkIcon_ = binding.bookmarkIcon
+        val bookmarkCount_ = binding.bookmarkCount
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -41,7 +47,14 @@ class RVAdapter_post(private val dataList: ArrayList<Post>) : RecyclerView.Adapt
         } else {
             holder.detail_.text = detailText
         }
+        holder.timeAgo_.text = dataList[position].timeAgo
         holder.Image_.setImageResource(R.drawable.asd)
+        holder.favorIcon_.setImageResource(R.drawable.favor1)
+        holder.favorCount_.text = dataList[position].favorCount
+        holder.commentIcon_.setImageResource(R.drawable.comment)
+        holder.commentCount_.text = dataList[position].commentCount
+        holder.bookmarkIcon_.setImageResource(R.drawable.bookmark)
+        holder.bookmarkCount_.text = dataList[position].bookmarkCount
     }
 
     override fun getItemCount(): Int {

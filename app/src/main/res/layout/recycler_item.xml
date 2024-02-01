@@ -65,7 +65,19 @@
             android:layout_marginStart="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-        
+
+        <TextView
+            android:id="@+id/timeAgo"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:text="10분전"
+            android:textSize="12sp"
+            android:textColor="#757575"
+            android:layout_marginTop="43dp"
+            android:layout_marginStart="273dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
             android:id="@+id/profile"
             android:layout_width="56dp"
@@ -77,6 +89,87 @@
             android:src="@drawable/check_on"
             android:contentDescription="TODO" />
 
+        <ImageView
+            android:id="@+id/favorIcon"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/favor1"
+            android:layout_marginTop="135dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="TODO" />
+
+        <TextView
+            android:id="@+id/favorCount"
+            android:layout_width="14dp"
+            android:layout_height="16dp"
+            android:text="00"
+            android:textSize="12sp"
+            android:textColor="#333333"
+            android:layout_marginTop="135dp"
+            android:layout_marginStart="36dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <ImageView
+            android:id="@+id/commentIcon"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/comment"
+            android:layout_marginTop="135dp"
+            android:layout_marginStart="62dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="TODO" />
+
+        <TextView
+            android:id="@+id/commentCount"
+            android:layout_width="14dp"
+            android:layout_height="16dp"
+            android:text="00"
+            android:textSize="12sp"
+            android:textColor="#333333"
+            android:layout_marginTop="135dp"
+            android:layout_marginStart="82dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <ImageView
+            android:id="@+id/bookmarkIcon"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/bookmark"
+            android:layout_marginTop="135dp"
+            android:layout_marginStart="106dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="TODO" />
+
+        <TextView
+            android:id="@+id/bookmarkCount"
+            android:layout_width="14dp"
+            android:layout_height="16dp"
+            android:text="00"
+            android:textSize="12sp"
+            android:textColor="#333333"
+            android:layout_marginTop="135dp"
+            android:layout_marginStart="126dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
     </androidx.cardview.widget.CardView>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:layout_marginTop="175dp"
+        android:layout_marginStart="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

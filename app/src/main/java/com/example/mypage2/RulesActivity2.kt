@@ -58,7 +58,7 @@ class RulesActivity2 : AppCompatActivity() {
         button.setTextColor(Color.parseColor(textColorResId))
 
         val fragment = when (button.id) {
-            R.id.rule_1 -> Rule_commuFragment()
+            R.id.rule_1 -> UseFragment()
             R.id.rule_2 -> Rule_diaryFragment()
             R.id.rule_3 -> Rule_commuFragment()
             R.id.rule_4 -> Rule_diaryFragment()

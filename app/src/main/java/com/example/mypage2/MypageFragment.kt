@@ -12,7 +12,7 @@ import androidx.fragment.app.activityViewModels
 import com.example.mypage2.databinding.FragmentMypageBinding
 
 class MypageFragment : Fragment() {
-    private val sharedViewModel by activityViewModels<SharedViewModel>()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private val sharedViewModel2: SharedViewModel2 by activityViewModels()
     private var _binding: FragmentMypageBinding? = null
     private val binding get() = _binding!!
@@ -59,14 +59,26 @@ class MypageFragment : Fragment() {
                 startActivity(intent)
             }
         }
+        binding.commentCount.setOnClickListener {
+            activity?.let {
+                val intent = Intent(context, Comment_ViewActivity2::class.java)
+                startActivity(intent)
+            }
+        }
+        binding.scrapCount.setOnClickListener {
+            activity?.let {
+                val intent = Intent(context, Scrap_ViewActivity::class.java)
+                startActivity(intent)
+            }
+        }
 
         val nicknameFromIntent = arguments?.getString("nickname")
         val introFromIntent = arguments?.getString("intro")
-        Log.d("asdsad",nicknameFromIntent.toString())
         if (!nicknameFromIntent.isNullOrEmpty() && !introFromIntent.isNullOrEmpty()) {
             binding.profileName.text = nicknameFromIntent
             binding.profileIntro.text = introFromIntent
         }
+        Log.d("asdsad", nicknameFromIntent.toString())
         return binding.root
     }
 
