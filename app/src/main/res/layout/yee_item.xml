@@ -130,7 +130,7 @@
             android:id="@+id/bookmarkIcon"
             android:layout_width="16dp"
             android:layout_height="16dp"
-            android:src="@drawable/favor1"
+            android:src="@drawable/bookmark"
             android:layout_marginTop="112dp"
             android:layout_marginStart="106dp"
             app:layout_constraintStart_toStartOf="parent"
