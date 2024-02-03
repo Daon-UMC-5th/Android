@@ -2,7 +2,6 @@ package com.example.mypage2
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -59,42 +58,18 @@ class MypageFragment : Fragment() {
                 startActivity(intent)
             }
         }
-        binding.commentCount.setOnClickListener {
-            activity?.let {
-                val intent = Intent(context, Comment_ViewActivity2::class.java)
-                startActivity(intent)
-            }
+        sharedViewModel.getUserInput().observe(viewLifecycleOwner) { userInputText ->
+            binding.profileName.text = userInputText
         }
-        binding.scrapCount.setOnClickListener {
-            activity?.let {
-                val intent = Intent(context, Scrap_ViewActivity::class.java)
-                startActivity(intent)
-            }
+        sharedViewModel2.getUserInput2().observe(viewLifecycleOwner) { userInputText2 ->
+            binding.profileIntro.text = userInputText2
         }
 
-        val nicknameFromIntent = arguments?.getString("nickname")
-        val introFromIntent = arguments?.getString("intro")
-        if (!nicknameFromIntent.isNullOrEmpty() && !introFromIntent.isNullOrEmpty()) {
-            binding.profileName.text = nicknameFromIntent
-            binding.profileIntro.text = introFromIntent
-        }
-        Log.d("asdsad", nicknameFromIntent.toString())
         return binding.root
     }
 
-
-    override fun onResume() {
-        super.onResume()
-        Log.d("MypageFragment_resume", "resume")
-    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    fun setData(dataFromEditProfile: String?) {
-        if (dataFromEditProfile != null) {
-            binding.profileName.text = dataFromEditProfile
-        }
     }
 }

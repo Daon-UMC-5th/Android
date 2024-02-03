@@ -31,70 +31,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <android.widget.Button
-        android:id="@+id/rule_1"
-        android:layout_width="164dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="72dp"
-        android:background="@drawable/button_selector"
-        android:gravity="center"
-        android:text="이용약관"
-        android:textColor="#AAAAAA"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <android.widget.Button
-        android:id="@+id/rule_2"
-        android:layout_width="164dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="181dp"
-        android:layout_marginTop="72dp"
-        android:background="@drawable/button_selector"
-        android:gravity="center"
-        android:text="개인정보 처리방침"
-        android:textColor="#AAAAAA"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <android.widget.Button
-        android:id="@+id/rule_3"
-        android:layout_width="164dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="105dp"
-        android:background="@drawable/button_selector"
-        android:gravity="center"
-        android:text="개인정보 제3자 제공동의"
-        android:textColor="#AAAAAA"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <android.widget.Button
-        android:id="@+id/rule_4"
-        android:layout_width="164dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="181dp"
-        android:layout_marginTop="105dp"
-        android:background="@drawable/button_selector"
-        android:gravity="center"
-        android:text="이용약관"
-        android:textColor="#AAAAAA"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/btn_frame2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="72dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rule_4"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
