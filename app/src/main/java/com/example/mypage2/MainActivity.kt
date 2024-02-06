@@ -12,65 +12,38 @@ import androidx.core.content.ContextCompat.getSystemService
 import com.example.mypage2.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityMainBinding
-    private val PREFS_NAME = "MyPrefsFile"
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initBottomNavigation()
 
+        Mypage()
     }
 
-    override fun onResume() {
-        super.onResume()
+    private fun Mypage() {
+        val nick = intent.getStringExtra("nickname")
+        val intr = intent.getStringExtra("intro")
+        val bundle = Bundle()
+        bundle.putString("nick", nick)
+        bundle.putString("intr", intr)
 
-        val selectedItemId = getSavedSelectedItemId()
+        val fragment = MypageFragment()
+        fragment.arguments = bundle
 
-        // 이전에 선택된 아이템이 있으면 해당 프래그먼트로 교체
-        if (selectedItemId != -1) {
-            binding.mainBnv.selectedItemId = selectedItemId
-        }
-            val myPageFragment = MypageFragment()
-            val dataFromEditProfile = intent.getStringExtra("nickname")
-            val dataFromEditProfile2 = intent.getStringExtra("intro")
-
-            if (dataFromEditProfile != null && dataFromEditProfile2 != null) {
-                myPageFragment.arguments = Bundle().apply {
-                    putString("nickname", dataFromEditProfile)
-                    putString("intro", dataFromEditProfile2)
-                }
-                Log.d("frag",dataFromEditProfile)
-        }
-    }
-    override fun onPause() {
-        super.onPause()
-
-        // 현재 선택된 BottomNavigationView의 아이템 ID를 저장
-        saveSelectedItemId(binding.mainBnv.selectedItemId)
-    }
-    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
-        val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
-
-        if(currentFocus is EditText) {
-            currentFocus!!.clearFocus()
-        }
-
-        return super.dispatchTouchEvent(ev)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.main_frm, fragment)
+            .commit()
     }
 
-    private fun initBottomNavigation(){
+    private fun initBottomNavigation() {
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_frm, CalendarFragment())
             .commit()
 
-        val selectedItemId = getSavedSelectedItemId()
-        if (selectedItemId != -1) {
-            binding.mainBnv.selectedItemId = selectedItemId
-        }
-        binding.mainBnv.setOnItemSelectedListener{ item ->
+        binding.mainBnv.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.calendarFragment -> {
                     val homeFragment = CalendarFragment()
@@ -106,17 +79,5 @@ class MainActivity : AppCompatActivity() {
             }
             false
         }
-    }
-    private fun saveSelectedItemId(itemId: Int) {
-        // SharedPreferences를 사용하여 선택된 아이템 ID 저장
-        val editor = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit()
-        editor.putInt("selectedItemId", itemId)
-        editor.apply()
-    }
-
-    private fun getSavedSelectedItemId(): Int {
-        // SharedPreferences를 사용하여 저장된 선택된 아이템 ID 가져오기
-        val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        return prefs.getInt("selectedItemId", -1)
     }
 }

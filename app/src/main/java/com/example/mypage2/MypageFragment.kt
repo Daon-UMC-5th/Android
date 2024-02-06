@@ -1,7 +1,9 @@
 package com.example.mypage2
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,21 +13,33 @@ import androidx.fragment.app.activityViewModels
 import com.example.mypage2.databinding.FragmentMypageBinding
 
 class MypageFragment : Fragment() {
-    private val sharedViewModel: SharedViewModel by activityViewModels()
-    private val sharedViewModel2: SharedViewModel2 by activityViewModels()
     private var _binding: FragmentMypageBinding? = null
     private val binding get() = _binding!!
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMypageBinding.inflate(inflater, container, false)
 
+        val nicknameget = arguments?.getString("nick")
+        val introget = arguments?.getString("intr")
+        Log.d("닉네임,", nicknameget.toString())
+        if(nicknameget != null && introget != null){
+            binding.profileName.text = nicknameget
+            binding.profileIntro.text = introget
+        }
+        else{
+            binding.profileName.text = "asd"
+            binding.profileIntro.text = "asdd"
+        }
+
         binding.mypageNext.setOnClickListener {
             activity?.let{
                 val intent = Intent(context, Edit_ProfileActivity::class.java)
                 startActivity(intent)
+                activity?.supportFragmentManager?.popBackStack()
             }
         }
         binding.alarmNext.setOnClickListener {
@@ -58,12 +72,7 @@ class MypageFragment : Fragment() {
                 startActivity(intent)
             }
         }
-        sharedViewModel.getUserInput().observe(viewLifecycleOwner) { userInputText ->
-            binding.profileName.text = userInputText
-        }
-        sharedViewModel2.getUserInput2().observe(viewLifecycleOwner) { userInputText2 ->
-            binding.profileIntro.text = userInputText2
-        }
+
 
         return binding.root
     }

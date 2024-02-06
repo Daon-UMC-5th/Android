@@ -1,5 +1,6 @@
 package com.example.mypage2
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.KeyEvent
@@ -10,8 +11,6 @@ import com.example.mypage2.databinding.ActivityEditProfileBinding
 import com.example.mypage2.databinding.ActivityMainBinding
 
 class Edit_ProfileActivity : AppCompatActivity() {
-    private val sharedViewModel: SharedViewModel by viewModels()
-    private val sharedViewModel2: SharedViewModel2 by viewModels()
     private lateinit var binding: ActivityEditProfileBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,16 +29,11 @@ class Edit_ProfileActivity : AppCompatActivity() {
             val nickname = binding.editNickname.text.toString()
             val intro = binding.editIntro.text.toString()
 
-            sharedViewModel.setUserInput(nickname)
-            sharedViewModel2.setUserInput2(intro)
+            val intent = Intent(this,MainActivity::class.java)
+            intent.putExtra("nickname",nickname)
+            intent.putExtra("intro",intro)
+            startActivity(intent)
             finish()
         }
-    }
-    private fun navigateToMypageFragment() {
-        val nextFragment = MypageFragment()
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.main_frm, nextFragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
     }
 }
