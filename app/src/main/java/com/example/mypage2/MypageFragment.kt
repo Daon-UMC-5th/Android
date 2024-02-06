@@ -31,8 +31,8 @@ class MypageFragment : Fragment() {
             binding.profileIntro.text = introget
         }
         else{
-            binding.profileName.text = "asd"
-            binding.profileIntro.text = "asdd"
+            binding.profileName.text = "홍길동"
+            binding.profileIntro.text = "안녕하세요. 좋은 모든 일들이 다 오기를!"
         }
 
         binding.mypageNext.setOnClickListener {
