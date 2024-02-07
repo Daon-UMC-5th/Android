@@ -44,6 +44,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <Switch
+        android:id="@+id/swt_all"
         android:layout_width="49dp"
         android:layout_height="28dp"
         android:layout_marginStart="295dp"
@@ -105,6 +106,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <Switch
+        android:id="@+id/swt_01"
         android:layout_width="49dp"
         android:layout_height="28dp"
         android:layout_marginStart="295dp"
@@ -152,6 +154,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <Switch
+        android:id="@+id/swt_02"
         android:layout_width="49dp"
         android:layout_height="28dp"
         android:layout_marginStart="295dp"
@@ -213,6 +216,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <Switch
+        android:id="@+id/swt_03"
         android:layout_width="49dp"
         android:layout_height="28dp"
         android:layout_marginStart="295dp"
@@ -274,6 +278,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <Switch
+        android:id="@+id/swt_04"
         android:layout_width="49dp"
         android:layout_height="28dp"
         android:layout_marginStart="295dp"
@@ -321,6 +326,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <Switch
+        android:id="@+id/swt_05"
         android:layout_width="49dp"
         android:layout_height="28dp"
         android:layout_marginStart="295dp"
