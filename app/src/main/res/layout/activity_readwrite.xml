@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ReadwriteActivity">
+
+    <ImageView
+        android:id="@+id/write_back"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/back"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="TODO" />
+
+    <ImageView
+        android:id="@+id/write_more"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/morebtn"
+        android:layout_marginStart="320dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="TODO" />
+
+    <ImageView
+        android:id="@+id/write_profile"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/wee"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="66dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="TODO" />
+    
+    <TextView
+        android:id="@+id/write_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:textSize="14sp"
+        android:text="닉네임"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="62dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/write_icon"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:src="@drawable/light"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="68dp"
+        app:layout_constraintStart_toEndOf="@id/write_nickname"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="TODO" />
+
+    <TextView
+        android:id="@+id/write_timeago"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:textSize="12sp"
+        android:text="10분전"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="0dp"
+        android:textColor="#757575"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/write_nickname"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="108dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="#EEEEEE"/>
+
+    <TextView
+        android:id="@+id/write_title"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:textSize="18sp"
+        android:text="제목입니다"
+        android:textStyle="bold"
+        android:gravity="left"
+        android:maxLines="1"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="123dp"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="RtlHardcoded" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="162dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="#EEEEEE"/>
+
+        <ImageView
+            android:id="@+id/write_image"
+            android:layout_width="260dp"
+            android:layout_height="260dp"
+            android:src="@drawable/light"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="178dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="TODO" />
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/write_image"
+        app:layout_constraintBottom_toTopOf="@id/write_time"
+        tools:ignore="MissingConstraints,ScrollViewCount">
+        <TextView
+            android:id="@+id/write_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:text="내용입니다"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="16dp"
+            android:maxLength="500"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RtlHardcoded" />
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/write_time"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:textSize="12sp"
+        android:text="2023.12.13 10:11"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="15dp"
+        android:textColor="#757575"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scroll"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="50dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="#EEEEEE"/>
+
+    <View
+        android:id="@+id/favor_background"
+        android:layout_width="62dp"
+        android:layout_height="32dp"
+        android:layout_marginBottom="9dp"
+        android:layout_marginStart="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/write_bottom"/>
+    <ImageView
+        android:id="@+id/write_favorite"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/favor1"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="17dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:contentDescription="TODO" />
+
+    <TextView
+        android:id="@+id/favorCount"
+        android:layout_width="14dp"
+        android:layout_height="16dp"
+        android:text="00"
+        android:textSize="12sp"
+        android:textColor="#333333"
+        android:layout_marginBottom="17dp"
+        android:layout_marginStart="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <View
+        android:id="@+id/comment_background"
+        android:layout_width="62dp"
+        android:layout_height="32dp"
+        android:layout_marginBottom="9dp"
+        android:layout_marginStart="84dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/write_bottom"/>
+
+    <ImageView
+        android:id="@+id/write_comment"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/comment"
+        android:layout_marginStart="96dp"
+        android:layout_marginBottom="17dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:contentDescription="TODO" />
+
+    <TextView
+        android:id="@+id/commentCount"
+        android:layout_width="14dp"
+        android:layout_height="16dp"
+        android:text="00"
+        android:textSize="12sp"
+        android:textColor="#333333"
+        android:layout_marginBottom="17dp"
+        android:layout_marginStart="120dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <View
+        android:id="@+id/bookmark_background"
+        android:layout_width="62dp"
+        android:layout_height="32dp"
+        android:layout_marginBottom="9dp"
+        android:layout_marginStart="156dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/write_bottom"/>
+
+    <ImageView
+        android:id="@+id/write_bookmark"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/bookmark"
+        android:layout_marginStart="168dp"
+        android:layout_marginBottom="17dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:contentDescription="TODO" />
+
+    <TextView
+        android:id="@+id/bookmarkCount"
+        android:layout_width="14dp"
+        android:layout_height="16dp"
+        android:text="00"
+        android:textSize="12sp"
+        android:textColor="#333333"
+        android:layout_marginBottom="17dp"
+        android:layout_marginStart="192dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

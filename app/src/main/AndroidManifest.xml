@@ -13,9 +13,12 @@
         android:theme="@style/Theme.Daon"
         tools:targetApi="31">
         <activity
-            android:name=".WriteActivity"
-            android:windowSoftInputMode="adjustResize"
+            android:name=".ReadwriteActivity"
             android:exported="false" />
+        <activity
+            android:name=".WriteActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
