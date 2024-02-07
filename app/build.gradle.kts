@@ -52,6 +52,8 @@ dependencies {
     implementation("com.github.prolificinteractive:material-calendarview:1.6.0")
     implementation("com.jakewharton.threetenabp:threetenabp:1.2.1")
 
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
+
     implementation("com.google.android.material:material:1.4.0")
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.6")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.6")

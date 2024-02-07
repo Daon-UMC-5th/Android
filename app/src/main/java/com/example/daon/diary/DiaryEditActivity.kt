@@ -1,4 +1,4 @@
-package com.example.daon
+package com.example.daon.diary
 
 import android.animation.ObjectAnimator
 import android.app.Activity
@@ -13,6 +13,8 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import com.example.daon.MainActivity
+import com.example.daon.R
 import com.example.daon.databinding.ActivityDiaryEditBinding
 
 class DiaryEditActivity : AppCompatActivity() {
@@ -172,12 +174,12 @@ class DiaryEditActivity : AppCompatActivity() {
         }
     }
     private fun activateRegisterBtn(){
-        if(title()||content()){
+        btnAble = if(title()||content()){
             binding.saveBtn.setImageResource(R.drawable.check_true)
-            btnAble=true
+            true
         }else{
             binding.saveBtn.setImageResource(R.drawable.check_false)
-            btnAble=false
+            false
         }
         binding.editTotal.text = binding.diaryContent.text.length.toString() + "/500"
     }

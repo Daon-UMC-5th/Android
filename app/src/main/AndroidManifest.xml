@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-feature android:name="android.hardware.camera" />
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -19,9 +20,21 @@
         android:theme="@style/Theme.Daon"
         tools:targetApi="31">
         <activity
-            android:name=".DiaryEditActivity"
+            android:name=".fab.ClinicActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fab.DoseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fab.BodyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".diary.DiaryInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".diary.DiaryEditActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".fab.FabControllerActivity"
             android:exported="false" />

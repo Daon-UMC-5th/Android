@@ -52,11 +52,11 @@ class PreferenceUtil(context: Context) {
 //    fun removeDiaryCalendarStatement(key:String){
 //        preferences.edit().remove(key).apply()
 //    }
-    fun setDiaryStatement(key:String, defValue: String){
-        preferences.edit().putString(key,defValue).apply()
+    fun setDiaryStatement(key:String, defValue: Int){
+        preferences.edit().putInt(key,defValue).apply()
     }
-    fun getDiaryStatement(key: String,defValue: String):String{
-        return preferences.getString(key,defValue).toString()
+    fun getDiaryStatement(key: String,defValue: Int):Int{
+        return preferences.getInt(key,defValue)
     }
     fun removeDiaryStatement(key:String){
         preferences.edit().remove(key).apply()

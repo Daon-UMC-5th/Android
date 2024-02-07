@@ -13,11 +13,12 @@ import android.widget.Toast
 import com.example.daon.MyApplication
 import com.example.daon.R
 import com.example.daon.databinding.FragmentCalendarBinding
-import com.example.daon.fab.FabControllerActivity
+import com.example.daon.fab.BodyActivity
+import com.example.daon.fab.ClinicActivity
+import com.example.daon.fab.DoseActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -90,6 +91,7 @@ class CalendarFragment : Fragment() {
             MyApplication.preferences.removeDate(CALENDAR_YEAR)
             MyApplication.preferences.removeDate(CALENDAR_MONTH)
             MyApplication.preferences.removeDate(CALENDAR_DAY)
+            MyApplication.preferences.removeDiaryStatement("diaryStatement")
         }
         binding.calendarView.setOnDateChangedListener { _, date, _ ->
             year = date.year
@@ -150,10 +152,24 @@ class CalendarFragment : Fragment() {
 
     }
     private fun changeIntent(selectFragment: String){
-        val intent = Intent(activity, FabControllerActivity::class.java)
-        intent.putExtra("fragment",selectFragment)
-        startActivity(intent)
-        activity?.finish()
+        when(selectFragment){
+            "신체" -> {
+                val intent = Intent(activity, BodyActivity::class.java)
+                startActivity(intent)
+                activity?.finish()
+            }
+            "복용" -> {
+                val intent = Intent(activity, DoseActivity::class.java)
+                startActivity(intent)
+                activity?.finish()
+            }
+            "진료" -> {
+                val intent = Intent(activity, ClinicActivity::class.java)
+                startActivity(intent)
+                activity?.finish()
+            }
+        }
+
     }
 //    private fun changeIntent(selectActivity: Class<ClinicActivity>){
 //        val intent = Intent(activity, selectActivity)

@@ -139,13 +139,18 @@
             android:layout_width="match_parent"
             android:layout_height="400dp"
             android:layout_margin="10dp"
+            android:visibility="gone"
             app:mcv_selectionColor="#5a7fbf"
             app:mcv_headerTextAppearance="@style/CalendarWidgetHeader"
             app:mcv_weekDayTextAppearance="@style/CalendarWidgetWeek"
             app:mcv_dateTextAppearance="@style/CalendarWidgetDay"
             tools:ignore="MissingConstraints" />
-        <!--        app:mcv_arrowColor="@color/white"-->
 
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/diary_vp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
     </LinearLayout>
     <View
         android:id="@+id/background"
@@ -157,6 +162,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="end|bottom"
+        android:visibility="gone"
         android:layout_marginBottom="20dp"
         android:layout_marginRight="20dp">
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -169,7 +175,6 @@
             app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
-        <!--            app:elevation="@dimen/cardview_default_elevation"/>-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
