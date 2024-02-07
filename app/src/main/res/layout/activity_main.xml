@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+
     <LinearLayout
         android:id="@+id/main_toolBar"
         android:layout_width="match_parent"
@@ -19,6 +20,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/main_toolBar"
         app:layout_constraintTop_toTopOf="parent"/>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/main_bnv"
         android:layout_width="match_parent"

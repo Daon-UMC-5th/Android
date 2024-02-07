@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Rule_commuFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="[ 다온 서비스 이용규칙 ]"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\n\n\n다온 서비스 안내"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\n\n\n\n\n다온은, 일기장을 통해 환자의 경험과 감정을 글로 표현, 공유하고, 캘린더를 통해 치료 일정 및 건강 체크의 용이성을 높여 이용자들의 신체적, 심리적 어려움 해소에 도움이 되고자 기획된 애플리케이션(이하 어플)입니다."
+            android:textColor="@color/black"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\n\n\n\n\n\n\n\n\n\n\n이용자들을 위한 에티켓"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/text05"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\n\n\n\n\n\n\n\n\n\n\n\n\n다온을 즐겁고 유익하게 유지하기 위한 일에는 모든 서비스 이용자들이 서로 나누고 이해하는 마음이 필요합니다.\n\n
+1. 가입할 때의 에티켓\n\n
+다온은 나와 비슷한 아픔과 궁금증을 가진 사람들을 찾을 수 있고, 비슷한 관심사와 아픔의 공유를 통해 아픔과 어려움을 치유할 수 있는 공간입니다.\n\n
+2. 게시글 쓸 때의 에티켓\n\n
+어플 내에서 게시글을 읽고 쓴다는 것은 보이지 않는 온라인 세상 속에서 서로 자신의 모습을 조금씩 보여주고 서로가 가진 이야기들을 나누는 의미 있는 일입니다. 무심코 등록한 내 글이 다온과 다온 이용자들에게 피해를 주는 글은 아닌지 생각해 주세요.\n\n
+3. 게시글 쓸 때의 에티켓\n\n
+내가 쓴 게시글이 자신의 모습과 이야기를 나누는 것이라면, 내가 쓴 댓글은 나의 생각과 느낌을 표현하는 일입니다. 댓글은 게시글에 비해 쓰기 쉽지만, 쓰기 쉬운 만큼 멤버 모두의 노력이 필요한 부분이기도 합니다. 내가 쓴 댓글이 상대방의 입장에서 읽었을 때 어떻게 받아들여질지, 혹시 불량 게시글의 기준에 해당하는 댓글을 쓴 건 아닌지 등록 전에 한 번 더 확인해 봅시다.\n\n
+4. 카페 자료를 이용할 때의 에티켓\n\n
+일기와 커뮤니티 게시글 또는 자료는 다온 사용자 모두에게 유용한 자료일 뿐 아니라 회사의 소중한 자산이기도 합니다. 자료를 이용할 때는 이용자 및 회사의 권리가 침해되지 않도록 주의해 주셔야 하며, 특히 자료를 회사와 사전 협의 없이 영리 목적으로 이용할 경우에는 관련 규정에서 정하고 있는 바에 따라 이용 제한 조치가 취해질 수 있다는 점을 유념하여 주시기 바랍니다.\n\n
+5. 불량 게시글 또는 자료를 발견했을 때\n\n
+어플 내에서 불량 게시글 또는 불량 자료를 발견했을 때에는 신고하거나 고객센터로 신고해 주세요.
+"
+            android:textColor="@color/black"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\n\n다온 서비스 이용 제한"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/text05"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/text01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\n\n\n\n\n다온은 더 유익한 따뜻한 커뮤니티를 위해 다음과 같은 ID에 대해 이용 제한 조치를 취하고 있습니다. 모두가 기분 좋게 다온을 이용할 수 있도록 아래 사항을 지켜 주시기 바랍니다."
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@+id/text05"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\n\n가. 이용 제한 사유에 해당하는 게시글 및 이용행위"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/text01"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/text02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\n\n\n\n다온 이용약관과 방송통신심의위원회의 정보통신에 관한 심의규정 및 청소년보호위원회 심의규정에 따라 다음과 같은 게시글을 작성한 사용자를 이용 제한 ID로 정의합니다."
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@+id/text01"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/text03"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text213"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@+id/text02"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\n\n나. 이용 제한 ID에 대한 정의"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/text03"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/text04"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\n\n\n1. 본 운영원칙의 '가' 항목에서 정의한 금지된 게시글을 올리는 ID\n
+2. 본 운영원칙의 '가' 항목에서 금지하고 있는 행위를 한 ID\n
+3. 동일한 게시글 도배를 통해 다른 회원에게 불편을 주는 ID\n
+4. 욕설과 비방을 하는 ID\n
+5. 물품 매매에 수반되는 의무를 다하지 않아 다른 회원에게 손해를 입힌 ID\n
+6. 기타 다른 방법으로 여러 회원에게 불쾌감을 주는 ID"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@+id/text03"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\n\n다. 이용 제한 ID에 제재 정의"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/text04"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\n\n\n\n1. 이용 제한 ID가 발견되거나 신고로 접수되면 이용약관 및 본 운영원칙에서 금지한 게시글은 통보 없이 즉시 삭제됩니다.\n
+2. 운영자에 의한 게시글 삭제 횟수가 누적이 되는 경우 누적 정도에 따라서 7일, 15일, 30일 혹은 무기한 글쓰기 금지의 제한을 받습니다.\n
+단, 다온 서비스에 치명적일 수도 있는 게시글이 발견되면 누적 정도와 관계없이 무기한으로 글쓰기가 제한될 수 있습니다.\n
+3. 이용 제한 ID가 다온 서비스에 막대한 피해를 끼쳤다고 판단될 경우, 해당 ID가 작성한 모든 글이 삭제될 수도 있으며, 같은 주민등록번호로 생성된 모든 ID에 대해 이용 제한이 조치될 수도 있습니다.\n
+4. 위 내용에도 불구하고 운영자에 의한 게시글 삭제 횟수가 누적이 되는 경우 누적 정도에 따라서 경고, 일시정지, 영구이용정지 등 단계적으로 제한될 수 있습니다.\n
+단, 음란게시글 작성 등 그 위반 정도가 중한 경우 누적 정도와 관계없이 일시정지 또는 영구이용정지될 수 있습니다.\n
+※ 본 운영원칙은 2024년 02월 19일부터 적용됩니다."
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@+id/text04"
+            tools:ignore="MissingConstraints" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

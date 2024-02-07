@@ -1,22 +1,49 @@
-package com.example.daon
+package com.example.mypage2
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
 import android.os.Bundle
-import com.example.daon.databinding.ActivityMainBinding
+import android.text.TextUtils.replace
+import android.util.Log
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.getSystemService
+import com.example.mypage2.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityMainBinding;
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initBottomNavigation()
+
+        Mypage()
     }
-    private fun initBottomNavigation(){
+
+    private fun Mypage() {
+        val nick = intent.getStringExtra("nickname")
+        val intr = intent.getStringExtra("intro")
+        val bundle = Bundle()
+        bundle.putString("nick", nick)
+        bundle.putString("intr", intr)
+
+        val fragment = MypageFragment()
+        fragment.arguments = bundle
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.main_frm, fragment)
+            .commit()
+    }
+
+    private fun initBottomNavigation() {
+
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_frm, CalendarFragment())
             .commit()
-        binding.mainBnv.setOnItemSelectedListener{ item ->
+
+        binding.mainBnv.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.calendarFragment -> {
                     val homeFragment = CalendarFragment()
@@ -46,7 +73,7 @@ class MainActivity : AppCompatActivity() {
                     val lockerFragment = MypageFragment()
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frm, lockerFragment)
-                        .commitAllowingStateLoss()
+                        .commit()
                     return@setOnItemSelectedListener true
                 }
             }

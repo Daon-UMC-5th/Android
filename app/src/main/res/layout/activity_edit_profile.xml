@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_edit"
+    tools:context=".Edit_ProfileActivity">
+
+    <TextView
+        android:id="@+id/edit_pro"
+        android:layout_width="137dp"
+        android:layout_height="24dp"
+        android:text="프로필 편집"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="16dp"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:lineSpacingExtra="1dp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/back_btn"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/backto"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="TODO" />
+
+    <ImageView
+        android:id="@+id/profileImage"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
+        android:layout_marginStart="136dp"
+        android:layout_marginTop="76dp"
+        android:src="@drawable/profile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:layout_width="45dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="184dp"
+        android:text="닉네임"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <EditText
+        android:id="@+id/edit_nickname"
+        android:layout_width="328dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="212dp"
+        android:inputType="text"
+        android:imeOptions="actionDone"
+        android:importantForAutofill="no"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="LabelFor" />
+    <TextView
+        android:id="@+id/juung"
+        android:layout_width="56dp"
+        android:layout_height="20dp"
+        android:text="중복확인"
+        android:textColor="#1C734D"
+        android:layout_marginStart="272dp"
+        android:layout_marginTop="217dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/nick_free"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="사용가능한 닉네임입니다."
+        android:textColor="#4CAF50"
+        android:textSize="12sp"
+        android:visibility="gone"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="253dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <TextView
+        android:layout_width="45dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="319dp"
+        android:text="소개말"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <EditText
+        android:id="@+id/edit_intro"
+        android:layout_width="328dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="347dp"
+        android:inputType="text"
+        android:imeOptions="actionDone"
+        android:maxLength="25"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:importantForAutofill="no"
+        tools:ignore="LabelFor" />
+
+    <android.widget.Button
+        android:id="@+id/save"
+        android:layout_width="328dp"
+        android:layout_height="56dp"
+        android:background="@drawable/btn_01"
+        tools:ignore="MissingConstraints"
+        android:text="저장"
+        android:textColor="#AAAAAA"
+        android:textSize="18sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="652dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="#80000000">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/select_picture_card_view"
+            android:layout_width="match_parent"
+            android:layout_height="129dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="3dp"
+            android:layout_gravity="bottom"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/take_picture"
+                    android:layout_width="match_parent"
+                    android:text="카메라로 촬영"
+                    android:textSize="14dp"
+                    android:textColor="@color/black"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="16dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="12dp"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="#E5E5E5"/>
+                <TextView
+                    android:id="@+id/select_album"
+                    android:layout_width="match_parent"
+                    android:text="갤러리에서 선택"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="16dp"
+                    android:layout_height="48dp"
+                    android:layout_marginBottom="12dp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/select_lock_card_view"
+            android:layout_width="match_parent"
+            android:layout_height="186dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="3dp"
+            android:layout_gravity="bottom"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/take_picture2"
+                    android:layout_width="match_parent"
+                    android:text="카메라로 촬영"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="16dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="12dp"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="4dp"
+                    android:background="#E5E5E5"/>
+                <TextView
+                    android:id="@+id/select_album2"
+                    android:layout_width="match_parent"
+                    android:text="갤러리에서 선택"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="16dp"
+                    android:layout_height="48dp" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="4dp"
+                    android:background="#E5E5E5"/>
+                <TextView
+                    android:id="@+id/delect_album"
+                    android:layout_width="match_parent"
+                    android:text="현재사진 삭제"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="16dp"
+                    android:layout_height="48dp"
+                    android:layout_marginBottom="12dp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
