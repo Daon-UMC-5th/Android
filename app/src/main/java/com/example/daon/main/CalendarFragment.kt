@@ -73,6 +73,7 @@ class CalendarFragment : Fragment() {
         val date: Date = dateFormat.parse(dateString)
         binding.calendarView.selectedDate = CalendarDay.from(date)
         binding.calendarView.setCurrentDate(CalendarDay.from(date), true)
+        Log.i("date",date.toString())
 //            binding.calendarView.selectedDate = CalendarDay.today()
 //            binding.calendarView.addDecorators(SaturdayDecorator(), SundayDecorator())
     }
@@ -208,7 +209,9 @@ class CalendarFragment : Fragment() {
     }
 
     private fun callList(year:Int,month:Int,day:Int){
-        //백엔드에 날짜 보내주고 일정 리스트 받아오기
+        var dateString: String = "$year-$month-$day"//MyApplication.preferences.getDate(CALENDAR_DATE,CalendarDay.today().toString())
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val date: Date = dateFormat.parse(dateString)
     }
     override fun onDestroyView() {
         _binding = null
