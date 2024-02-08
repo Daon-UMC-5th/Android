@@ -35,6 +35,8 @@ class CalendarFragment : Fragment() {
     private var month: Int = 0
     private var day: Int = 0
 
+    private var bottomSheetState = false
+
     private var noticeCnt: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,8 +52,8 @@ class CalendarFragment : Fragment() {
         initNotice()
         initCalendar()
         clickListener()
-        initializePersistentBottomSheet()
-        persistentBottomSheetEvent()
+//        initializePersistentBottomSheet()
+//        persistentBottomSheetEvent()
 //        year = binding.calendarView.selectedDate!!.year
 //        month = binding.calendarView.selectedDate!!.month + 1
 //        day = binding.calendarView.selectedDate!!.day
@@ -130,26 +132,23 @@ class CalendarFragment : Fragment() {
             Toast.makeText(this.context, "복용 버튼 클릭!", Toast.LENGTH_SHORT).show()
             changeIntent("복용")
         }
-//        // 플로팅 버튼 클릭 이벤트 - 신체
-//        binding.fabBody.setOnClickListener {
-//            Toast.makeText(this.context, "신체 버튼 클릭!", Toast.LENGTH_SHORT).show()
-//            changeIntent(BodyActivity::class.java)
-//        }
-//        // 플로팅 버튼 클릭 이벤트 - 진료
-//        binding.fabClinic.setOnClickListener {
-//            Toast.makeText(this.context, "진료 버튼 클릭!", Toast.LENGTH_SHORT).show()
-//            changeIntent(ClinicActivity::class.java)
-//        }
-//        // 플로팅 버튼 클릭 이벤트 - 복용
-//        binding.fabDose.setOnClickListener{
-//            Toast.makeText(this.context, "복용 버튼 클릭!", Toast.LENGTH_SHORT).show()
-//            changeIntent(DoseActivity::class.java)
-//        }
         // 회색 배경 클릭 이벤트
         binding.background.setOnClickListener{
             toggleFab()
         }
-
+        binding.bottomSheetLayout.setOnClickListener{bottomSheetController()}
+    }
+    private fun bottomSheetController(){
+        if(bottomSheetState){
+            ObjectAnimator.ofFloat(binding.bottomSheetLayout, "translationY", 0f).apply { start() }
+            binding.fabController.visibility = View.VISIBLE
+            bottomSheetState=false
+        }else{
+            ObjectAnimator.ofFloat(binding.bottomSheetLayout, "translationY", -(binding.mainFrm.height).toFloat()
+            ).apply { start() }
+            binding.fabController.visibility = View.GONE
+            bottomSheetState=true
+        }
     }
     private fun changeIntent(selectFragment: String){
         when(selectFragment){
@@ -207,75 +206,7 @@ class CalendarFragment : Fragment() {
         isFabOpen = !isFabOpen
 
     }
-    private fun initializePersistentBottomSheet() {
 
-        // BottomSheetBehavior에 layout 설정
-        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetLayout!!)
-        val initialPeekHeight = resources.getDimensionPixelSize(R.dimen.peek_height) // 초기 peekHeight
-        val maxSheetHeight = resources.getDimensionPixelSize(R.dimen.max_height) // 최대 높이
-
-        bottomSheetBehavior.peekHeight = initialPeekHeight
-        bottomSheetBehavior.maxHeight = maxSheetHeight
-
-        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                Log.i(TAG,newState.toString())
-                // BottomSheetBehavior state에 따른 이벤트
-                when (newState) {
-                    BottomSheetBehavior.STATE_HIDDEN -> {
-                        Log.d(TAG, "state: hidden")
-                    }
-                    BottomSheetBehavior.STATE_EXPANDED -> {
-                        Log.d(TAG, "state: expanded")
-
-                    }
-                    BottomSheetBehavior.STATE_COLLAPSED -> {
-                        Log.d(TAG, "state: collapsed")
-                    }
-                    BottomSheetBehavior.STATE_DRAGGING -> {
-                        Log.d(TAG, "state: dragging")
-                    }
-                    BottomSheetBehavior.STATE_SETTLING -> {
-                        Log.d(TAG, "state: settling")
-                    }
-                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {
-                        Log.d(TAG, "state: half expanded")
-                    }
-                }
-
-            }
-
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                Log.i(TAG,slideOffset.toString())
-            }
-
-        })
-
-    }
-    private fun persistentBottomSheetEvent() {
-        binding.bottomSheetLayout.bottomSheetDate.setOnClickListener{
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-            initializePersistentBottomSheet()
-            Log.i(TAG,"dateclick")
-        }
-//        bottomSheetLayout.setOnDragListener{
-//            bttomSheet
-//        }
-//        bottomSheetExpandPersistentButton.setOnClickListener {
-//            // BottomSheet의 최대 높이만큼 보여주기
-//            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-//        }
-//
-//        bottomSheetHidePersistentButton.setOnClickListener {
-//            // BottomSheet 숨김
-//            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-//        }
-//
-//        bottomSheetShowModalButton.setOnClickListener {
-//            // 추후 modal bottomSheet 띄울 버튼
-//        }
-
-    }
     private fun callList(year:Int,month:Int,day:Int){
         //백엔드에 날짜 보내주고 일정 리스트 받아오기
     }
