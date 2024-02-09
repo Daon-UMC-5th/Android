@@ -1,10 +1,10 @@
-package com.example.mypage2
+package com.example.daon
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.mypage2.databinding.ActivityAccessBinding
-import com.example.mypage2.databinding.ActivityEditProfileBinding
+import androidx.appcompat.app.AppCompatActivity
+import com.example.daon.databinding.ActivityAccessBinding
+import com.example.mypage2.PasswordchangeActivity
 
 class AccessActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAccessBinding
@@ -17,7 +17,7 @@ class AccessActivity : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
         }
         binding.changePassword.setOnClickListener {
-            val intent = Intent(this,PasswordchangeActivity::class.java)
+            val intent = Intent(this, PasswordchangeActivity::class.java)
             startActivity(intent)
         }
     }

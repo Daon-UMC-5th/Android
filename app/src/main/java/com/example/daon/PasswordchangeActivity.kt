@@ -1,4 +1,4 @@
-package com.example.mypage2
+package com.example.daon
 
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
