@@ -1,14 +1,11 @@
 package com.example.daon
 
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat
-import com.example.mypage2.databinding.ActivityAccessBinding
-import com.example.mypage2.databinding.ActivityPasswordchangeBinding
+import androidx.appcompat.app.AppCompatActivity
+import com.example.daon.databinding.ActivityPasswordchangeBinding
 
 class PasswordchangeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPasswordchangeBinding

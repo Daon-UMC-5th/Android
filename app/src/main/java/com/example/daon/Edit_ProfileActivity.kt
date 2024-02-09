@@ -1,5 +1,6 @@
 package com.example.daon
 
+import android.Manifest
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -9,18 +10,16 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.Manifest
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
-import com.example.mypage2.databinding.ActivityEditProfileBinding
+import com.example.daon.databinding.ActivityEditProfileBinding
 import java.io.IOException
 
 class Edit_ProfileActivity : AppCompatActivity() {

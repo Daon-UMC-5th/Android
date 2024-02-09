@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.daon.databinding.ActivityAccessBinding
-import com.example.mypage2.PasswordchangeActivity
 
 class AccessActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAccessBinding

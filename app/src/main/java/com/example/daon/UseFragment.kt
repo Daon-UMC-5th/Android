@@ -1,12 +1,11 @@
 package com.example.daon
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.mypage2.databinding.FragmentMypageBinding
-import com.example.mypage2.databinding.FragmentUseBinding
+import androidx.fragment.app.Fragment
+import com.example.daon.databinding.FragmentUseBinding
 
 
 class UseFragment : Fragment() {

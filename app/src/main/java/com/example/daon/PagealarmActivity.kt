@@ -1,9 +1,8 @@
 package com.example.daon
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.mypage2.databinding.ActivityPagealarmBinding
+import com.example.daon.databinding.ActivityPagealarmBinding
 
 
 class PagealarmActivity : AppCompatActivity() {

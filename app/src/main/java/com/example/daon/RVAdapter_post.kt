@@ -6,7 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.example.mypage2.databinding.RecyclerItemBinding
+import com.example.daon.databinding.RecyclerItemBinding
 
 class RVAdapter_post(private val dataList: ArrayList<Post>) : RecyclerView.Adapter<RVAdapter_post.ViewHolder>() {
 
