@@ -1,15 +1,8 @@
 package com.example.daon
 
-import android.content.Context
 import android.os.Bundle
-import android.text.TextUtils.replace
-import android.util.Log
-import android.view.MotionEvent
-import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.getSystemService
-import com.example.mypage2.databinding.ActivityMainBinding
+import com.example.daon.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

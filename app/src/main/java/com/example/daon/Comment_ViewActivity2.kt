@@ -1,13 +1,11 @@
 package com.example.daon
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.mypage2.databinding.ActivityCommentView2Binding
-import com.example.mypage2.databinding.ActivityPasswordchangeBinding
-import com.example.mypage2.databinding.ActivityPostsViewBinding
+import com.example.daon.databinding.ActivityCommentView2Binding
 
 class Comment_ViewActivity2 : AppCompatActivity() {
     private lateinit var binding: ActivityCommentView2Binding

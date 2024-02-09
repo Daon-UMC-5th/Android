@@ -1,23 +1,24 @@
-package com.example.daon
+package com.example.mypage2
 
 import android.annotation.SuppressLint
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.daon.databinding.ActivityScrapViewBinding
+import com.example.mypage2.databinding.ActivityPasswordchangeBinding
+import com.example.mypage2.databinding.ActivityPostsViewBinding
 
-class Scrap_ViewActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityScrapViewBinding
+class Posts_ViewActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityPostsViewBinding
     private var postitem = ArrayList<Post>()
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityScrapViewBinding.inflate(layoutInflater)
+        binding = ActivityPostsViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.scrapBack.setOnClickListener {
+        binding.postviewBack.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
         val layoutManager = LinearLayoutManager(this)
