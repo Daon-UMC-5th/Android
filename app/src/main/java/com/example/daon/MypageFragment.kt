@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.daon.databinding.FragmentMypageBinding
+import com.example.mypage2.Posts_ViewActivity
 
 class MypageFragment : Fragment() {
     private var _binding: FragmentMypageBinding? = null

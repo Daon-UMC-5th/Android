@@ -1,4 +1,4 @@
-package com.example.mypage2
+package com.example.daon
 
 data class Post(val post: String,
                 val nickname: String,
