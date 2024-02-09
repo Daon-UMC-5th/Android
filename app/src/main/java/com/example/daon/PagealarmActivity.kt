@@ -1,4 +1,4 @@
-package com.example.mypage2
+package com.example.daon
 
 import android.content.Intent
 import android.os.Bundle
