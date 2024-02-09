@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Mypage2"
+rootProject.name = "daon"
 include ':app'
