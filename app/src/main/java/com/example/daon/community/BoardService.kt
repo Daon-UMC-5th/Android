@@ -14,13 +14,13 @@ interface BoardService {
     fun getPost(@Path("boardId") boardId: String): Call<PostOneListResponseDto>
     // 게시판 작성
     @POST("/board/write/post/{boardType}")
-    fun writePost(@Path("boardType") boardType: String, @Body post: PostWriteRequestDto): Call<PostOneListCall>
+    fun writePost(@Path("boardType") boardType: String, @Body post: PostWriteRequestDto): Call<PostWriteResponseDto>
     // 게시판 수정
     @PUT("/board/write/put/{boardId}")
-    fun updatePost(@Path("boardId") boardId: String, @Body post: PostWriteRequestDto): Call<PostOneListCall>
+    fun updatePost(@Path("boardId") boardId: String, @Body post: PostWriteRequestDto): Call<PostWriteResponseDto>
     // 게시판 삭제
     @DELETE("/board/write/delete/{boardId}")
-    fun deletePost(@Path("boardId") boardId: String): Call<PostOneListCall>
+    fun deletePost(@Path("boardId") boardId: String): Call<PostWriteResponseDto>
     // 좋아요 추가
     @POST("/board/like-up/{boardId}")
     fun likeUp(@Path("boardId") boardId: String): Call<LikeResponse>

@@ -1,6 +1,7 @@
 package com.example.daon
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.text.Editable
@@ -8,7 +9,14 @@ import android.text.TextWatcher
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.daon.community.ApiClient
+import com.example.daon.community.BoardService
+import com.example.daon.community.PostWriteRequestDto
+import com.example.daon.community.PostWriteResponseDto
 import com.example.daon.databinding.ActivityWriteBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class WriteActivity : AppCompatActivity() {
     private val checkonResourceId = R.drawable.checkon
@@ -21,6 +29,7 @@ class WriteActivity : AppCompatActivity() {
         binding = ActivityWriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val boardType = intent.getStringExtra("boardType")?:""
 
         binding.writeBack.setOnClickListener {
             val currentResourceId = binding.accessCheck.tag as? Int ?: checknoResourceId
@@ -38,13 +47,8 @@ class WriteActivity : AppCompatActivity() {
             val title = binding.titleWr.text.toString()
             val detail = binding.detailWr.text.toString()
 
-            val bundle = Bundle().apply {
-                putString("title", title)
-                putString("detail", detail)
-            }
-            yeeFragment.updateData(bundle)
+            writePost(boardType, title, detail)
             finish()
-            Log.d("dsadad",title)
         }
 
         val maxCharacters = 500
@@ -91,6 +95,48 @@ class WriteActivity : AppCompatActivity() {
                     binding.accessCheck.setImageResource(R.drawable.checkno)
                     binding.accessCheck.tag = R.drawable.checkno
                 }
+            }
+        })
+    }
+    private fun writePost(boardType: String, title: String, detail: String) {
+        val requestDto = PostWriteRequestDto(title, detail)
+
+        val call = ApiClient.boardService.writePost(boardType, requestDto)
+        call.enqueue(object : Callback<PostWriteResponseDto> {
+            override fun onResponse(
+                call: Call<PostWriteResponseDto>,
+                response: Response<PostWriteResponseDto>
+            ) {
+                if (response.isSuccessful) {
+                    val postWriteResponse = response.body()
+                    if (postWriteResponse != null && postWriteResponse.isSuccess) {
+                        // 게시글 작성 성공
+                        val newPost = postWriteResponse.result
+                        val newPostData  = YeeData(
+                            nickname = "권혁찬", // 닉네임 설정 필요
+                            title = newPost.title,
+                            detail = newPost.content,
+                            timeAgo = newPost.created_at,
+                            profileImage = R.drawable.calendar, // 프로필 이미지 설정 필요
+                            favorIcon = R.drawable.calendar, // 좋아요 아이콘 설정 필요
+                            favorCount = newPost.likecount.toString(),
+                            commentIcon = R.drawable.calendar, // 댓글 아이콘 설정 필요
+                            commentCount = newPost.commentcount.toString(),
+                            bookmarkIcon = R.drawable.calendar, // 북마크 아이콘 설정 필요
+                            bookmarkCount = newPost.scrapecount.toString()
+                        )
+                        yeeFragment.addNewPost(newPostData )
+                    } else {
+                        // 게시글 작성 실패
+                        Log.e(TAG, "Failed to write post: ${postWriteResponse?.message}")
+                    }
+                } else {
+                    Log.e(TAG, "Failed to write post: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<PostWriteResponseDto>, t: Throwable) {
+                Log.e(TAG, "Failed to write post: ${t.message}")
             }
         })
     }

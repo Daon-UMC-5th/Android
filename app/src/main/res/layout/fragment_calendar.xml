@@ -1,21 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".CalendarFragment">
-    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-        android:id="@+id/calendarView"
+
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:mcv_selectionColor="#5a7fbf"
-        app:mcv_headerTextAppearance="@style/CalendarWidgetHeader"
-        app:mcv_weekDayTextAppearance="@style/CalendarWidgetWeek"
-        app:mcv_dateTextAppearance="@style/CalendarWidgetDay"
-        tools:ignore="MissingConstraints" />
-<!--        app:mcv_arrowColor="@color/white"-->
+        android:layout_height="match_parent"
+        android:text="diary" />
 
-
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
