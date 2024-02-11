@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class DoseAllListCallResponseDto(
     @SerializedName("isSuccess") val isSuccess: Boolean,
-    @SerializedName("code") val code: String,
+    @SerializedName("code") val code: Int,
     @SerializedName("message") val message: String,
-    @SerializedName("result") val result: DoseListCall
+    @SerializedName("result") val result: List<DoseListCall>
 )

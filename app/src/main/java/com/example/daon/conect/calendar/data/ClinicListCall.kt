@@ -6,7 +6,7 @@ data class ClinicListCall(
     @SerializedName("consultation_id") val consultation_id: Int,
     @SerializedName("user_id") val user_id: Int,
     @SerializedName("hospital") val hospital : String,
-    @SerializedName("content") val content : Int,
+    @SerializedName("content") val content : String,
     @SerializedName("alarmed_date") val alarmed_date : String,
     @SerializedName("alarmed_at") val alarmed_at : String,
     @SerializedName("created_at") val created_at : String,

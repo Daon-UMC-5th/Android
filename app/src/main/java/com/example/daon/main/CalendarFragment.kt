@@ -10,25 +10,40 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.daon.MyApplication
 import com.example.daon.R
+import com.example.daon.bottomsheet.BodyAdapter
+import com.example.daon.bottomsheet.ClinicAdapter
+import com.example.daon.bottomsheet.DoseAdapter
+import com.example.daon.conect.ApiClient
+import com.example.daon.conect.calendar.BodyListCallResponseDto
+import com.example.daon.conect.calendar.ClinicListCallResponseDto
+import com.example.daon.conect.calendar.DoseAllListCallResponseDto
+import com.example.daon.conect.calendar.data.BodyListCall
+import com.example.daon.conect.calendar.data.ClinicListCall
+import com.example.daon.conect.calendar.data.DoseListCall
 import com.example.daon.databinding.FragmentCalendarBinding
 import com.example.daon.fab.BodyActivity
 import com.example.daon.fab.ClinicActivity
 import com.example.daon.fab.DoseActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.prolificinteractive.materialcalendarview.CalendarDay
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class CalendarFragment : Fragment() {
+class CalendarFragment : Fragment(),ClinicAdapter.OnClinicItemClickListener,DoseAdapter.OnDoseItemClickListener,BodyAdapter.OnBodyItemClickListener {
     private var _binding: FragmentCalendarBinding? = null
+    private var jwt: String = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMywiaWF0IjoxNzA3NjYxNjIzLCJleHAiOjE3MDc2NjUyMjMsInN1YiI6InVzZXJJbmZvIn0.1F6lJ2rOxLakW4OrggCoCd2zRltbisSV8XspOzh1b1M"
     private val binding get() = _binding!!
 
-    private lateinit var bottomSheetLayout: LinearLayout
-
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
+    private lateinit var doseAdapter: DoseAdapter
+    private lateinit var clinicAdapter: ClinicAdapter
+    private lateinit var bodyAdapter: BodyAdapter
 
     private var isFabOpen = false
     private var year: Int = 0
@@ -47,19 +62,12 @@ class CalendarFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentCalendarBinding.inflate(inflater, container, false)
-        val view = inflater.inflate(R.layout.fragment_calendar,container,false)
-        bottomSheetLayout = view.findViewById(R.id.bottom_sheet_layout)
+        doseAdapter = DoseAdapter()
+        bodyAdapter = BodyAdapter()
+        clinicAdapter = ClinicAdapter()
         initNotice()
         initCalendar()
         clickListener()
-//        initializePersistentBottomSheet()
-//        persistentBottomSheetEvent()
-//        year = binding.calendarView.selectedDate!!.year
-//        month = binding.calendarView.selectedDate!!.month + 1
-//        day = binding.calendarView.selectedDate!!.day
-//        selectedDate = "$year-$month-$day"
-//        Log.i(TAG,selectedDate)
-//        Log.i(TAG,bottomSheetLayout.toString())
 
         return binding.root
     }
@@ -74,6 +82,7 @@ class CalendarFragment : Fragment() {
         binding.calendarView.selectedDate = CalendarDay.from(date)
         binding.calendarView.setCurrentDate(CalendarDay.from(date), true)
         Log.i("date",date.toString())
+        callList(year,month,day)
 //            binding.calendarView.selectedDate = CalendarDay.today()
 //            binding.calendarView.addDecorators(SaturdayDecorator(), SundayDecorator())
     }
@@ -171,11 +180,6 @@ class CalendarFragment : Fragment() {
         }
 
     }
-//    private fun changeIntent(selectActivity: Class<ClinicActivity>){
-//        val intent = Intent(activity, selectActivity)
-//        startActivity(intent)
-//        activity?.finish()
-//    }
     private fun toggleFab() {
         Toast.makeText(this.context, "메인 버튼 클릭!", Toast.LENGTH_SHORT).show()
         // 플로팅 액션 버튼 닫기 - 열려있는 플로팅 버튼 집어넣는 애니메이션
@@ -207,16 +211,146 @@ class CalendarFragment : Fragment() {
         isFabOpen = !isFabOpen
 
     }
+    private fun setClinicBottomSheet(result: ClinicListCall){
+        clinicAdapter.setData(result)
+        binding.clinicRv.apply {
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            adapter = clinicAdapter
+            clinicAdapter.notifyDataSetChanged()
+        }
+    }
+    private fun setDoseBottomSheet(result: List<DoseListCall>){
+        doseAdapter.setData(result)
+        binding.doseRv.apply {
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            adapter = doseAdapter
+            doseAdapter.notifyDataSetChanged()
+        }
+    }
+    private fun setBodyBottomSheet(result: BodyListCall){
+        bodyAdapter.setData(result)
+        binding.bodyRv.apply {
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            adapter = bodyAdapter
+            bodyAdapter.notifyDataSetChanged()
+        }
+    }
+
+
 
     private fun callList(year:Int,month:Int,day:Int){
         var dateString: String = "$year-$month-$day"//MyApplication.preferences.getDate(CALENDAR_DATE,CalendarDay.today().toString())
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        val date: Date = dateFormat.parse(dateString)
+        initBody(dateString)
+        initClinic(dateString)
+        initDose(dateString)
+    }
+    private fun initBody(dateString: String){
+        val call = ApiClient.calendarService.bodyListCall(jwt,dateString)
+        call.enqueue(object : Callback<BodyListCallResponseDto> {
+            override fun onResponse(call: Call<BodyListCallResponseDto>, response: Response<BodyListCallResponseDto>) {
+                if (response.isSuccessful) {
+                    val bodyResponse = response.body()
+                    // 서버로부터 받은 응답을 처리합니다.
+                    // 예를 들어, 로그인 성공 여부에 따라 처리할 수 있습니다.
+                    if (bodyResponse != null) {
+                        val message = bodyResponse
+                        Log.i("bodySuccess",message.toString())
+                        if(message.code==200){
+                            setBodyBottomSheet(message.result)
+                        }else if(message.code==404){
+                            showToast(message.message)
+                        }else if(message.code==500){
+                            showToast(message.message)
+                        }
+                    }
+                } else {
+                    showToast("Failed to communicate with the server.")
+                }
+            }
+            override fun onFailure(call: Call<BodyListCallResponseDto>, t: Throwable) {
+                showToast("Network request failed. Error: ${t.message}")
+                Log.i("bodyFail",t.message.toString())
+            }
+        })
+    }
+    private fun initClinic(dateString: String){
+        val call = ApiClient.calendarService.clinicListCall(jwt,dateString)
+        call.enqueue(object : Callback<ClinicListCallResponseDto> {
+            override fun onResponse(call: Call<ClinicListCallResponseDto>, response: Response<ClinicListCallResponseDto>) {
+                if (response.isSuccessful) {
+                    val clinicResponse = response.body()
+                    // 서버로부터 받은 응답을 처리합니다.
+                    // 예를 들어, 로그인 성공 여부에 따라 처리할 수 있습니다.
+                    if (clinicResponse != null) {
+                        val message = clinicResponse
+                        Log.i("clinicSuccess",message.toString())
+                        if(message.code==200){
+                            setClinicBottomSheet(message.result)
+                        }else if(message.code==404){
+                            showToast(message.message)
+                        }else if(message.code==500){
+                            showToast(message.message)
+                        }
+                    }
+                } else {
+                    showToast("Failed to communicate with the server.")
+                }
+            }
+            override fun onFailure(call: Call<ClinicListCallResponseDto>, t: Throwable) {
+                showToast("Network request failed. Error: ${t.message}")
+                Log.i("clinicFail",t.message.toString())
+            }
+        })
+    }
+    private fun initDose(dateString: String){
+        val call = ApiClient.calendarService.doseAllListCall(jwt,dateString)
+        call.enqueue(object : Callback<DoseAllListCallResponseDto> {
+            override fun onResponse(call: Call<DoseAllListCallResponseDto>, response: Response<DoseAllListCallResponseDto>) {
+                if (response.isSuccessful) {
+                    val doseResponse = response.body()
+                    // 서버로부터 받은 응답을 처리합니다.
+                    // 예를 들어, 로그인 성공 여부에 따라 처리할 수 있습니다.
+                    if (doseResponse != null) {
+                        val message = doseResponse
+                        Log.i("doseSuccess",message.toString())
+                        if(message.code==200){
+                            setDoseBottomSheet(message.result)
+                        }else if(message.code==404){
+                            showToast(message.message)
+                        }else if(message.code==500){
+                            showToast(message.message)
+                        }
+                    }
+                } else {
+                    Log.i("doseNot",response.body().toString())
+                    showToast("Failed to communicate with the server.")
+                }
+            }
+            override fun onFailure(call: Call<DoseAllListCallResponseDto>, t: Throwable) {
+                showToast("Network request failed. Error: ${t.message}")
+                Log.i("doseFail",t.message.toString())
+            }
+        })
+    }
+    override fun onClinicItemClick(position: Int) {
+        // RecyclerView 아이템 클릭 이벤트 처리
+        val clickedItem = clinicAdapter.listData[position]
+    }
+    override fun onDoseItemClick(position: Int) {
+        // RecyclerView 아이템 클릭 이벤트 처리
+        val clickedItem = doseAdapter.listData[position]
+    }
+    override fun onBodyItemClick(position: Int) {
+        // RecyclerView 아이템 클릭 이벤트 처리
+        val clickedItem = bodyAdapter.listData[position]
     }
     override fun onDestroyView() {
         _binding = null
         Log.i(TAG,"onDestroy")
         super.onDestroyView()
+    }
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
     companion object{
         const val TAG = "CalendarFragment"

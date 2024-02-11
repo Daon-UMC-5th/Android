@@ -4,6 +4,7 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
@@ -12,7 +13,7 @@ interface CalendarService {
     //캘린더
     //신체 조회
     @GET("calendar/physical-record/{date}")
-    fun bodyListCall(@Path("date") date: String): Call<BodyListCallResponseDto>
+    fun bodyListCall(@Header("api-key") jwtToken: String, @Path("date") date: String): Call<BodyListCallResponseDto>
     //신체 삽입
     @POST("calendar/physical-record/{date}")
     fun bodyListInsert(@Path("date") date: String, @Body request: BodyListInsertRequestDto): Call<BodyListInsertResponseDto>
@@ -24,7 +25,7 @@ interface CalendarService {
     fun bodyListEdit(@Path("date") date: String, @Body request: BodyListInsertRequestDto) : Call<BodyListInsertResponseDto>
     //진료 조회
     @GET("calendar/consultation/{date}")
-    fun clinicListCall(@Path("date") date: String) : Call<ClinicListCallResponseDto>
+    fun clinicListCall(@Header("api-key") jwtToken: String,@Path("date") date: String) : Call<ClinicListCallResponseDto>
     //진료 삽입
     @POST("calendar/consultation/{date}")
     fun clinicListInsert(@Path("date") date: String, @Body request: ClinicListInsertRequestDto) : Call<ClinicListInsertResponseDto>
@@ -36,7 +37,7 @@ interface CalendarService {
     fun clinicListEdit(@Path("date") date: String, @Body request: ClinicListInsertRequestDto) : Call<ClinicListInsertResponseDto>
     //복용 조회
     @GET("calendar/madication/{date}")
-    fun doseAllListCall(@Path("date") date: String) : Call<DoseAllListCallResponseDto>
+    fun doseAllListCall(@Header("api-key") jwtToken: String, @Path("date") date: String) : Call<DoseAllListCallResponseDto>
     @GET("calendar/madication/{when}/{date}")
     fun doseListCall(@Path("when") time: String, @Path("date") date: String) : Call<DoseAllListCallResponseDto>
     //복용 삽입
