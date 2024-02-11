@@ -1,14 +1,16 @@
-import com.example.daon.calendar.MypageService
+package com.example.daon.mypage_api
+
+import com.example.daon.BuildConfig
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.FileInputStream
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 object ApiClient {
+
+    private const val BASE_URL = BuildConfig.BASE_URL
 
     var gson = GsonBuilder().setLenient().create()
     private val client: OkHttpClient by lazy {
@@ -25,19 +27,16 @@ object ApiClient {
             .hostnameVerifier { _, _ -> true }
             .build()
     }
-    val retrofit: Retrofit by lazy {
-        val properties = Properties()
-        properties.load(FileInputStream("local.properties"))
-        val serverURL = properties.getProperty("BASE_URL")
+    private val retrofit: Retrofit by lazy {
 
         Retrofit.Builder()
-            .baseUrl(serverURL)
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(client)
             .build()
     }
 
-    val calendarService: MypageService by lazy {
+    val mypageService: MypageService by lazy {
         retrofit.create(MypageService::class.java)
     }
 }

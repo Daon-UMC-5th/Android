@@ -1,4 +1,4 @@
-package com.example.daon.conect.calendar
+package com.example.daon.mypage_api
 
 import com.google.gson.annotations.SerializedName
 

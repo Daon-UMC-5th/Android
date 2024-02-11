@@ -1,6 +1,6 @@
-package com.example.daon.calendar
+package com.example.daon.mypage_api
 
-import com.example.daon.calendar.data.ResultItem
+import com.example.daon.mypage_api.data.ResultItem
 import com.google.gson.annotations.SerializedName
 
 data class CountGetResponseDto(

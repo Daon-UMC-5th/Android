@@ -4,12 +4,10 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id "kotlin-android"
-
 }
 
-def properties = new Properties()
-properties.load(project.rootProject.file("local.properties").newInputStream())
-def serverURL = properties.getProperty("BASE_URL")
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 android {
     namespace 'com.example.daon'
@@ -25,6 +23,7 @@ android {
         versionCode 1
         versionName "1.0"
 
+        buildConfigField "String", "BASE_URL", properties["BASE_URL"]
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -52,7 +51,7 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.9.0")
+    implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
@@ -61,7 +60,7 @@ dependencies {
 
     implementation("androidx.viewpager2:viewpager2:1.0.0")
 
-    implementation("com.google.android.material:material:1.4.0")
+    implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.6")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.6")
     implementation("androidx.databinding:databinding-runtime:8.2.2")
@@ -70,6 +69,8 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp")
     implementation("com.squareup.okhttp3:logging-interceptor")
     implementation("com.google.code.gson:gson:2.8.9")
+    implementation ('com.squareup.retrofit2:retrofit:2.9.0')
+
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:(latest version)")
 

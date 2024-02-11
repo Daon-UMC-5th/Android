@@ -1,5 +1,6 @@
 package com.example.daon
 
+import com.example.daon.mypage_api.ApiClient.mypageService
 import android.Manifest
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
@@ -19,7 +20,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
+import com.example.daon.mypage_api.ProfilechangeRequestDto
+import com.example.daon.mypage_api.ProfilechangeResponseDto
 import com.example.daon.databinding.ActivityEditProfileBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.IOException
 
 class Edit_ProfileActivity : AppCompatActivity() {
@@ -59,7 +65,6 @@ class Edit_ProfileActivity : AppCompatActivity() {
 
         binding.backBtn.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
-
         }
 
         binding.juung.setOnClickListener {
@@ -80,12 +85,33 @@ class Edit_ProfileActivity : AppCompatActivity() {
             val nickname = binding.editNickname.text.toString()
             val intro = binding.editIntro.text.toString()
 
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("nickname", nickname)
-            intent.putExtra("intro", intro)
-            startActivity(intent)
-            finish()
+            val profileChangeRequestDto = ProfilechangeRequestDto(nickname, intro)
+
+            val call = mypageService.changeProfile(profileChangeRequestDto)
+            call.enqueue(object : Callback<ProfilechangeResponseDto> {
+                override fun onResponse(call: Call<ProfilechangeResponseDto>, response: Response<ProfilechangeResponseDto>) {
+                    if (response.isSuccessful) {
+                        val intent = Intent(this@Edit_ProfileActivity, MainActivity::class.java)
+
+                        intent.putExtra("nickname", nickname)
+                        intent.putExtra("intro", intro)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        // Handle error response
+                        // For example, show an error message to the user
+                        Toast.makeText(this@Edit_ProfileActivity, "Failed to change profile", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<ProfilechangeResponseDto>, t: Throwable) {
+                    // Handle failure
+                    // For example, show a network error message to the user
+                    Toast.makeText(this@Edit_ProfileActivity, "Network error", Toast.LENGTH_SHORT).show()
+                }
+            })
         }
+
 
         binding.profileImage.setOnClickListener {
             Log.d("asdsda","aaa")
@@ -185,8 +211,9 @@ class Edit_ProfileActivity : AppCompatActivity() {
         private fun updateSaveButtonState() {
             val isNicknameNotEmpty = binding.editNickname.text.isNotEmpty()
             val isIntroNotEmpty = binding.editIntro.text.isNotEmpty()
+            val isNickFreeVisible = binding.nickFree.visibility == View.VISIBLE
 
-            if (isNicknameNotEmpty && isIntroNotEmpty) {
+            if (isNicknameNotEmpty && isIntroNotEmpty &&  isNickFreeVisible) {
                 binding.save.setBackgroundResource(R.drawable.btn_023)
                 binding.save.setTextColor(ContextCompat.getColor(this, R.color.white))
                 binding.save.isEnabled = true

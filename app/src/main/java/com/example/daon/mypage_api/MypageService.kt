@@ -1,9 +1,6 @@
-package com.example.daon.calendar
+package com.example.daon.mypage_api
 
 import com.example.daon.conect.calendar.PostBoardResponseDto
-import com.example.daon.conect.calendar.PostCommentResponseDto
-import com.example.daon.conect.calendar.PostScrapResponseDto
-import com.example.daon.conect.calendar.ProfilechangeResponseDto
 import retrofit2.Call
 import retrofit2.http.*
 
