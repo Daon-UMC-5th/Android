@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +26,7 @@ class YeeFragment : Fragment() {
 
     private var _binding: FragmentYeeBinding? = null
     private val binding get() = _binding!!
+    private var isFavorite = false
 
     private lateinit var yeeRVAdapter: YeeRVAdapter
     private lateinit var recyclerView: RecyclerView
@@ -104,4 +106,18 @@ class YeeFragment : Fragment() {
         recyclerView.scrollToPosition(0) // RecyclerView를 최상단으로 스크롤
     }
 
+    fun toggleFavoriteState() {
+        isFavorite = !isFavorite
+        updateFavoriteIcon()
+    }
+
+    // 별표시 아이콘 상태에 따라 이미지 업데이트
+    private fun updateFavoriteIcon() {
+        val favoriteIcon = view?.findViewById<ImageView>(R.id.favorite_icon)
+        if (isFavorite) {
+            favoriteIcon?.setImageResource(R.drawable.favorite_on)
+        } else {
+            favoriteIcon?.setImageResource(R.drawable.favorite_off)
+        }
+    }
 }

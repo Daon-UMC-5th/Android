@@ -38,6 +38,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
+        <ImageView
+            android:id="@+id/favorite_icon"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:scaleType="centerInside"
+            android:layout_marginStart="303dp"
+            android:src="@drawable/favorite_off"
+            app:layout_constraintStart_toStartOf="parent"
+            android:contentDescription="TODO" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView

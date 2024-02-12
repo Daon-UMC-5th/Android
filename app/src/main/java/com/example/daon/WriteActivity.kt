@@ -114,8 +114,8 @@ class WriteActivity : AppCompatActivity() {
                         val newPost = postWriteResponse.result
                         val newPostData  = YeeData(
                             nickname = "권혁찬", // 닉네임 설정 필요
+                             detail = newPost.content,
                             title = newPost.title,
-                            detail = newPost.content,
                             timeAgo = newPost.created_at,
                             profileImage = R.drawable.calendar, // 프로필 이미지 설정 필요
                             favorIcon = R.drawable.calendar, // 좋아요 아이콘 설정 필요
