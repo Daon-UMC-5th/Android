@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.daon.databinding.CommentItemBinding
-import com.example.daon.databinding.YeeItemBinding
 
 class CommentRVAdapter(private val dataList: ArrayList<CommentData>) : RecyclerView.Adapter<CommentRVAdapter.ViewHolder>(){
     inner class ViewHolder(private val binding: CommentItemBinding) : RecyclerView.ViewHolder(binding.root){

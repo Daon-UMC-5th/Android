@@ -38,6 +38,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
+        <ImageView
+            android:id="@+id/favorite_icon"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:scaleType="centerInside"
+            android:layout_marginStart="303dp"
+            android:src="@drawable/favorite_off"
+            app:layout_constraintStart_toStartOf="parent"
+            android:contentDescription="TODO" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -50,7 +60,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints"
         tools:itemCount="3"
-        tools:listitem="@layout/yee_item"/>
+        tools:listitem="@layout/post_item"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_01"

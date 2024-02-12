@@ -4,11 +4,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.daon.databinding.YeeItemBinding
+import com.example.daon.databinding.PostItemBinding
 
 class YeeRVAdapter(private val dataList: ArrayList<YeeData>) : RecyclerView.Adapter<YeeRVAdapter.ViewHolder>() {
 
-    inner class ViewHolder(private val binding: YeeItemBinding) : RecyclerView.ViewHolder(binding.root){
+    inner class ViewHolder(private val binding: PostItemBinding) : RecyclerView.ViewHolder(binding.root){
         val nickname_ = binding.nickname
         val title_ = binding.title
         val detail_ = binding.detail
@@ -22,7 +22,7 @@ class YeeRVAdapter(private val dataList: ArrayList<YeeData>) : RecyclerView.Adap
         val bookmarkCount_ = binding.bookmarkCount
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): YeeRVAdapter.ViewHolder {
-        val binding = YeeItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = PostItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F8FAF5"
+    android:id="@+id/yee"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".YeeFragment">
     
@@ -37,6 +38,16 @@
             android:layout_marginStart="62dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageView
+            android:id="@+id/favorite_icon"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:scaleType="centerInside"
+            android:layout_marginStart="303dp"
+            android:src="@drawable/favorite_off"
+            app:layout_constraintStart_toStartOf="parent"
+            android:contentDescription="TODO" />
         
     </androidx.constraintlayout.widget.ConstraintLayout>
     
@@ -50,7 +61,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints"
         tools:itemCount="3"
-        tools:listitem="@layout/yee_item"/>
+        tools:listitem="@layout/post_item"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_01"
