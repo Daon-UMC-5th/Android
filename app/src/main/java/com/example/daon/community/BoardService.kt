@@ -1,12 +1,14 @@
 package com.example.daon.community
 
-import com.example.daon.community.data.PostOneListCall
 import retrofit2.Call
 import retrofit2.http.*
 
 interface BoardService {
     //커뮤니티
-    //게시물 목록
+    //게시판 전체
+    @GET("/board/get-all-allType")
+    fun getAllAllPosts(@Query("offset") offset: Int): Call<PostListCallResponseDto>
+    //게시판 목록
     @GET("/board/get-all/{boardType}")
     fun getAllPosts(@Path("boardType") boardType: String, @Query("offset") offset: Int): Call<PostListCallResponseDto>
     // 특정 게시물

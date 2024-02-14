@@ -68,6 +68,7 @@ dependencies {
     implementation("androidx.databinding:databinding-runtime:8.2.2")
 
     implementation(platform("com.squareup.okhttp3:okhttp-bom:4.10.0"))
+    implementation ("io.jsonwebtoken:jjwt:0.9.1")
     implementation("com.squareup.okhttp3:okhttp")
     implementation("com.squareup.okhttp3:logging-interceptor")
     implementation("com.google.code.gson:gson:2.8.9")

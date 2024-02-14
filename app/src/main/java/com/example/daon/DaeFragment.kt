@@ -40,13 +40,10 @@ class DaeFragment : Fragment() {
         yeeRVAdapter = YeeRVAdapter(yeeitem)
         binding.yeeRv.adapter = yeeRVAdapter
 
-        yeeitem.add(YeeData("권혁찬","줄바꿈이 되는지 확인해야지 후후","줄바꿈이 되는지 확인해야지 후후","10분전",R.drawable.calendar,R.drawable.calendar,"02",R.drawable.calendar,"01",R.drawable.calendar,"05"))
-        yeeitem.add(YeeData("권혁찬","줄바꿈이 되는지 확인해야지 후후","줄바꿈이 되는지 확인해야지 후후","10분전",R.drawable.calendar,R.drawable.calendar,"02",R.drawable.calendar,"01",R.drawable.calendar,"05"))
-        yeeRVAdapter.notifyDataSetChanged()
-
         binding.fab01.setOnClickListener {
             activity?.let{
                 val intent = Intent(context, WriteActivity::class.java)
+                intent.putExtra("boardType", "intestine")
                 startActivity(intent)
             }
         }
@@ -56,6 +53,10 @@ class DaeFragment : Fragment() {
 
     private fun getYourDataList(): ArrayList<YeeData> {
         return ArrayList()
+    }
+
+    fun addNewPost(newPostData: YeeData) {
+
     }
 
 }

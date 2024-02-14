@@ -2,8 +2,9 @@ package com.example.daon.community.token
 
 import com.google.gson.annotations.SerializedName
 
-data class SignUpResponseDto(
+data class LoginResponseDto(
     @SerializedName("isSuccess") val isSuccess: Boolean,
-    @SerializedName("code") val code: String,
+    @SerializedName("code") val code: Int,
     @SerializedName("message") val message: String,
+    @SerializedName("result") val result: String
 )

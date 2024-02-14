@@ -2,7 +2,6 @@ package com.example.daon
 
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,9 +9,10 @@ import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.daon.community.ApiClient
-import com.example.daon.community.BoardService
 import com.example.daon.community.PostWriteRequestDto
 import com.example.daon.community.PostWriteResponseDto
+import com.example.daon.community.token.MyApplication
+import com.example.daon.community.token.PreferenceUtil
 import com.example.daon.databinding.ActivityWriteBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -21,7 +21,12 @@ import retrofit2.Response
 class WriteActivity : AppCompatActivity() {
     private val checkonResourceId = R.drawable.checkon
     private val checknoResourceId = R.drawable.checkno
-    private var yeeFragment = YeeFragment()
+    private lateinit var liverFragment: GanFragment
+    private lateinit var stomachFragment: YeeFragment
+    private lateinit var intestineFragment: DaeFragment
+    private lateinit var breastFragment: YuuFragment
+    private lateinit var wombFragment: JaeGFragment
+    private lateinit var etcFragment: GitarFragment
 
     private lateinit var binding: ActivityWriteBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +35,7 @@ class WriteActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val boardType = intent.getStringExtra("boardType")?:""
-
+        stomachFragment = YeeFragment()
         binding.writeBack.setOnClickListener {
             val currentResourceId = binding.accessCheck.tag as? Int ?: checknoResourceId
 
@@ -114,18 +119,18 @@ class WriteActivity : AppCompatActivity() {
                         val newPost = postWriteResponse.result
                         val newPostData  = YeeData(
                             nickname = "권혁찬", // 닉네임 설정 필요
-                             detail = newPost.content,
-                            title = newPost.title,
+                            detail = detail,
+                            title = title,
                             timeAgo = newPost.created_at,
-                            profileImage = R.drawable.calendar, // 프로필 이미지 설정 필요
-                            favorIcon = R.drawable.calendar, // 좋아요 아이콘 설정 필요
+                            profileImage = newPost.image_url, // 프로필 이미지 설정 필요
+                            favorIcon = R.drawable.favor1,  // 좋아요 아이콘 설정 필요
                             favorCount = newPost.likecount.toString(),
-                            commentIcon = R.drawable.calendar, // 댓글 아이콘 설정 필요
+                            commentIcon = R.drawable.comment, // 댓글 아이콘 설정 필요
                             commentCount = newPost.commentcount.toString(),
-                            bookmarkIcon = R.drawable.calendar, // 북마크 아이콘 설정 필요
+                            bookmarkIcon = R.drawable.bookmark, // 북마크 아이콘 설정 필요
                             bookmarkCount = newPost.scrapecount.toString()
                         )
-                        yeeFragment.addNewPost(newPostData )
+                        addNewPostToBoard(boardType, newPostData)
                     } else {
                         // 게시글 작성 실패
                         Log.e(TAG, "Failed to write post: ${postWriteResponse?.message}")
@@ -139,6 +144,35 @@ class WriteActivity : AppCompatActivity() {
                 Log.e(TAG, "Failed to write post: ${t.message}")
             }
         })
+    }
+
+    private fun addNewPostToBoard(boardType: String, newPostData: YeeData) {
+        when (boardType) {
+            "liver" -> {
+                // 간암 게시판에 글을 추가하는 작업을 수행합니다.
+                liverFragment.addNewPost(newPostData)
+            }
+            "stomach" -> {
+                // 위암 게시판에 글을 추가하는 작업을 수행합니다.
+                stomachFragment.addNewPost(newPostData)
+            }
+            "intestine" -> {
+                // 대장 게시판에 글을 추가하는 작업을 수행합니다.
+                intestineFragment.addNewPost(newPostData)
+            }
+            "breast" -> {
+                // 유방암 게시판에 글을 추가하는 작업을 수행합니다.
+                breastFragment.addNewPost(newPostData)
+            }
+            "womb" -> {
+                // 자궁경부암 게시판에 글을 추가하는 작업을 수행합니다.
+                wombFragment.addNewPost(newPostData)
+            }
+            "etc" -> {
+                // 기타암 게시판에 글을 추가하는 작업을 수행합니다.
+                etcFragment.addNewPost(newPostData)
+            }
+        }
     }
 
     private fun showConfirmationDialog() {

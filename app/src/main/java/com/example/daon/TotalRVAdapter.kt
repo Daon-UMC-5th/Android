@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.daon.databinding.PostItemBinding
+import com.example.daon.databinding.TotalItemBinding
 
-class YeeRVAdapter(private val dataList: ArrayList<YeeData>) : RecyclerView.Adapter<YeeRVAdapter.ViewHolder>() {
+class TotalRVAdapter(private val dataList: ArrayList<TotalData>) : RecyclerView.Adapter<TotalRVAdapter.ViewHolder>() {
 
-    inner class ViewHolder(private val binding: PostItemBinding) : RecyclerView.ViewHolder(binding.root){
+    inner class ViewHolder(private val binding: TotalItemBinding) : RecyclerView.ViewHolder(binding.root){
+        val postname_ = binding.postname
         val nickname_ = binding.nickname
         val title_ = binding.title
         val detail_ = binding.detail
@@ -21,12 +23,13 @@ class YeeRVAdapter(private val dataList: ArrayList<YeeData>) : RecyclerView.Adap
         val bookmarkIcon_ = binding.bookmarkIcon
         val bookmarkCount_ = binding.bookmarkCount
     }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): YeeRVAdapter.ViewHolder {
-        val binding = PostItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TotalRVAdapter.ViewHolder {
+        val binding = TotalItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: YeeRVAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TotalRVAdapter.ViewHolder, position: Int) {
+        holder.postname_.text = dataList[position].postname
         holder.nickname_.text = dataList[position].nickname
         val titleText = dataList[position].title
         if (titleText.length >= 15) {
