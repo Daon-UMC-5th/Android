@@ -1,6 +1,5 @@
 package com.example.daon.mypage_api
 
-import com.example.daon.conect.calendar.PostBoardResponseDto
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -21,4 +20,7 @@ interface MypageService {
     //프로필 변경
     @PUT("mypage/change-profile")
     fun changeProfile(@Body request: ProfilechangeRequestDto): Call<ProfilechangeResponseDto>
+    //유저 닉네임 소개글 가져오기
+    @GET("/user/users")
+    fun getUsers(): Call<UserListResponse>
 }

@@ -1,57 +1,91 @@
 package com.example.daon
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.daon.community.token.*
+import com.example.daon.databinding.FragmentCalendarBinding
+import com.example.daon.mypage_api.ApiClient.retrofit
+import com.example.daon.mypage_api.token.PreferenceUtil
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [DiaryFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CalendarFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
+    private var _binding: FragmentCalendarBinding? = null
+    private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_diary, container, false)
-    }
+        val preferenceUtil = PreferenceUtil(requireContext())
+        _binding = FragmentCalendarBinding.inflate(inflater, container, false)
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DiaryFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DiaryFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        val signUpRequestDto = SignUpRequestDto(
+            user_name = "권혁찬",
+            email = "a7117944712@gmail.com",
+            password = "kwon123",
+            phone_number = "010-7113-9447",
+            birth_date = "990820",
+            gender = 3,
+            user_nickname = "chan2",
+            introduction = "안녕하세요. 잘부탁드려요.",
+            role = "user",
+            agree = "1"
+        )
+
+        val service = retrofit.create(DaonService::class.java)
+        val call = service.signUp(signUpRequestDto)
+
+        call.enqueue(object : Callback<SignUpResponseDto> {
+            override fun onResponse(call: Call<SignUpResponseDto>, response: Response<SignUpResponseDto>) {
+                if (response.isSuccessful) {
+                    val signUpResponse = response.body()
+                    // 회원가입 성공 시 토큰 발행 코드 구현
+                    val loginRequestDto = LoginRequestDto(
+                        email = signUpRequestDto.email,
+                        password = signUpRequestDto.password
+                    )
+                    val loginCall = service.login(loginRequestDto)
+                    loginCall.enqueue(object : Callback<LoginResponseDto> {
+                        override fun onResponse(call: Call<LoginResponseDto>, response: Response<LoginResponseDto>) {
+                            if (response.isSuccessful) {
+                                val loginResponse = response.body()
+                                val token = loginResponse?.result
+                                preferenceUtil.saveToken(token?:"")
+                                Log.d("토큰",token.toString())
+                            } else {
+                                // 로그인 실패 처리
+                            }
+                        }
+
+                        override fun onFailure(call: Call<LoginResponseDto>, t: Throwable) {
+                            // 통신 실패 처리
+                        }
+                    })
+                } else {
+                    // 서버 응답이 실패일 때 처리
+                    val errorBody = response.errorBody()?.string()
+                    // 에러 처리 코드 작성
                 }
             }
+
+            override fun onFailure(call: Call<SignUpResponseDto>, t: Throwable) {
+                // 통신 실패 시 처리
+            }
+        })
+
+        return binding.root
+    }
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

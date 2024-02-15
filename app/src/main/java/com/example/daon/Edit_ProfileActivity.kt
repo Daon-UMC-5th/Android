@@ -1,6 +1,5 @@
 package com.example.daon
 
-import com.example.daon.mypage_api.ApiClient.mypageService
 import android.Manifest
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
@@ -20,9 +19,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
+import com.example.daon.databinding.ActivityEditProfileBinding
+import com.example.daon.mypage_api.ApiClient
+import com.example.daon.mypage_api.MypageService
 import com.example.daon.mypage_api.ProfilechangeRequestDto
 import com.example.daon.mypage_api.ProfilechangeResponseDto
-import com.example.daon.databinding.ActivityEditProfileBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -87,7 +88,7 @@ class Edit_ProfileActivity : AppCompatActivity() {
 
             val profileChangeRequestDto = ProfilechangeRequestDto(nickname, intro)
 
-            val call = mypageService.changeProfile(profileChangeRequestDto)
+            val call = ApiClient.Service.changeProfile(profileChangeRequestDto)
             call.enqueue(object : Callback<ProfilechangeResponseDto> {
                 override fun onResponse(call: Call<ProfilechangeResponseDto>, response: Response<ProfilechangeResponseDto>) {
                     if (response.isSuccessful) {
@@ -100,7 +101,7 @@ class Edit_ProfileActivity : AppCompatActivity() {
                     } else {
                         // Handle error response
                         // For example, show an error message to the user
-                        Toast.makeText(this@Edit_ProfileActivity, "Failed to change profile", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@Edit_ProfileActivity, "서버 에러, 관리자에게 문의 바랍니다.", Toast.LENGTH_SHORT).show()
                     }
                 }
 
