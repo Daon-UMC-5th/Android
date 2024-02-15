@@ -5,27 +5,27 @@ import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.daon.community.ApiClient
 import com.example.daon.community.BoardService
 import com.example.daon.community.PostListCallResponseDto
-import com.example.daon.community.token.MyApplication
 import com.example.daon.community.token.PreferenceUtil
 import com.example.daon.databinding.FragmentYeeBinding
 import retrofit2.Call
 import retrofit2.Response
 
 class YeeFragment : Fragment() {
-
+    private lateinit var preferenceUtil: PreferenceUtil
     private var _binding: FragmentYeeBinding? = null
     private val binding get() = _binding!!
     private var isFavorite = false
+    private val pendingPosts: ArrayList<YeeData> = ArrayList()
 
     private lateinit var yeeRVAdapter: YeeRVAdapter
     private lateinit var recyclerView: RecyclerView
@@ -44,6 +44,15 @@ class YeeFragment : Fragment() {
         yeeRVAdapter = YeeRVAdapter(yeeitem)
         binding.yeeRv.adapter = yeeRVAdapter
 
+        preferenceUtil = PreferenceUtil(requireContext())
+        val isFavorite = preferenceUtil.getFavoriteState(R.id.item3)
+        val imageView = binding.favoriteIcon
+        Log.d("상태", isFavorite.toString())
+        if (isFavorite) {
+            imageView.setImageResource(R.drawable.favorite_on)
+        } else {
+            imageView.setImageResource(R.drawable.favorite_off)
+        }
         binding.fab01.setOnClickListener {
             activity?.let{
                 val intent = Intent(context, WriteActivity::class.java)
@@ -51,8 +60,8 @@ class YeeFragment : Fragment() {
                 startActivity(intent)
             }
         }
-        getWiangPosts()
-
+        //getWiangPosts()
+        processPendingPosts()
         return binding.root
     }
     private fun getWiangPosts() {
@@ -81,10 +90,21 @@ class YeeFragment : Fragment() {
             }
         })
     }
+    @SuppressLint("NotifyDataSetChanged")
+    private fun processPendingPosts() {
+        if (::yeeRVAdapter.isInitialized) {
+            for (post in pendingPosts) {
+                yeeitem.add(post)
+            }
+            yeeRVAdapter.notifyDataSetChanged()
+            pendingPosts.clear() // 처리된 데이터를 지움
+        }
+    }
 
     @SuppressLint("NotifyDataSetChanged")
     fun addNewPost(newPost: YeeData) {
         yeeitem.add(newPost)
+        yeeRVAdapter.notifyDataSetChanged()
         Log.d("list", newPost.toString())// 새로운 게시글을 리스트의 맨 위에 추가
 
     }
@@ -95,7 +115,7 @@ class YeeFragment : Fragment() {
     }
 
     // 별표시 아이콘 상태에 따라 이미지 업데이트
-    private fun updateFavoriteIcon() {
+        private fun updateFavoriteIcon() {
         val favoriteIcon = view?.findViewById<ImageView>(R.id.favorite_icon)
         if (isFavorite) {
             favoriteIcon?.setImageResource(R.drawable.favorite_on)

@@ -23,4 +23,12 @@ class PreferenceUtil(context: Context) {
     fun getToken(): String? {
         return getString("token", null.toString())
     }
+
+    fun saveFavoriteState(itemId: Int, isFavorite: Boolean) {
+        prefs.edit().putBoolean("favorite_$itemId", isFavorite).apply()
+    }
+
+    fun getFavoriteState(itemId: Int): Boolean {
+        return prefs.getBoolean("favorite_$itemId", false)
+    }
 }

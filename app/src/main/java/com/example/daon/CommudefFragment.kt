@@ -43,7 +43,20 @@ class CommudefFragment : Fragment() {
         binding.favorite.setOnClickListener {
             handleButtonClick(binding.favorite,favoritebtnSelected)
         }
-
+        val isButtonClicked = arguments?.getBoolean("buttonClicked", false) ?: false
+        val isButtonClicked2 = arguments?.getBoolean("buttonClicked2", false) ?: false
+        if (isButtonClicked) {
+            handleButtonClick(binding.total,totalbtnSelected)
+            childFragmentManager.beginTransaction()
+                .replace(R.id.post_frm2, CommuTotalFragment())
+                .commit()
+        }
+        if (isButtonClicked2) {
+            handleButtonClick(binding.notice,noticebtnSelected)
+            childFragmentManager.beginTransaction()
+                .replace(R.id.post_frm2, CommunoticeFragment())
+                .commit()
+        }
         return binding.root
     }
 

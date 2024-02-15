@@ -30,15 +30,17 @@ class CalendarFragment : Fragment() {
 
         val signUpRequestDto = SignUpRequestDto(
             user_name = "권혁찬",
-            email = "a7117944711@gmail.com",
-            password = "kwon123",
-            phone_number = "010-7115-9447",
+            email = "a711447211@gmail.com",
+            password = "kwon1231",
+            phone_number = "010-7135-9442",
             birth_date = "990820",
             gender = 3,
-            user_nickname = "chan1",
+            user_nickname = "chan4",
             introduction = "안녕하세요. 잘부탁드려요.",
             role = "user",
-            agree = "1"
+            agree = "1",
+            profile_url = R.drawable.calendar.toString(),
+            doctor_url = R.drawable.calendar.toString()
         )
 
         val service = retrofit.create(DaonService::class.java)

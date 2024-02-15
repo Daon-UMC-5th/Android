@@ -10,6 +10,7 @@
     import androidx.drawerlayout.widget.DrawerLayout
     import com.example.daon.community.ApiClient
     import com.example.daon.community.LikeResponse
+    import com.example.daon.community.token.PreferenceUtil
     import com.example.daon.databinding.FragmentCommunityBinding
     import com.google.android.material.bottomnavigation.BottomNavigationView
     import com.google.android.material.navigation.NavigationView
@@ -18,6 +19,7 @@
     import retrofit2.Response
 
     class CommunityFragment : Fragment() {
+        private lateinit var preferenceUtil: PreferenceUtil
         private var _binding: FragmentCommunityBinding? = null
         private val binding get() = _binding!!
 
@@ -69,7 +71,7 @@
                 .commit()
 
             setItemClickListener()
-
+            preferenceUtil = PreferenceUtil(requireContext())
             return binding.root
         }
         private fun setItemClickListener() {
@@ -80,7 +82,6 @@
                 actionView?.findViewById<ImageView>(R.id.menu_icon2)?.setOnClickListener {
                     favoriteStates[itemId] = !favoriteStates[itemId]!!
                     toggleFavoriteState(itemId)
-                    likeUpToServer("boardId",itemId)
                 }
             }
         }
@@ -88,34 +89,64 @@
         private fun handleDrawerMenuItemClick(menuItem: MenuItem) {
             // 드로어 메뉴의 아이템 클릭 처리
             when (menuItem.itemId) {
+                R.id.item1 -> {
+                    // 전체 아이템 클릭 시 처리
+                    val fragment = CommudefFragment().apply {
+                        arguments = Bundle().apply {
+                            putBoolean("buttonClicked", true) // 버튼이 눌려진 상태를 전달
+                        }
+                    }
+                    replaceFragment(fragment)
+                }
+                R.id.item2-> {
+                    // 공지 아이템 클릭 시 처리
+                    val fragment = CommudefFragment().apply {
+                        arguments = Bundle().apply {
+                            putBoolean("buttonClicked2", true) // 버튼이 눌려진 상태를 전달
+                        }
+                    }
+                    replaceFragment(fragment)
+                }
                 R.id.item3 -> {
                     // 위암 아이템 클릭 시 처리
                    val fragment = YeeFragment()
+                    val isFavorite = favoriteStates[R.id.item3] ?: false
+                    preferenceUtil.saveFavoriteState(R.id.item3, isFavorite)
                     replaceFragment(fragment)
                 }
                 R.id.item4 -> {
                     // 간암 아이템 클릭 시 처리
                     val fragment = GanFragment()
+                    val isFavorite = favoriteStates[R.id.item4] ?: false
+                    preferenceUtil.saveFavoriteState(R.id.item4, isFavorite)
                     replaceFragment(fragment)
                 }
                 R.id.item5 -> {
                     // 대장암 아이템 클릭 시 처리
                     val fragment = DaeFragment()
+                    val isFavorite = favoriteStates[R.id.item5] ?: false
+                    preferenceUtil.saveFavoriteState(R.id.item5, isFavorite)
                     replaceFragment(fragment)
                 }
                 R.id.item6 -> {
                     // 유방암 아이템 클릭 시 처리
                     val fragment = YuuFragment()
+                    val isFavorite = favoriteStates[R.id.item6] ?: false
+                    preferenceUtil.saveFavoriteState(R.id.item6, isFavorite)
                     replaceFragment(fragment)
                 }
                 R.id.item7 -> {
                     // 자궁경부암 아이템 클릭 시 처리
                     val fragment = JaeGFragment()
+                    val isFavorite = favoriteStates[R.id.item7] ?: false
+                    preferenceUtil.saveFavoriteState(R.id.item7, isFavorite)
                     replaceFragment(fragment)
                 }
                 R.id.item8 -> {
                     // 기타암 아이템 클릭 시 처리
                     val fragment = GitarFragment()
+                    val isFavorite = favoriteStates[R.id.item8] ?: false
+                    preferenceUtil.saveFavoriteState(R.id.item8, isFavorite)
                     replaceFragment(fragment)
                 }
 
@@ -129,29 +160,6 @@
                 .commit()
         }
 
-        private fun likeUpToServer(boardId: String, menuItemId: Int) {
-            // 서버에 POST 요청을 보냅니다.
-            val call = ApiClient.boardService.likeUp(boardId)
-            call.enqueue(object : Callback<LikeResponse> {
-                override fun onResponse(call: Call<LikeResponse>, response: Response<LikeResponse>) {
-                    if (response.isSuccessful) {
-                        // 서버에서 응답을 받았을 때 아이콘을 변경하고, 사용자에게 알립니다.
-                        toggleFavoriteState(menuItemId) // 별표시 아이콘 변경
-                        // 사용자에게 좋아요가 추가되었음을 알립니다.
-                        showToast("즐겨찾기에 추가되었습니다.")
-                    } else {
-                        // 서버에서 오류 응답을 받았을 때 처리합니다.
-                        Log.e("LikeUp", "서버 오류: ${response.code()}")
-                    }
-                }
-
-                override fun onFailure(call: Call<LikeResponse>, t: Throwable) {
-                    // 네트워크 오류 등 요청 실패 시 처리합니다.
-                    Log.e("LikeUp", "요청 실패: ${t.message}")
-                }
-            })
-        }
-
         private fun toggleFavoriteState(menuItemId: Int) {
             val menuItem = binding.drawerNavi.menu.findItem(menuItemId)
             val actionView = menuItem?.actionView
@@ -162,10 +170,6 @@
             } else {
                 favoriteIcon?.setImageResource(R.drawable.favorite_off) // 즐겨찾기가 되어 있지 않은 상태의 이미지
             }
-        }
-
-        private fun showToast(message: String) {
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
         }
 
         override fun onDestroyView() {

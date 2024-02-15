@@ -12,10 +12,11 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.daon.community.token.PreferenceUtil
 import com.example.daon.databinding.*
 
 class YuuFragment : Fragment() {
-
+    private lateinit var preferenceUtil: PreferenceUtil
     private var _binding: FragmentYuuBinding? = null
     private val binding get() = _binding!!
 
@@ -32,6 +33,16 @@ class YuuFragment : Fragment() {
 
         recyclerView = binding.yeeRv
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        preferenceUtil = PreferenceUtil(requireContext())
+        val isFavorite = preferenceUtil.getFavoriteState(R.id.item6)
+        val imageView = binding.favoriteIcon
+        Log.d("상태", isFavorite.toString())
+        if (isFavorite) {
+            imageView.setImageResource(R.drawable.favorite_on)
+        } else {
+            imageView.setImageResource(R.drawable.favorite_off)
+        }
 
         yeeitem = getYourDataList()
 
