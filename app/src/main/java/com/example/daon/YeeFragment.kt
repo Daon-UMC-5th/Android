@@ -8,10 +8,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.daon.Adapter.OnItemClickListener
+import com.example.daon.Adapter.YeeData
+import com.example.daon.Adapter.GanRVAdapter
+import com.example.daon.Adapter.YeeRVAdapter
 import com.example.daon.community.ApiClient
 import com.example.daon.community.BoardService
 import com.example.daon.community.PostListCallResponseDto
@@ -61,11 +64,10 @@ class YeeFragment : Fragment(), OnItemClickListener {
             }
         }
         getWiangPosts()
-        processPendingPosts()
+
         return binding.root
     }
     private fun getWiangPosts() {
-        Log.d("ghkrdls","asfgksd")
         val boardService = ApiClient.retrofit.create(BoardService::class.java)
         val call = boardService.getAllPosts("stomach", 0) // 위암 게시판의 종류를 나타내는 값입니다.
         call.enqueue(object : retrofit2.Callback<PostListCallResponseDto> {
@@ -90,10 +92,9 @@ class YeeFragment : Fragment(), OnItemClickListener {
                                 bookmarkCount = post.scrapecount.toString()
                             )
                         }
-                            yeeitem.addAll(postDataList)
-                            yeeRVAdapter.notifyDataSetChanged() // RecyclerView에 새로운 아이템이 추가됨을 알림
-                            recyclerView.scrollToPosition(0) // RecyclerView를 최상단으로 스크롤
-                            Log.d("ghkrdls", "asfgksd")
+                        yeeitem.addAll(postDataList)
+                        yeeRVAdapter.notifyDataSetChanged() // RecyclerView에 새로운 아이템이 추가됨을 알림
+                        recyclerView.scrollToPosition(0) // RecyclerView를 최상단으로 스크롤
                     }else {
                         Log.e(TAG, "Failed to get Wiang posts: ${postListCallResponseDto?.message}")
                     }
@@ -106,25 +107,21 @@ class YeeFragment : Fragment(), OnItemClickListener {
             }
         })
     }
-    @SuppressLint("NotifyDataSetChanged")
-    private fun processPendingPosts() {
-        if (::yeeRVAdapter.isInitialized) {
-            for (post in pendingPosts) {
-                yeeitem.add(post)
-            }
-            yeeRVAdapter.notifyDataSetChanged()
-            pendingPosts.clear() // 처리된 데이터를 지움
-        }
+    fun setAdapter(adapter: YeeRVAdapter) {
+        yeeRVAdapter = adapter
     }
-
     @SuppressLint("NotifyDataSetChanged")
     fun addNewPost(newPost: YeeData) {
-        yeeitem.add(newPost)
-        yeeRVAdapter.notifyDataSetChanged()
-        Log.d("list", newPost.toString())// 새로운 게시글을 리스트의 맨 위에 추가
+        if (::yeeRVAdapter.isInitialized) {
+            yeeitem.add(newPost)
+            yeeRVAdapter.notifyDataSetChanged()
+        } else {
+            // 어댑터가 초기화되지 않은 경우, pendingPosts에 추가
+            pendingPosts.add(newPost)
+        }
     }
     override fun onItemClick(boardId: Int) {
-        val intent = Intent(context, WriteActivity::class.java)
+        val intent = Intent(context, ReadwriteActivity::class.java)
         intent.putExtra("boardId", boardId)
         startActivity(intent)
     }

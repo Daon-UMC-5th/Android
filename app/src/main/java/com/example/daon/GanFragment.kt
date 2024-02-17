@@ -3,22 +3,23 @@ package com.example.daon
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.daon.Adapter.OnItemClickListener
+import com.example.daon.Adapter.YeeData
+import com.example.daon.Adapter.GanRVAdapter
+import com.example.daon.Adapter.YeeRVAdapter
 import com.example.daon.community.ApiClient
 import com.example.daon.community.BoardService
 import com.example.daon.community.PostListCallResponseDto
 import com.example.daon.community.token.PreferenceUtil
 import com.example.daon.databinding.FragmentGanBinding
-import com.example.daon.databinding.FragmentYeeBinding
 import retrofit2.Call
 import retrofit2.Response
 
@@ -27,9 +28,10 @@ class GanFragment : Fragment(), OnItemClickListener {
     private var _binding: FragmentGanBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var yeeRVAdapter: YeeRVAdapter
+    private lateinit var ganRVAdapter: GanRVAdapter
     private lateinit var recyclerView: RecyclerView
     private lateinit var yeeitem: ArrayList<YeeData>
+    private val pendingPosts: ArrayList<YeeData> = ArrayList()
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
@@ -43,8 +45,8 @@ class GanFragment : Fragment(), OnItemClickListener {
 
         yeeitem = getYourDataList()
 
-        yeeRVAdapter = YeeRVAdapter(yeeitem,this)
-        binding.yeeRv.adapter = yeeRVAdapter
+        ganRVAdapter = GanRVAdapter(yeeitem,this)
+        binding.yeeRv.adapter = ganRVAdapter
 
         preferenceUtil = PreferenceUtil(requireContext())
         val isFavorite = preferenceUtil.getFavoriteState(R.id.item4)
@@ -93,7 +95,7 @@ class GanFragment : Fragment(), OnItemClickListener {
                             )
                         }
                         yeeitem.addAll(postDataList)
-                        yeeRVAdapter.notifyDataSetChanged() // RecyclerView에 새로운 아이템이 추가됨을 알림
+                        ganRVAdapter.notifyDataSetChanged() // RecyclerView에 새로운 아이템이 추가됨을 알림
                         recyclerView.scrollToPosition(0) // RecyclerView를 최상단으로 스크롤
                         Log.d("ghkrdls", "asfgksd")
                     }else {
@@ -111,15 +113,21 @@ class GanFragment : Fragment(), OnItemClickListener {
     private fun getYourDataList(): ArrayList<YeeData> {
         return ArrayList()
     }
-
+    fun setAdapter2(adapter: GanRVAdapter) {
+        ganRVAdapter = adapter
+    }
     @SuppressLint("NotifyDataSetChanged")
     fun addNewPost(newPost: YeeData) {
-        yeeitem.add(newPost)
-        yeeRVAdapter.notifyDataSetChanged()
-        Log.d("list", newPost.toString())// 새로운 게시글을 리스트의 맨 위에 추가
+        if (::ganRVAdapter.isInitialized) {
+            yeeitem.add(newPost)
+            ganRVAdapter.notifyDataSetChanged()
+        } else {
+            // 어댑터가 초기화되지 않은 경우, pendingPosts에 추가
+            pendingPosts.add(newPost)
+        }
     }
     override fun onItemClick(boardId: Int) {
-        val intent = Intent(context, WriteActivity::class.java)
+        val intent = Intent(context, ReadwriteActivity::class.java)
         intent.putExtra("boardId", boardId)
         startActivity(intent)
     }

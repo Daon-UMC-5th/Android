@@ -8,11 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.daon.Adapter.TotalData
+import com.example.daon.Adapter.TotalRVAdapter
 import com.example.daon.community.ApiClient
 import com.example.daon.community.BoardService
 import com.example.daon.community.PostListCallResponseDto
 import com.example.daon.databinding.FragmentCommuTotalBinding
-import com.example.daon.databinding.FragmentCommudefBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

@@ -1,4 +1,4 @@
-package com.example.daon
+package com.example.daon.Adapter
 
 class TotalData (
     val postname: String,

@@ -8,7 +8,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
@@ -20,26 +19,25 @@ import android.Manifest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
+import com.example.daon.Adapter.GanData
+import com.example.daon.Adapter.YeeData
+import com.example.daon.Adapter.GanRVAdapter
+import com.example.daon.Adapter.YeeRVAdapter
 import com.example.daon.community.ApiClient
 import com.example.daon.community.PostWriteRequestDto
 import com.example.daon.community.PostWriteResponseDto
-import com.example.daon.community.token.MyApplication
 import com.example.daon.community.token.PreferenceUtil
 import com.example.daon.community.token.UploadResponse
 import com.example.daon.databinding.ActivityWriteBinding
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.File
+import java.io.ByteArrayOutputStream
 import java.io.IOException
 
 class WriteActivity : AppCompatActivity() {
@@ -54,6 +52,7 @@ class WriteActivity : AppCompatActivity() {
     private lateinit var etcFragment: GitarFragment
     private lateinit var imageUrl: String
     private lateinit var binding: ActivityWriteBinding
+    private var yeeitem: ArrayList<YeeData> = ArrayList()
 
     private val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -76,6 +75,7 @@ class WriteActivity : AppCompatActivity() {
                 binding.imageView.visibility = View.VISIBLE
                 binding.imageView.setImageBitmap(selectedBitmap)
                 moveEditTextDown()
+                uploadImageToServer(selectedBitmap)
             } catch (e: IOException) {
                 e.printStackTrace()
             }
@@ -88,6 +88,24 @@ class WriteActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         preferenceUtil = PreferenceUtil(this)
+
+        liverFragment = GanFragment()
+        stomachFragment = YeeFragment()
+        intestineFragment = DaeFragment()
+        breastFragment = YuuFragment()
+        wombFragment = JaeGFragment()
+        etcFragment = GitarFragment()
+
+        val fragment = supportFragmentManager.findFragmentById(R.id.yee_Rv) as? YeeFragment
+        val fragment2 = supportFragmentManager.findFragmentById(R.id.yee_Rv) as? GanFragment
+        val adapter = fragment?.let { YeeRVAdapter(yeeitem, it) }
+        val adapter2 = fragment?.let { GanRVAdapter(yeeitem,it) }
+        if (adapter != null) {
+            fragment.setAdapter(adapter)
+        }
+        if (adapter2 != null) {
+            fragment2?.setAdapter2(adapter2)
+        }
 
         val boardType = intent.getStringExtra("boardType")?:""
         stomachFragment = YeeFragment()
@@ -124,6 +142,10 @@ class WriteActivity : AppCompatActivity() {
             val detail = binding.detailWr.text.toString()
             if (::imageUrl.isInitialized) {
                 writePost(boardType, title, detail, imageUrl)
+                finish()
+            }
+            else {
+                writePost(boardType, title, detail, "")
                 finish()
             }
         }
@@ -216,23 +238,19 @@ class WriteActivity : AppCompatActivity() {
         private const val REQUEST_IMAGE_CAPTURE = 1
         private const val CAMERA_PERMISSION_REQUEST_CODE = 100
     }
-    private fun writePostWithImage(boardType: String, title: String, detail: String, imageUri: Uri) {
-        // 이미지를 파일로 변환
-        val file = File(imageUri.path)
+    private fun uploadImageToServer(bitmap: Bitmap) {
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+        val byteArray = stream.toByteArray()
+        val requestFile = byteArray.toRequestBody("image/*".toMediaTypeOrNull())
+        val imagePart = MultipartBody.Part.createFormData("file", "image.jpg", requestFile)
 
-        // 이미지를 RequestBody로 변환
-        val requestFile = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
-        val imagePart = MultipartBody.Part.createFormData("file", file.name, requestFile)
-
-        // 이미지를 업로드하고 응답을 받음
         ApiClient.boardService.uploadBoardImage(imagePart).enqueue(object : Callback<UploadResponse> {
             override fun onResponse(call: Call<UploadResponse>, response: Response<UploadResponse>) {
                 if (response.isSuccessful) {
                     val uploadResponse = response.body()
                     if (uploadResponse != null && uploadResponse.isSuccess) {
-                        // 이미지 업로드 성공 시 게시글 작성 진행
                         imageUrl = uploadResponse.result.imageUrl
-                        writePost(boardType, title, detail, imageUrl)
                     } else {
                         Log.e(TAG, "Failed to upload image: ${uploadResponse?.message}")
                     }
@@ -260,16 +278,11 @@ class WriteActivity : AppCompatActivity() {
                     if (postWriteResponse != null && postWriteResponse.isSuccess) {
                         // 게시글 작성 성공
                         val newPost = postWriteResponse.result
-                        val currentTimeMillis = System.currentTimeMillis()
-                        val uploadTimeMillis = newPost.updated_at.toLong()
-                        val timeDifferenceMillis = currentTimeMillis - uploadTimeMillis
-                        val timeDifferenceMinutes = timeDifferenceMillis / (1000 * 60)
                         val newPostData  = YeeData(
-
                             nickname = preferenceUtil.getUserNickname().toString(), // 닉네임 설정 필요
                             detail = detail,
                             title = title,
-                            timeAgo = "$timeDifferenceMinutes 분 전",
+                            timeAgo = "10 분전",
                             profileImage = newPost.image_url, // 프로필 이미지 설정 필요
                             favorIcon = R.drawable.favor1,  // 좋아요 아이콘 설정 필요
                             favorCount = newPost.likecount.toString(),

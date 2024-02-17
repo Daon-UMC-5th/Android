@@ -30,12 +30,12 @@ class CalendarFragment : Fragment() {
 
         val signUpRequestDto = SignUpRequestDto(
             user_name = "권혁찬",
-            email = "a7114472211@gmail.com",
+            email = "a71144722211@gmail.com",
             password = "kwon1231",
-            phone_number = "010-4135-9442",
+            phone_number = "010-3135-9442",
             birth_date = "990820",
             gender = 3,
-            user_nickname = "chan41",
+            user_nickname = "chan7",
             introduction = "안녕하세요. 잘부탁드려요.",
             role = "user",
             agree = "1",
