@@ -30,12 +30,12 @@ class CalendarFragment : Fragment() {
 
         val signUpRequestDto = SignUpRequestDto(
             user_name = "권혁찬",
-            email = "a711447211@gmail.com",
+            email = "a7114472211@gmail.com",
             password = "kwon1231",
-            phone_number = "010-7135-9442",
+            phone_number = "010-4135-9442",
             birth_date = "990820",
             gender = 3,
-            user_nickname = "chan4",
+            user_nickname = "chan41",
             introduction = "안녕하세요. 잘부탁드려요.",
             role = "user",
             agree = "1",
@@ -45,6 +45,7 @@ class CalendarFragment : Fragment() {
 
         val service = retrofit.create(DaonService::class.java)
         val call = service.signUp(signUpRequestDto)
+        val call2 = service.getAllUsers()
 
         call.enqueue(object : Callback<SignUpResponseDto> {
             override fun onResponse(call: Call<SignUpResponseDto>, response: Response<SignUpResponseDto>) {
@@ -62,7 +63,24 @@ class CalendarFragment : Fragment() {
                                 val loginResponse = response.body()
                                 val token = loginResponse?.result
                                 preferenceUtil.saveToken(token?:"")
-                                Log.d("토큰",token.toString())
+
+                                val userCall = service.getAllUsers()
+                                userCall.enqueue(object : Callback<UsersResponseDto> {
+                                    override fun onResponse(call: Call<UsersResponseDto>, response: Response<UsersResponseDto>) {
+                                        if (response.isSuccessful) {
+                                            val userResponse = response.body()
+                                            val nickname = userResponse?.result?.get(0)?.user_nickname
+                                            preferenceUtil.saveUserNickname(nickname ?: "")
+                                            Log.d("닉네임", nickname.toString())
+                                        } else {
+                                            // 사용자 정보 조회 실패 처리
+                                        }
+                                    }
+
+                                    override fun onFailure(call: Call<UsersResponseDto>, t: Throwable) {
+                                        // 통신 실패 처리
+                                    }
+                                })
                             } else {
                                 // 로그인 실패 처리
                             }
@@ -73,17 +91,14 @@ class CalendarFragment : Fragment() {
                         }
                     })
                 } else {
-                    // 서버 응답이 실패일 때 처리
-                    val errorBody = response.errorBody()?.string()
-                    // 에러 처리 코드 작성
+                    // 회원가입 실패 처리
                 }
             }
 
             override fun onFailure(call: Call<SignUpResponseDto>, t: Throwable) {
-                // 통신 실패 시 처리
+                // 통신 실패 처리
             }
         })
-
         return binding.root
     }
     override fun onDestroyView() {

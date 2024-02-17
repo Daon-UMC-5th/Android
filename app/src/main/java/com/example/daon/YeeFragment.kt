@@ -20,7 +20,7 @@ import com.example.daon.databinding.FragmentYeeBinding
 import retrofit2.Call
 import retrofit2.Response
 
-class YeeFragment : Fragment() {
+class YeeFragment : Fragment(), OnItemClickListener {
     private lateinit var preferenceUtil: PreferenceUtil
     private var _binding: FragmentYeeBinding? = null
     private val binding get() = _binding!!
@@ -41,7 +41,7 @@ class YeeFragment : Fragment() {
         recyclerView = binding.yeeRv
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        yeeRVAdapter = YeeRVAdapter(yeeitem)
+        yeeRVAdapter = YeeRVAdapter(yeeitem,this)
         binding.yeeRv.adapter = yeeRVAdapter
 
         preferenceUtil = PreferenceUtil(requireContext())
@@ -60,7 +60,7 @@ class YeeFragment : Fragment() {
                 startActivity(intent)
             }
         }
-        //getWiangPosts()
+        getWiangPosts()
         processPendingPosts()
         return binding.root
     }
@@ -69,15 +69,31 @@ class YeeFragment : Fragment() {
         val boardService = ApiClient.retrofit.create(BoardService::class.java)
         val call = boardService.getAllPosts("stomach", 0) // 위암 게시판의 종류를 나타내는 값입니다.
         call.enqueue(object : retrofit2.Callback<PostListCallResponseDto> {
-            @SuppressLint("NotifyDataSetChanged")
+            @SuppressLint("NotifyDataSetChanged", "SuspiciousIndentation")
             override fun onResponse(call: Call<PostListCallResponseDto>, response: Response<PostListCallResponseDto>) {
                 if (response.isSuccessful) {
                     val postListCallResponseDto = response.body()
                     if (postListCallResponseDto != null && postListCallResponseDto.isSuccess) {
                         val post = postListCallResponseDto.result
-                        yeeRVAdapter.notifyDataSetChanged() // RecyclerView에 새로운 아이템이 추가됨을 알림
-                        recyclerView.scrollToPosition(0) // RecyclerView를 최상단으로 스크롤
-                        Log.d("ghkrdls","asfgksd")
+                        val postDataList: List<YeeData> = post.map { post ->
+                            YeeData(
+                                nickname = preferenceUtil.getUserNickname().toString(),
+                                detail = post.content,
+                                title = post.title,
+                                timeAgo = post.created_at,
+                                profileImage = post.image_url,
+                                favorIcon = R.drawable.favor1,
+                                favorCount = post.likecount.toString(),
+                                commentIcon = R.drawable.comment,
+                                commentCount = post.commentcount.toString(),
+                                bookmarkIcon = R.drawable.bookmark,
+                                bookmarkCount = post.scrapecount.toString()
+                            )
+                        }
+                            yeeitem.addAll(postDataList)
+                            yeeRVAdapter.notifyDataSetChanged() // RecyclerView에 새로운 아이템이 추가됨을 알림
+                            recyclerView.scrollToPosition(0) // RecyclerView를 최상단으로 스크롤
+                            Log.d("ghkrdls", "asfgksd")
                     }else {
                         Log.e(TAG, "Failed to get Wiang posts: ${postListCallResponseDto?.message}")
                     }
@@ -106,21 +122,10 @@ class YeeFragment : Fragment() {
         yeeitem.add(newPost)
         yeeRVAdapter.notifyDataSetChanged()
         Log.d("list", newPost.toString())// 새로운 게시글을 리스트의 맨 위에 추가
-
     }
-
-    fun toggleFavoriteState() {
-        isFavorite = !isFavorite
-        updateFavoriteIcon()
-    }
-
-    // 별표시 아이콘 상태에 따라 이미지 업데이트
-        private fun updateFavoriteIcon() {
-        val favoriteIcon = view?.findViewById<ImageView>(R.id.favorite_icon)
-        if (isFavorite) {
-            favoriteIcon?.setImageResource(R.drawable.favorite_on)
-        } else {
-            favoriteIcon?.setImageResource(R.drawable.favorite_off)
-        }
+    override fun onItemClick(boardId: Int) {
+        val intent = Intent(context, WriteActivity::class.java)
+        intent.putExtra("boardId", boardId)
+        startActivity(intent)
     }
 }

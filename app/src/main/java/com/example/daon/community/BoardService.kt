@@ -1,5 +1,7 @@
 package com.example.daon.community
 
+import com.example.daon.community.token.UploadResponse
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -59,4 +61,7 @@ interface BoardService {
     // 댓글 좋아요 삭제
     @DELETE("/board/comment/like-down/{commentId}")
     fun likeDownComment(@Path("commentId") commentId: String): Call<LikeResponse>
+    @Multipart
+    @POST("/upload/board")
+    fun uploadBoardImage(@Part file: MultipartBody.Part): Call<UploadResponse>
 }

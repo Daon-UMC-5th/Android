@@ -4,10 +4,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.daon.community.token.PreferenceUtil
 import com.example.daon.databinding.PostItemBinding
-
-class YeeRVAdapter(private val dataList: ArrayList<YeeData>) : RecyclerView.Adapter<YeeRVAdapter.ViewHolder>() {
-
+interface OnItemClickListener {
+   fun onItemClick(boardId: Int)
+}
+class YeeRVAdapter(private val dataList: ArrayList<YeeData>, private val listener: OnItemClickListener) : RecyclerView.Adapter<YeeRVAdapter.ViewHolder>() {
+    private lateinit var preferenceUtil: PreferenceUtil
     inner class ViewHolder(private val binding: PostItemBinding) : RecyclerView.ViewHolder(binding.root){
         val nickname_ = binding.nickname
         val title_ = binding.title
@@ -27,6 +30,8 @@ class YeeRVAdapter(private val dataList: ArrayList<YeeData>) : RecyclerView.Adap
     }
 
     override fun onBindViewHolder(holder: YeeRVAdapter.ViewHolder, position: Int) {
+        val boardId = preferenceUtil.getPostId()
+
         holder.nickname_.text = dataList[position].nickname
         val titleText = dataList[position].title
         if (titleText.length >= 15) {
@@ -50,6 +55,9 @@ class YeeRVAdapter(private val dataList: ArrayList<YeeData>) : RecyclerView.Adap
         holder.commentCount_.text = dataList[position].commentCount
         holder.bookmarkIcon_.setImageResource(R.drawable.calendar)
         holder.bookmarkCount_.text = dataList[position].bookmarkCount
+        holder.itemView.setOnClickListener {
+           // listener.onItemClick(boardId)
+        }
     }
 
     override fun getItemCount(): Int {

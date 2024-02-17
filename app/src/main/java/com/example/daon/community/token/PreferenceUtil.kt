@@ -2,13 +2,12 @@ package com.example.daon.community.token
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 
 class PreferenceUtil(context: Context) {
     private val prefs: SharedPreferences =
         context.getSharedPreferences("prefs_name", Context.MODE_PRIVATE)
 
-    fun getString(key: String, defValue: String): String {
+    fun getString(key: String, defValue: String?): String {
         return prefs.getString(key, defValue).toString()
     }
 
@@ -30,5 +29,23 @@ class PreferenceUtil(context: Context) {
 
     fun getFavoriteState(itemId: Int): Boolean {
         return prefs.getBoolean("favorite_$itemId", false)
+    }
+    fun saveUserNickname(userNickname: String) {
+        setString("user_nickname", userNickname)
+    }
+    fun getUserNickname(): String? {
+        return getString("user_nickname", null)
+    }
+    fun savePostId(postId: Int) {
+       prefs.edit().putInt("postId",postId).apply()
+    }
+    fun getPostId(): Int {
+        return prefs.getInt("postId", 1)
+    }
+    fun saveBoardType(boardType: String) {
+        setString("boardType", boardType)
+    }
+    fun getBoardType(): String? {
+        return getString("boardType", null)
     }
 }

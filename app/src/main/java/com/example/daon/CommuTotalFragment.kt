@@ -46,22 +46,24 @@ class CommuTotalFragment : Fragment() {
                     val postListCallResponseDto = response.body()
                     if (postListCallResponseDto != null && postListCallResponseDto.isSuccess) {
                         // 성공적으로 응답을 받았을 때 처리할 작업 수행
-                        val post = postListCallResponseDto.result
-                        val yeeData2 = TotalData(
-                            postname = post.board_type+"게시판",
-                            nickname = "asd", // 닉네임 설정 필요
-                            title = post.title,
-                            detail = post.content,
-                            timeAgo = post.created_at,
-                            profileImage = post.image_url, // 프로필 이미지 설정 필요
-                            favorIcon = R.drawable.favor1, // 좋아요 아이콘 설정 필요
-                            favorCount = post.likecount.toString(),
-                            commentIcon = R.drawable.comment, // 댓글 아이콘 설정 필요
-                            commentCount = post.commentcount.toString(),
-                            bookmarkIcon = R.drawable.bookmark, // 북마크 아이콘 설정 필요
-                            bookmarkCount = post.scrapecount.toString()
-                        )
-                        totalitem.add(yeeData2)
+                        val postList = postListCallResponseDto.result
+                        val postDataList: List<TotalData> = postList.map { post ->
+                            TotalData(
+                                postname = post.board_type + "게시판",
+                                nickname = "asd", // 닉네임 설정 필요
+                                title = post.title,
+                                detail = post.content,
+                                timeAgo = post.created_at,
+                                profileImage = post.image_url, // 프로필 이미지 설정 필요
+                                favorIcon = R.drawable.favor1, // 좋아요 아이콘 설정 필요
+                                favorCount = post.likecount.toString(),
+                                commentIcon = R.drawable.comment, // 댓글 아이콘 설정 필요
+                                commentCount = post.commentcount.toString(),
+                                bookmarkIcon = R.drawable.bookmark, // 북마크 아이콘 설정 필요
+                                bookmarkCount = post.scrapecount.toString()
+                            )
+                        }
+                        totalitem.addAll(postDataList)
                         totalRVAdapter.notifyDataSetChanged()
 
                     } else {

@@ -7,5 +7,5 @@ data class PostListCallResponseDto(
     @SerializedName("isSuccess") val isSuccess: Boolean,
     @SerializedName("code") val code: String,
     @SerializedName("message") val message: String,
-    @SerializedName("result") val result: PostListCall
+    @SerializedName("result") val result: List<PostListCall>
 )
