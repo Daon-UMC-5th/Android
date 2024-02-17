@@ -68,6 +68,18 @@ class MypageFragment : Fragment() {
                 startActivity(intent)
             }
         }
+        binding.commentCount.setOnClickListener {
+            activity?.let{
+                val intent = Intent(context, Comment_ViewActivity2::class.java)
+                startActivity(intent)
+            }
+        }
+        binding.scrapCount.setOnClickListener {
+            activity?.let{
+                val intent = Intent(context, Scrap_ViewActivity::class.java)
+                startActivity(intent)
+            }
+        }
         fetchUserInfoFromServer()
 
         return binding.root
@@ -91,10 +103,6 @@ class MypageFragment : Fragment() {
                     binding.profileName.text =  users?.userNickname
                     binding.profileIntro.text =  users?.introduction
                 }
-                val userListResponse = response.body()
-                val users = userListResponse?.result
-                binding.profileName.text =  users?.userNickname
-                binding.profileIntro.text =  users?.introduction
             }
 
             override fun onFailure(call: Call<UserListResponse>, t: Throwable) {
