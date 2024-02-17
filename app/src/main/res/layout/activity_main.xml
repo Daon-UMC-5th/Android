@@ -17,8 +17,8 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/main_frm"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/main_toolBar"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toTopOf="@id/main_bnv"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

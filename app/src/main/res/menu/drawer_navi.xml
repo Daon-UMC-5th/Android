@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group
+        android:id="@+id/ac123"
+        android:checkableBehavior="single">
+        <item android:id = "@+id/item1"
+            android:icon = "@drawable/total"
+            android:title = "전체"
+            />
+        <item android:id = "@+id/item2"
+            android:icon = "@drawable/not"
+            android:title = "공지"
+            />
+    </group>
+    <item android:id = "@+id/item3"
+        android:icon="@drawable/wee"
+        android:title = "위암"
+        app:actionLayout = "@layout/menu_item_layout"
+        />
+    <item android:id = "@+id/item4"
+        android:icon = "@drawable/gan"
+        android:title = "간암"
+        app:actionLayout = "@layout/menu_item_layout"
+        />
+    <item android:id = "@+id/item5"
+        android:icon = "@drawable/dae"
+        android:title = "대장암"
+        app:actionLayout = "@layout/menu_item_layout"
+        />
+    <item android:id = "@+id/item6"
+        android:icon = "@drawable/yuu"
+        android:title = "유방암"
+        app:actionLayout = "@layout/menu_item_layout"
+        />
+    <item android:id = "@+id/item7"
+        android:icon = "@drawable/ja"
+        android:title = "자궁경부암"
+        app:actionLayout = "@layout/menu_item_layout"
+        />
+    <item android:id = "@+id/item8"
+        android:icon = "@drawable/gita"
+        android:title = "기타암"
+        app:actionLayout = "@layout/menu_item_layout"
+        />
+</menu>
