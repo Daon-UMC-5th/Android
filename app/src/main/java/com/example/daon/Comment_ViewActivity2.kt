@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.daon.databinding.ActivityCommentView2Binding
+import com.example.mypage2.Post
 
 class Comment_ViewActivity2 : AppCompatActivity() {
     private lateinit var binding: ActivityCommentView2Binding
