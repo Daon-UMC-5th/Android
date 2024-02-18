@@ -7,10 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import com.example.daon.data.community.ApiClient
-import com.example.daon.data.community.BoardService
-import com.example.daon.data.community.PostOneListResponseDto
-import com.example.daon.data.community.PostWriteResponseDto
+import com.example.daon.data.community.*
 import com.example.daon.data.community.token.PreferenceUtil
 import com.example.daon.databinding.ActivityReadwriteBinding
 import com.example.daon.databinding.ActivityWriteBinding
@@ -21,6 +18,7 @@ import retrofit2.Response
 class ReadwriteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityReadwriteBinding
     private lateinit var preferenceUtil: PreferenceUtil
+    private var isLiked = false
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,39 +36,25 @@ class ReadwriteActivity : AppCompatActivity() {
             val intent = Intent(this,CommentActivity::class.java)
             startActivity(intent)
         }
+        binding.favorBackground.setOnClickListener {
+            if (isLiked) {
+                // 이미 좋아요를 누른 상태이면 좋아요 취소 API 호출
+                likeDown()
+            } else {
+                // 좋아요를 누른 상태가 아니면 좋아요 API 호출
+                likeUp()
+            }
+        }
 
         binding.writeMore.setOnClickListener {
             // 수정 및 삭제 버튼 보이기
             binding.selectWriteCardView.visibility = View.VISIBLE
         }
         binding.editButton.setOnClickListener {
-
+        //수정
         }
         binding.deleteButton.setOnClickListener {
-            val boardService = ApiClient.retrofit.create(BoardService::class.java)
-            val call = boardService.deletePost(boardId)
-            call.enqueue(object : Callback<PostWriteResponseDto> {
-                override fun onResponse(call: Call<PostWriteResponseDto>, response: Response<PostWriteResponseDto>) {
-                    if (response.isSuccessful) {
-                        val postWriteResponse = response.body()
-                        if (postWriteResponse != null && postWriteResponse.isSuccess) {
-                            val bundle = Bundle()
-                            bundle.putInt("deleteboardId", postWriteResponse.result.board_id)
-                            bundle.putString("deleteboardType", postWriteResponse.result.board_type)
-                            finish() // 현재 액티비티를 종료하여 이전 화면으로 돌아감
-                        } else {
-                            Log.e(TAG, "Failed to delete post: ${postWriteResponse?.message}")
-                            // 삭제 실패 메시지를 표시하거나 다른 처리를 수행할 수 있습니다.
-                        }
-                    } else {
-                        Log.e(TAG, "Failed to delete post: ${response.code()}")
-                    }
-                }
-
-                override fun onFailure(call: Call<PostWriteResponseDto>, t: Throwable) {
-                    Log.e(TAG, "Failed to delete post: ${t.message}")
-                }
-            })
+            deletePost()
         }
         binding.root.setOnTouchListener { _, _ ->
             // 수정 및 삭제 버튼 숨기기
@@ -78,7 +62,36 @@ class ReadwriteActivity : AppCompatActivity() {
             // 이벤트 소비 여부를 반환합니다.
             true
         }
+        getPostDetails(boardId)
+        getLikesForPost(boardId)
+    }
 
+    private fun getLikesForPost(boardId: Int) {
+        val boardService = ApiClient.retrofit.create(BoardService::class.java)
+        val call = boardService.getLikesForPost(boardId)
+        call.enqueue(object : Callback<LikeResponse> {
+            @SuppressLint("SetTextI18n")
+            override fun onResponse(call: Call<LikeResponse>, response: Response<LikeResponse>) {
+                if (response.isSuccessful) {
+                    val likeResponse = response.body()
+                    if (likeResponse != null && likeResponse.isSuccess) {
+                        val likeCount = likeResponse.result.count
+                        binding.favorCount.text = "$likeCount"
+                    } else {
+                        Log.e(TAG, "Failed to get likes for post: ${likeResponse?.message}")
+                    }
+                } else {
+                    Log.e(TAG, "Failed to get likes for post: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<LikeResponse>, t: Throwable) {
+                Log.e(TAG, "Failed to get likes for post: ${t.message}")
+            }
+        })
+    }
+
+    private fun getPostDetails(boardId: Int) {
         val boardService = ApiClient.retrofit.create(BoardService::class.java)
         val call = boardService.getPost(boardId)
         call.enqueue(object : Callback<PostOneListResponseDto> {
@@ -96,6 +109,7 @@ class ReadwriteActivity : AppCompatActivity() {
                         binding.writeDetail.text = boardDetails.content
                         binding.writeNickname.text = preferenceUtil.getUserNickname().toString()
                         binding.writeTime.text = dateString
+                        binding.favorCount.text =boardDetails.likecount.toString()
                     } else {
                         Log.e(TAG, "Failed to get board details: ${boardDetailsResponse?.message}")
                     }
@@ -108,5 +122,89 @@ class ReadwriteActivity : AppCompatActivity() {
                 Log.e(TAG, "Failed to fetch board details: ${t.message}")
             }
         })
+    }
+    private fun likeUp() {
+        val boardId = intent.getIntExtra("boardId", -1)
+        val boardService = ApiClient.retrofit.create(BoardService::class.java)
+        val call = boardService.likeUp(boardId)
+        call.enqueue(object : Callback<LikeResponse> {
+            override fun onResponse(call: Call<LikeResponse>, response: Response<LikeResponse>) {
+                if (response.isSuccessful) {
+                    // 좋아요 성공 시 좋아요 수를 업데이트하고 버튼의 상태를 변경
+                    val likeResponse = response.body()
+                    if (likeResponse != null && likeResponse.isSuccess) {
+                        updateLikeCount(1)
+                    } else {
+                        Log.e(TAG, "Failed to like post: ${likeResponse?.message}")
+                    }
+                } else {
+                    Log.e(TAG, "Failed to like post: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<LikeResponse>, t: Throwable) {
+                Log.e(TAG, "Failed to like post: ${t.message}")
+            }
+        })
+    }
+    private fun likeDown() {
+        val boardId = intent.getIntExtra("boardId", -1)
+        val boardService = ApiClient.retrofit.create(BoardService::class.java)
+        val call = boardService.likeDown(boardId)
+        call.enqueue(object : Callback<LikeResponse> {
+            override fun onResponse(call: Call<LikeResponse>, response: Response<LikeResponse>) {
+                if (response.isSuccessful) {
+                    // 좋아요 취소 성공 시 좋아요 수를 업데이트하고 버튼의 상태를 변경
+                    val likeResponse = response.body()
+                    if (likeResponse != null && likeResponse.isSuccess) {
+                        updateLikeCount(-1)
+                    } else {
+                        Log.e(TAG, "Failed to dislike post: ${likeResponse?.message}")
+                    }
+                } else {
+                    Log.e(TAG, "Failed to dislike post: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<LikeResponse>, t: Throwable) {
+                Log.e(TAG, "Failed to dislike post: ${t.message}")
+            }
+        })
+    }
+    private  fun deletePost() {
+        val boardId = intent.getIntExtra("boardId", -1)
+        val boardService = ApiClient.retrofit.create(BoardService::class.java)
+        val call = boardService.deletePost(boardId)
+        call.enqueue(object : Callback<PostWriteResponseDto> {
+            override fun onResponse(
+                call: Call<PostWriteResponseDto>,
+                response: Response<PostWriteResponseDto>
+            ) {
+                if (response.isSuccessful) {
+                    val postWriteResponse = response.body()
+                    if (postWriteResponse != null && postWriteResponse.isSuccess) {
+                        val bundle = Bundle()
+                        bundle.putInt("deleteboardId", postWriteResponse.result.board_id)
+                        bundle.putString("deleteboardType", postWriteResponse.result.board_type)
+                        finish() // 현재 액티비티를 종료하여 이전 화면으로 돌아감
+                    } else {
+                        Log.e(TAG, "Failed to delete post: ${postWriteResponse?.message}")
+                        // 삭제 실패 메시지를 표시하거나 다른 처리를 수행할 수 있습니다.
+                    }
+                } else {
+                    Log.e(TAG, "Failed to delete post: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<PostWriteResponseDto>, t: Throwable) {
+                Log.e(TAG, "Failed to delete post: ${t.message}")
+            }
+        })
+    }
+    @SuppressLint("SetTextI18n")
+    private fun updateLikeCount(change: Int) {
+        val currentLikeCount = binding.favorCount.text.toString().toInt()
+        binding.favorCount.text =(currentLikeCount + change).toString()
+        isLiked = !isLiked // 버튼의 상태 변경
     }
 }
