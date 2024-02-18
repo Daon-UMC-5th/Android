@@ -1,5 +1,6 @@
 package com.example.daon
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -45,6 +46,8 @@ class JoinFragment : Fragment() {
     private lateinit var certifyNumButton: ImageView
     private lateinit var certifyNumImageView: ImageView
     private lateinit var certifyNotImageView: ImageView
+    private lateinit var closeBtn: ImageView
+    private lateinit var backBtn: ImageView
     private var toast: Toast? = null
 
     override fun onCreateView(
@@ -69,12 +72,29 @@ class JoinFragment : Fragment() {
         certifyNumButton = view.findViewById(R.id.join_certify_num_btn)
         certifyNumImageView = view.findViewById(R.id.certify_num_text)
         certifyNotImageView = view.findViewById(R.id.certify_num_not_equal_text)
+        closeBtn = view.findViewById(R.id.join_close_btn)
+        backBtn = view.findViewById(R.id.join_back_btn)
         nextButton.isEnabled = false
 
         fun showToast(msg: String) {
             toast?.cancel()
             toast = Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT)
             toast?.show()
+        }
+
+        closeBtn.setOnClickListener {
+            val intent = Intent(context, StartActivity::class.java)
+            startActivity(intent)
+
+            requireActivity().finish()
+        }
+
+        backBtn.setOnClickListener {
+            val membershipFragment = MembershipFragment()
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_join, membershipFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
         }
 
     emailEditText.addTextChangedListener(object : TextWatcher {

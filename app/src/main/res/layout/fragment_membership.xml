@@ -45,17 +45,17 @@
         android:id="@+id/membership_basic_btn"
         android:layout_width="328dp"
         android:layout_height="64dp"
-        android:src="@drawable/basic_mem"
         android:layout_marginTop="84dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/basic_mem"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text"
-        />
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text" />
 
     <ImageView
         android:id="@+id/membership_medical_btn"
         android:layout_width="328dp"
-        android:layout_height="64dp"
+        android:layout_height="68dp"
         android:src="@drawable/medical_mem"
         android:layout_marginTop="12dp"
         app:layout_constraintStart_toStartOf="parent"

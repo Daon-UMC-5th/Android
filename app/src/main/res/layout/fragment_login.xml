@@ -135,7 +135,7 @@
         android:id="@+id/login_kakao_btn"
         android:layout_width="328dp"
         android:layout_height="52dp"
-        android:src="@drawable/google_btn"
+        android:src="@drawable/kakao_btn"
         android:layout_marginTop="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -1,5 +1,6 @@
 package com.example.daon
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.Editable
@@ -48,6 +49,8 @@ class SelfCertifyFragment : Fragment() {
     private lateinit var numCheckButton: ImageView
     private lateinit var numCheckYet: ImageView
     private lateinit var numCheckNot: ImageView
+    private lateinit var closeBtn: ImageView
+    private lateinit var backBtn: ImageView
     private var toast: Toast? = null
 
     private var isTimerRunning = false
@@ -72,6 +75,8 @@ class SelfCertifyFragment : Fragment() {
         numCheckButton = view.findViewById(R.id.self_num_check_btn)
         numCheckYet = view.findViewById(R.id.self_num_yet)
         numCheckNot = view.findViewById(R.id.num_check_not)
+        closeBtn = view.findViewById(R.id.self_close_btn)
+        backBtn = view.findViewById(R.id.self_back_btn)
 
         fun showToast(msg: String) {
             toast?.cancel()
@@ -81,6 +86,21 @@ class SelfCertifyFragment : Fragment() {
 
         numEditText.isEnabled = false
         nextButton.isEnabled = false
+
+        closeBtn.setOnClickListener {
+            val intent = Intent(context, StartActivity::class.java)
+            startActivity(intent)
+
+            requireActivity().finish()
+        }
+
+        backBtn.setOnClickListener {
+            val joinFragment = JoinFragment()
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_self_certify, joinFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
 
         tellEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence?, start: Int, count: Int, after: Int) {}

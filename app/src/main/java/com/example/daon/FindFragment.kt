@@ -2,6 +2,7 @@ package com.example.daon
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.Editable
@@ -70,6 +71,8 @@ class FindFragment : Fragment() {
     private lateinit var noSameImageView: ImageView
     private lateinit var nextBtn: Button
     private lateinit var timer2TextView: TextView
+    private lateinit var closeBtn: ImageView
+    private lateinit var backBtn: ImageView
     private var toast: Toast? = null
 
     private var isTimerRunning = false
@@ -108,11 +111,27 @@ class FindFragment : Fragment() {
         noSameImageView = view.findViewById(R.id.no_same)
         nextBtn = view.findViewById(R.id.find_num_next_btn)
         timer2TextView = view.findViewById(R.id.find_num_timer)
+        closeBtn = view.findViewById(R.id.find_close_btn)
+        backBtn = view.findViewById(R.id.find_back_btn)
 
         fun showToast(msg: String) {
             toast?.cancel()
             toast = Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT)
             toast?.show()
+        }
+
+        backBtn.setOnClickListener {
+            val intent = Intent(context, StartActivity::class.java)
+            startActivity(intent)
+
+            requireActivity().finish()
+        }
+
+        closeBtn.setOnClickListener {
+            val intent = Intent(context, StartActivity::class.java)
+            startActivity(intent)
+
+            requireActivity().finish()
         }
 
         numEditText.isEnabled = false

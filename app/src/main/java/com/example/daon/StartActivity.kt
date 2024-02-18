@@ -1,5 +1,7 @@
 package com.example.daon
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.daon.AgreeFragment
@@ -17,6 +19,12 @@ class StartActivity : AppCompatActivity() {
 
         val fragmentLogin = LoginFragment()
         val fragmentAgree = AgreeFragment()
+
+        binding.startNaverBtn.setOnClickListener {
+            val url = "http://15.164.2.250/login/kakao"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
+        }
 
         binding.startLogin.setOnClickListener{
             supportFragmentManager

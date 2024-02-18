@@ -1,5 +1,7 @@
 package com.example.daon
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -33,6 +35,7 @@ class LoginFragment : Fragment() {
     private lateinit var nextButton: Button
     private lateinit var findImageView: TextView
     private lateinit var notImageView: ImageView
+    private lateinit var kakaoBtn: ImageView
     private var toast: Toast? = null
 
 
@@ -48,6 +51,7 @@ class LoginFragment : Fragment() {
         findImageView = view.findViewById(R.id.login_find_secret)
         nextButton = view.findViewById(R.id.login_btn)
         notImageView = view.findViewById(R.id.profile_not_equal_text)
+        kakaoBtn = view.findViewById(R.id.login_kakao_btn)
 
         // 이메일 형식 체크
         loginEmailEditText.addTextChangedListener(object : TextWatcher {
@@ -60,6 +64,12 @@ class LoginFragment : Fragment() {
                 checkLoginButtonState(isValidEmail, isPasswordValid(loginSecretEditText.text.toString()))
             }
         })
+
+        kakaoBtn.setOnClickListener {
+            val url = "http://15.164.2.250/login/kakao"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
+        }
 
         // 비밀번호 형식 체크
         loginSecretEditText.addTextChangedListener(object : TextWatcher {

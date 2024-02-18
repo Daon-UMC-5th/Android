@@ -1,5 +1,6 @@
 package com.example.daon
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -37,6 +38,8 @@ class SetProfileFragment : Fragment() {
     private lateinit var profileBack: View
     private lateinit var profileDialog: FrameLayout
     private lateinit var profileNameDup: ImageView
+    private lateinit var closeBtn: ImageView
+    private lateinit var backBtn: ImageView
     private var toast: Toast? = null
 
 
@@ -55,11 +58,28 @@ class SetProfileFragment : Fragment() {
         profileBack = view.findViewById(R.id.profile_back)
         profileDialog = view.findViewById(R.id.profile_dialog)
         profileNameDup = view.findViewById(R.id.profile_name_duplication)
+        closeBtn = view.findViewById(R.id.profile_close_btn)
+        backBtn = view.findViewById(R.id.profile_back_btn)
 
         fun showToast(msg: String) {
             toast?.cancel()
             toast = Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT)
             toast?.show()
+        }
+
+        closeBtn.setOnClickListener {
+            val intent = Intent(context, StartActivity::class.java)
+            startActivity(intent)
+
+            requireActivity().finish()
+        }
+
+        backBtn.setOnClickListener {
+            val selfCertifyFragment = SelfCertifyFragment()
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_set_profile, selfCertifyFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
         }
 
         profileImg.setOnClickListener {
@@ -78,8 +98,6 @@ class SetProfileFragment : Fragment() {
         var isNameValid = false
         profileNextButton.isEnabled = false
         var isNoneValid = false
-
-
 
         profileNameEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -110,13 +128,7 @@ class SetProfileFragment : Fragment() {
                     override fun onResponse(call: Call<OverlapNicknameResponseDto>, response: Response<OverlapNicknameResponseDto>) {
                         if (response.isSuccessful) {
                             val signUpResponse = response.body()
-                            if (signUpResponse?.isSuccess == false) {
-                                profileNameIcon.visibility = View.INVISIBLE
-                                profileNameDup.visibility = View.VISIBLE
-                                profileNameEditText.backgroundTintList =
-                                    ContextCompat.getColorStateList(requireContext(), R.color.et_red)
-                                showToast("중복.")
-                            } else {
+                            if (signUpResponse?.isSuccess == true) {
                                 profileNameIcon.visibility = View.VISIBLE
                                 profileNameDup.visibility = View.INVISIBLE
                                 sharedViewModel.profileName = profileNameEditText.text.toString()
@@ -124,43 +136,12 @@ class SetProfileFragment : Fragment() {
                                     ContextCompat.getColorStateList(requireContext(), R.color.et_green)
                                 updateNextButtonState()
                                 showToast("중복 아님")
-
-                                val service = ApiClient.retrofit.create(UserService::class.java)
-                                val signUpRequest = SignUpRequestDto(
-                                    user_name = "", // 사용자 이름
-                                    email = "",
-                                    password = "", // 비밀번호
-                                    phone_number = "", // 전화번호
-                                    birth_date = "", // 생년월일
-                                    gender = 0, // 성별 (0 또는 1)
-                                    user_nickname = profileNameEditText.text.toString(), // 사용자 닉네임
-                                    introduction = "", // 자기 소개
-                                    role = "", // 역할
-                                    agree = "" // 동의 여부
-                                )
-                                val call = service.signUp(signUpRequest)
-                                call.enqueue(object : Callback<SignUpResponseDto> {
-                                    override fun onResponse(call: Call<SignUpResponseDto>, response: Response<SignUpResponseDto>) {
-                                        if (response.isSuccessful) {
-                                            val signUpResponse = response.body()
-                                            if (signUpResponse?.isSuccess == true) {
-                                                // 서버에 이메일 전송 성공
-                                                showToast("닉네임이 성공적으로 전송되었습니다.")
-                                            } else {
-                                                // 서버에서 실패 응답을 받음
-                                                showToast(signUpResponse?.message ?: "Unknown error")
-                                            }
-                                        } else {
-                                            // 서버와 통신 실패
-                                            showToast("서버와의 통신에 실패하였습니다.")
-                                        }
-                                    }
-
-                                    override fun onFailure(call: Call<SignUpResponseDto>, t: Throwable) {
-                                        // 통신 오류
-                                        showToast("통신 오류: ${t.message}")
-                                    }
-                                })
+                            } else {
+                                profileNameIcon.visibility = View.INVISIBLE
+                                profileNameDup.visibility = View.VISIBLE
+                                profileNameEditText.backgroundTintList =
+                                    ContextCompat.getColorStateList(requireContext(), R.color.et_red)
+                                showToast("중복.")
                             }
 
                         } else {
@@ -221,7 +202,7 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
                 phone_number = "", // 전화번호
                 birth_date = "", // 생년월일
                 gender = 0, // 성별 (0 또는 1)
-                user_nickname = "", // 사용자 닉네임
+                user_nickname = profileNameEditText.text.toString(),
                 introduction = profileIntroEdittext.text.toString(), // 자기 소개
                 role = "", // 역할
                 agree = "" // 동의 여부

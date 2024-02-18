@@ -1,5 +1,6 @@
 package com.example.daon
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -24,6 +25,8 @@ class MembershipFragment : Fragment() {
     private lateinit var basicBtn: ImageView
     private lateinit var medicalBtn: ImageView
     private lateinit var nextBtn: Button
+    private lateinit var closeBtn: ImageView
+    private lateinit var backBtn: ImageView
     private var toast: Toast? = null
 
     private var isBasicSelected = false
@@ -44,6 +47,23 @@ class MembershipFragment : Fragment() {
         basicBtn = view.findViewById(R.id.membership_basic_btn)
         medicalBtn = view.findViewById(R.id.membership_medical_btn)
         nextBtn = view.findViewById(R.id.membership_next_btn)
+        closeBtn = view.findViewById(R.id.membership_close_btn)
+        backBtn = view.findViewById(R.id.membership_back_btn)
+
+        closeBtn.setOnClickListener {
+            val intent = Intent(context, StartActivity::class.java)
+            startActivity(intent)
+
+            requireActivity().finish()
+        }
+
+        backBtn.setOnClickListener {
+            val agreeFragment = AgreeFragment()
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_membership, agreeFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
 
         basicBtn.setOnClickListener {
             selectMembership("basic")

@@ -31,10 +31,10 @@
         />
 
     <ImageView
-        android:id="@+id/start_google_btn"
+        android:id="@+id/start_kakao_btn"
         android:layout_width="328dp"
         android:layout_height="52dp"
-        android:src="@drawable/google_btn"
+        android:src="@drawable/kakao_btn"
         android:layout_marginTop="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,7 +49,7 @@
         android:layout_marginTop="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/start_google_btn"
+        app:layout_constraintTop_toBottomOf="@id/start_kakao_btn"
         />
 
     <TextView
