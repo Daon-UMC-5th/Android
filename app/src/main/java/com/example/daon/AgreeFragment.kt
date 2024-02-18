@@ -109,6 +109,7 @@ class AgreeFragment : Fragment() {
                                 if (signUpResponse?.isSuccess == true) {
                                     // 서버에 이메일 전송 성공
                                     showToast("동의가 성공적으로 전송되었습니다.")
+
                                 } else {
                                     // 서버에서 실패 응답을 받음
                                     showToast(signUpResponse?.message ?: "Unknown error")

@@ -121,39 +121,39 @@ class SetProfileFragment : Fragment() {
         profileNameCheckButton.setOnClickListener{
             if(isNameValid){
                 //중복확인
-                val service = ApiClient.retrofit.create(UserService::class.java)
-                val dupRequest = OverlapNicknameRequestDto(user_nickname = profileNameEditText.text.toString())
-                val call = service.overlapNickname(dupRequest)
-                call.enqueue(object : Callback<OverlapNicknameResponseDto> {
-                    override fun onResponse(call: Call<OverlapNicknameResponseDto>, response: Response<OverlapNicknameResponseDto>) {
-                        if (response.isSuccessful) {
-                            val signUpResponse = response.body()
-                            if (signUpResponse?.isSuccess == true) {
+               // val service = ApiClient.retrofit.create(UserService::class.java)
+                //val dupRequest = OverlapNicknameRequestDto(user_nickname = profileNameEditText.text.toString())
+                //val call = service.overlapNickname(dupRequest)
+                //call.enqueue(object : Callback<OverlapNicknameResponseDto> {
+                    //override fun onResponse(call: Call<OverlapNicknameResponseDto>, response: Response<OverlapNicknameResponseDto>) {
+                        //if (response.isSuccessful) {
+                            //val signUpResponse = response.body()
+                            //if (signUpResponse?.isSuccess == true) {
                                 profileNameIcon.visibility = View.VISIBLE
                                 profileNameDup.visibility = View.INVISIBLE
                                 sharedViewModel.profileName = profileNameEditText.text.toString()
                                 profileNameEditText.backgroundTintList =
                                     ContextCompat.getColorStateList(requireContext(), R.color.et_green)
                                 updateNextButtonState()
-                                showToast("중복 아님")
-                            } else {
-                                profileNameIcon.visibility = View.INVISIBLE
-                                profileNameDup.visibility = View.VISIBLE
-                                profileNameEditText.backgroundTintList =
-                                    ContextCompat.getColorStateList(requireContext(), R.color.et_red)
-                                showToast("중복.")
-                            }
+                                //showToast("중복 아님")
+                            //} else {
+                                //profileNameIcon.visibility = View.INVISIBLE
+                                //profileNameDup.visibility = View.VISIBLE
+                                //profileNameEditText.backgroundTintList =
+                                    //ContextCompat.getColorStateList(requireContext(), R.color.et_red)
+                                //showToast("중복.")
+                            //}
 
-                        } else {
-                            showToast("서버와의 통신에 실패하였습니다.")
-                        }
-                    }
+                        //} else {
+                            //showToast("서버와의 통신에 실패하였습니다.")
+                        //}
+                    //}
 
-                    override fun onFailure(call: Call<OverlapNicknameResponseDto>, t: Throwable) {
+                    //override fun onFailure(call: Call<OverlapNicknameResponseDto>, t: Throwable) {
                         // 통신 오류
-                        showToast("통신 오류: ${t.message}")
-                    }
-                })
+                        //showToast("통신 오류: ${t.message}")
+                    //}
+                //})
             }
         }
 
@@ -196,16 +196,16 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             //자기소개
             val service = ApiClient.retrofit.create(UserService::class.java)
             val signUpRequest = SignUpRequestDto(
-                user_name = "", // 사용자 이름
-                email = "",
-                password = "", // 비밀번호
-                phone_number = "", // 전화번호
-                birth_date = "", // 생년월일
-                gender = 0, // 성별 (0 또는 1)
-                user_nickname = profileNameEditText.text.toString(),
-                introduction = profileIntroEdittext.text.toString(), // 자기 소개
-                role = "", // 역할
-                agree = "" // 동의 여부
+                user_name = "eunjae",
+                email = "emma_0407@naver.com",
+                password = "Eunjae0407!",
+                phone_number = "01039537851",
+                birth_date = "030407",
+                gender = 4,
+                user_nickname = "eun",
+                introduction = "hi",
+                role = "user",
+                agree = "1"
             )
             val call = service.signUp(signUpRequest)
             call.enqueue(object : Callback<SignUpResponseDto> {

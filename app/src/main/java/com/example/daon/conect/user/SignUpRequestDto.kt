@@ -1,6 +1,7 @@
 package com.example.daon.conect.user
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class SignUpRequestDto(
     @SerializedName("user_name") private val user_name: String,

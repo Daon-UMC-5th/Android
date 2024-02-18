@@ -1,6 +1,7 @@
 package com.example.daon
 
 import android.content.Intent
+import android.content.Intent.ACTION_VIEW
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -36,6 +37,7 @@ class LoginFragment : Fragment() {
     private lateinit var findImageView: TextView
     private lateinit var notImageView: ImageView
     private lateinit var kakaoBtn: ImageView
+    private lateinit var naver: ImageView
     private var toast: Toast? = null
 
 
@@ -52,6 +54,7 @@ class LoginFragment : Fragment() {
         nextButton = view.findViewById(R.id.login_btn)
         notImageView = view.findViewById(R.id.profile_not_equal_text)
         kakaoBtn = view.findViewById(R.id.login_kakao_btn)
+        naver = view.findViewById(R.id.login_naver_btn)
 
         // 이메일 형식 체크
         loginEmailEditText.addTextChangedListener(object : TextWatcher {
@@ -67,6 +70,12 @@ class LoginFragment : Fragment() {
 
         kakaoBtn.setOnClickListener {
             val url = "http://15.164.2.250/login/kakao"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
+        }
+
+        naver.setOnClickListener{
+            val url = "http://15.164.2.250/login/naver"
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)
         }
@@ -135,8 +144,9 @@ class LoginFragment : Fragment() {
                         if (response.isSuccessful) {
                             val signUpResponse = response.body()
                             if (signUpResponse?.isSuccess == true) {
-                                showToast("로그인 성공")
-                                //메인으로 이동하는 코드 추가하기
+                                val intent = Intent(requireActivity(), MainActivity::class.java)
+                                startActivity(intent)
+                                requireActivity().supportFragmentManager.beginTransaction().remove(this@LoginFragment).commit()
                             } else {
                                 loginEmailEditText.backgroundTintList =
                                     ContextCompat.getColorStateList(requireContext(), R.color.et_red)
