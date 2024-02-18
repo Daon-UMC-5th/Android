@@ -79,6 +79,7 @@ class LoginFragment : Fragment() {
             transaction.replace(R.id.fragment_login, findFragment)
             transaction.addToBackStack(null)
             transaction.commit()
+
         }
 
         return view
