@@ -9,5 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="btn_text1"> #AAAAAA</color>
     <color name="gray">#AAAAAA</color>
-
+    <color name="et_gray">#E5E5E5</color>
+    <color name="et_green">#4CAF50</color>
+    <color name="et_red">#CE190C</color>
 </resources>

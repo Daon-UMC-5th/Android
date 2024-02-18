@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:id="@+id/fragment_complete"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".CompleteFragment">
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="가입완료,"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="120dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/complete_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="닉네임"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@id/text1"
+        app:layout_constraintTop_toBottomOf="@id/text1"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="님 환영해요!"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@id/complete_name_tv"
+        app:layout_constraintTop_toTopOf="@id/complete_name_tv"
+        />
+
+    <ImageView
+        android:id="@+id/complete_iv"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:src="@drawable/complete"
+        android:layout_marginTop="58dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/complete_name_tv"
+        />
+    
+    <Button
+        android:id="@+id/complete_start_btn"
+        android:layout_width="328dp"
+        android:layout_height="56dp"
+        android:background="@drawable/btnstyle"
+        android:text="시작하기"
+        style="?android:attr/borderlessButtonStyle"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:layout_marginTop="126dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/complete_iv"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

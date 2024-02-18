@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:id="@+id/fragment_set_profile"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SetProfileFragment">
+
+    <ImageView
+        android:id="@+id/profile_back_btn"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/back_btn"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/profile_close_btn"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/close_btn"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/profile_back_btn"
+        />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="나를 나타내는\n프로필을 만들어주세요."
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="56dp"
+        app:layout_constraintStart_toStartOf="@id/profile_back_btn"
+        app:layout_constraintTop_toBottomOf="@id/profile_back_btn"
+        />
+
+    <ImageView
+        android:id="@+id/profile_img"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="28dp"
+        android:src="@drawable/basic_profile"
+        app:layout_constraintStart_toStartOf="@id/text"
+        app:layout_constraintTop_toBottomOf="@id/text" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="닉네임"
+        android:textSize="16sp"
+        android:layout_marginTop="14dp"
+        app:layout_constraintStart_toStartOf="@id/text"
+        app:layout_constraintTop_toBottomOf="@id/profile_img"
+        />
+    
+    <EditText
+        android:id="@+id/profile_name_et"
+        android:layout_width="328dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="4dp"
+        android:hint="최소 2자~최대 8자"
+        android:textSize="16sp"
+        android:textColorHint="#757575"
+        app:layout_constraintStart_toStartOf="@id/name"
+        app:layout_constraintTop_toBottomOf="@id/name"
+        android:inputType="text"
+        android:maxLines="1"
+        android:maxLength="8"
+        />
+    
+    <ImageView
+        android:id="@+id/profile_name_iv"
+        android:layout_width="130dp"
+        android:layout_height="16dp"
+        android:src="@drawable/profile_name"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@id/profile_name_et"
+        app:layout_constraintTop_toBottomOf="@id/profile_name_et"
+        />
+    
+    <ImageView
+        android:id="@+id/profile_name_duplication"
+        android:layout_width="144dp"
+        android:layout_height="16dp"
+        android:visibility="invisible"
+        android:src="@drawable/profile_name_dupli"
+        app:layout_constraintStart_toStartOf="@id/profile_name_et"
+        app:layout_constraintTop_toBottomOf="@id/profile_name_et"
+        />
+    
+    <ImageView
+        android:id="@+id/profile_name_check"
+        android:layout_width="88dp"
+        android:layout_height="40dp"
+        android:src="@drawable/duplicate_name"
+        app:layout_constraintEnd_toEndOf="@id/profile_name_et"
+        app:layout_constraintTop_toTopOf="@id/profile_name_et"
+        />
+
+    <TextView
+        android:id="@+id/intro_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="소개말"
+        android:textSize="16sp"
+        android:layout_marginTop="79dp"
+        app:layout_constraintStart_toStartOf="@id/text"
+        app:layout_constraintTop_toBottomOf="@id/profile_name_et"
+        />
+
+    <EditText
+        android:id="@+id/profile_intro_et"
+        android:layout_width="328dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="4dp"
+        android:hint="안녕하세요. 좋은 모든 일들이 다 오기를!"
+        android:textSize="16sp"
+        android:textColorHint="#757575"
+        android:inputType="text"
+        android:maxLines="1"
+        android:maxLength="25"
+        app:layout_constraintStart_toStartOf="@id/intro_text"
+        app:layout_constraintTop_toBottomOf="@id/intro_text"
+        />
+    
+    <Button
+        android:id="@+id/profile_next_btn"
+        android:layout_width="328dp"
+        android:layout_height="56dp"
+        android:background="@drawable/uncheck_btnstyle"
+        android:text="인증 완료"
+        style="?android:attr/borderlessButtonStyle"
+        android:textColor="#AAAAAA"
+        android:textSize="18sp"
+        android:layout_marginTop="129dp"
+        app:layout_constraintTop_toBottomOf="@id/profile_intro_et"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <View
+        android:id="@+id/profile_back"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:visibility="gone"
+        />
+
+    <FrameLayout
+        android:id="@+id/profile_dialog"
+        android:layout_width="328dp"
+        android:layout_height="129dp"
+        android:background="@drawable/border_dialog"
+        android:layout_marginTop="603dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
+        >
+
+        <ImageView
+            android:id="@+id/camera"
+            android:layout_width="304dp"
+            android:layout_height="48dp"
+            android:src="@drawable/dialog_camera_tv"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            />
+
+        <View
+            android:id="@+id/bar"
+            android:layout_width="328dp"
+            android:layout_height="1dp"
+            android:background="#E5E5E5"
+            android:layout_marginTop="64dp"
+            />
+
+        <ImageView
+            android:id="@+id/gallery"
+            android:layout_width="304dp"
+            android:layout_height="48dp"
+            android:src="@drawable/dialog_gallery_tv"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="69dp"
+            />
+
+    </FrameLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
