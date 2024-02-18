@@ -5,12 +5,23 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
+import android.widget.Toast
 import com.example.daon.MainActivity
 import com.example.daon.R
+import com.example.daon.conect.ApiClient
+import com.example.daon.conect.calendar.BodyListInsertRequestDto
+import com.example.daon.conect.calendar.BodyListInsertResponseDto
+import com.example.daon.conect.calendar.ClinicListInsertResponseDto
 import com.example.daon.databinding.ActivityBodyBinding
+import com.prolificinteractive.materialcalendarview.CalendarDay
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class BodyActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBodyBinding
+    private var jwt: String = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMywiaWF0IjoxNzA3NzIwMDY2LCJleHAiOjE3MDgzMjQ4NjYsInN1YiI6InVzZXJJbmZvIn0.8oDPW4Z_Mifj7NwEbO517W9xprRGKbNSU5TUl6sjnc4"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBodyBinding.inflate(layoutInflater)
@@ -73,7 +84,50 @@ class BodyActivity : AppCompatActivity() {
         onBackPressed()
     }
     private fun saveBody(){
-        //서버에게 전달
+        Log.i("saveClinic","------------")
+        val date = intent.getStringExtra("selectedDate").toString()
+        Log.i("selectedDate",date)
+        val bodyListInsertRequestDto = BodyListInsertRequestDto(
+            temperature = if(binding.bodyTemperature.text.isEmpty()) 0.0 else binding.bodyTemperature.text.toString().toDouble(),
+            weight = if(binding.bodyWeight.text.isEmpty()) 0.0 else binding.bodyWeight.text.toString().toDouble(),
+            fastingBloodSugar = if(binding.bodyBloodSugar.text.isEmpty()) 0 else binding.bodyBloodSugar.text.toString().toInt(),
+            note = binding.content.text.toString()
+        )
+        val call = ApiClient.calendarService.bodyListInsert(jwt,date, bodyListInsertRequestDto)
+        call.enqueue(object : Callback<BodyListInsertResponseDto> {
+            override fun onResponse(call: Call<BodyListInsertResponseDto>, response: Response<BodyListInsertResponseDto>) {
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    // 서버로부터 받은 응답을 처리합니다.
+                    // 예를 들어, 로그인 성공 여부에 따라 처리할 수 있습니다.
+                    if (body != null) {
+                        Log.i("saveBodySuccess", body.toString())
+                        when (body.code) {
+                            200 -> {
+                                onBackPressed()
+                            }
+                            400 -> {
+                                showToast(body.message)
+                            }
+                            500 -> {
+                                showToast(body.message)
+                            }
+                        }
+                    }
+                } else {
+                    showToast("Failed to communicate with the server.")
+                    Log.i("saveBodyNot",response.toString())
+                }
+            }
+            override fun onFailure(call: Call<BodyListInsertResponseDto>, t: Throwable) {
+                showToast("Network request failed. Error: ${t.message}")
+                Log.i("saveBodyFail",t.message.toString())
+            }
+        })
+        Log.i("saveClinic","------------")
+    }
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
     override fun onBackPressed() {
         super.onBackPressed()

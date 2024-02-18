@@ -1,6 +1,7 @@
 package com.example.daon.conect.calendar.data
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class ClinicListCall(
     @SerializedName("consultation_id") val consultation_id: Int,
@@ -11,4 +12,4 @@ data class ClinicListCall(
     @SerializedName("alarmed_at") val alarmed_at : String,
     @SerializedName("created_at") val created_at : String,
     @SerializedName("updated_at") val updated_at : String
-)
+):Serializable

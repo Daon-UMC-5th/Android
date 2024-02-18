@@ -1,5 +1,6 @@
 package com.example.daon
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.daon.databinding.ActivityMainBinding
@@ -16,7 +17,35 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         initBottomNavigation()
     }
+    private fun initFragment(){
+        if(intent.getStringExtra("title") == null){
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, CalendarFragment())
+                .commit()
+        }
+        else if(intent.getStringExtra("title") == "calendar"){
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, CalendarFragment())
+                .commit()
+        }
+        else if(intent.getStringExtra("title") == "diary"){
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, DiaryFragment())
+                .commit()
+        }
+        else if(intent.getStringExtra("title") == "myPage"){
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, MypageFragment())
+                .commit()
+        }
+        else if(intent.getStringExtra("title") == "community"){
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, CommunityFragment())
+                .commit()
+        }
+    }
     private fun initBottomNavigation(){
+//        initFragment()
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_frm, CalendarFragment())
             .commit()

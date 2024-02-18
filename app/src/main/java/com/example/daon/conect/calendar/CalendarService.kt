@@ -16,37 +16,42 @@ interface CalendarService {
     fun bodyListCall(@Header("api-key") jwtToken: String, @Path("date") date: String): Call<BodyListCallResponseDto>
     //신체 삽입
     @POST("calendar/physical-record/{date}")
-    fun bodyListInsert(@Path("date") date: String, @Body request: BodyListInsertRequestDto): Call<BodyListInsertResponseDto>
+    fun bodyListInsert(@Header("api-key") jwtToken: String,@Path("date") date: String, @Body request: BodyListInsertRequestDto): Call<BodyListInsertResponseDto>
     //신체 삭제
     @DELETE("calendar/physical-record/{date}")
-    fun bodyListDelete(@Path("date") date: String) : Call<BodyListInsertResponseDto>
+    fun bodyListDelete(@Header("api-key") jwtToken: String,@Path("date") date: String) : Call<BodyListInsertResponseDto>
     //신체 수정
     @PUT("calendar/physical-record/{date}")
-    fun bodyListEdit(@Path("date") date: String, @Body request: BodyListInsertRequestDto) : Call<BodyListInsertResponseDto>
+    fun bodyListEdit(@Header("api-key") jwtToken: String,@Path("date") date: String, @Body request: BodyListInsertRequestDto) : Call<BodyListInsertResponseDto>
     //진료 조회
-    @GET("calendar/consultation/{date}")
+    @GET("calendar/consultation/all/{date}")
     fun clinicListCall(@Header("api-key") jwtToken: String,@Path("date") date: String) : Call<ClinicListCallResponseDto>
     //진료 삽입
     @POST("calendar/consultation/{date}")
-    fun clinicListInsert(@Path("date") date: String, @Body request: ClinicListInsertRequestDto) : Call<ClinicListInsertResponseDto>
+    fun clinicListInsert(@Header("api-key") jwtToken: String,@Path("date") date: String, @Body request: ClinicListInsertRequestDto) : Call<ClinicListInsertResponseDto>
+    //진료 개별조회
+    @GET("calendar/consultation/{id}")
+    fun clinicOneCall(@Header("api-key") jwtToken: String,@Path("id") id: String) : Call<ClinicListCallResponseDto>
     //진료 삭제
-    @DELETE("calendar/consultation/{date}")
-    fun clinicListDelete(@Path("date") date: String) : Call<ClinicListInsertResponseDto>
+    @DELETE("calendar/consultation/{id}")
+    fun clinicListDelete(@Header("api-key") jwtToken: String,@Path("id") id: Int) : Call<ClinicListInsertResponseDto>
     //진료 수정
-    @PUT("calendar/consultation/{date}")
-    fun clinicListEdit(@Path("date") date: String, @Body request: ClinicListInsertRequestDto) : Call<ClinicListInsertResponseDto>
+    @PUT("calendar/consultation/{id}")
+    fun clinicListEdit(@Header("api-key") jwtToken: String,@Path("id") id: Int, @Body request: ClinicListInsertRequestDto) : Call<ClinicListInsertResponseDto>
     //복용 조회
-    @GET("calendar/madication/{date}")
+    @GET("calendar/medication/all/{date}")
     fun doseAllListCall(@Header("api-key") jwtToken: String, @Path("date") date: String) : Call<DoseAllListCallResponseDto>
-    @GET("calendar/madication/{when}/{date}")
-    fun doseListCall(@Path("when") time: String, @Path("date") date: String) : Call<DoseAllListCallResponseDto>
+    @GET("calendar/medication/{id}")
+    fun doseListCall(@Header("api-key") jwtToken: String,@Path("id") id : Int): Call<DoseListCallResponseDto>
     //복용 삽입
-    @POST("calendar/madication/{when}/{date}")
-    fun doseListCall(@Path("when") time: String,@Path("date") date: String, @Body request: DoseListInsertRequestDto) : Call<DoseListInsertResponseDto>
+    @POST("calendar/medication/{when}/{date}")
+    fun doseListInsert(@Header("api-key") jwtToken: String,@Path("when") time: String,@Path("date") date: String, @Body request: DoseListInsertRequestDto) : Call<DoseListInsertResponseDto>
     //복용 삭제
-    @DELETE("calendar/madication/{when}/{date}")
-    fun doseListDelete(@Path("when") time: String,@Path("date") date: String) : Call<DoseListInsertResponseDto>
+    @DELETE("calendar/medication/{id}")
+    fun doseListDelete(@Header("api-key") jwtToken: String,@Path("id") id: Int) : Call<DoseListInsertResponseDto>
     //복용 수정
-    @PUT("calendar/madication/{when}/{date}")
-    fun doseListEdit(@Path("when") time: String,@Path("date") date: String, @Body request: DoseListInsertRequestDto) : Call<DoseListInsertResponseDto>
+    @PUT("calendar/medication/{id}")
+    fun doseListEdit(@Header("api-key") jwtToken: String,@Path("id") id: Int, @Body request: DoseListInsertRequestDto) : Call<DoseListInsertResponseDto>
+    @GET("calendar/{month}")
+    fun doseMonthList(@Header("api-key") jwtToken: String, @Path("month") month: String) : Call<DoseMonthListResponseDto>
 }
