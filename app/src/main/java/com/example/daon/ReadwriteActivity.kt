@@ -19,6 +19,7 @@ class ReadwriteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityReadwriteBinding
     private lateinit var preferenceUtil: PreferenceUtil
     private var isLiked = false
+    private var isLiked_book = false
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +44,15 @@ class ReadwriteActivity : AppCompatActivity() {
             } else {
                 // 좋아요를 누른 상태가 아니면 좋아요 API 호출
                 likeUp()
+            }
+        }
+        binding.bookmarkBackground.setOnClickListener {
+            if (isLiked_book) {
+                // 이미 북마크를 누른 상태이면 북마크 취소 API 호출
+                subScrape()
+            } else {
+                // 북마크를 누른 상태가 아니면 북마크 API 호출
+                addScrape()
             }
         }
 
@@ -84,7 +94,6 @@ class ReadwriteActivity : AppCompatActivity() {
                     Log.e(TAG, "Failed to get likes for post: ${response.code()}")
                 }
             }
-
             override fun onFailure(call: Call<LikeResponse>, t: Throwable) {
                 Log.e(TAG, "Failed to get likes for post: ${t.message}")
             }
@@ -110,6 +119,7 @@ class ReadwriteActivity : AppCompatActivity() {
                         binding.writeNickname.text = preferenceUtil.getUserNickname().toString()
                         binding.writeTime.text = dateString
                         binding.favorCount.text =boardDetails.likecount.toString()
+                        binding.bookmarkCount.text = boardDetails.scrapecount.toString()
                     } else {
                         Log.e(TAG, "Failed to get board details: ${boardDetailsResponse?.message}")
                     }
@@ -120,6 +130,55 @@ class ReadwriteActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<PostOneListResponseDto>, t: Throwable) {
                 Log.e(TAG, "Failed to fetch board details: ${t.message}")
+            }
+        })
+    }
+    private fun addScrape() {
+        val boardId = intent.getIntExtra("boardId", -1)
+        val boardService = ApiClient.retrofit.create(BoardService::class.java)
+        val call = boardService.addScrape(boardId)
+        call.enqueue(object : Callback<ScrapeResponse> {
+            override fun onResponse(call: Call<ScrapeResponse>, response: Response<ScrapeResponse>) {
+                if (response.isSuccessful) {
+                    val scrapeResponse = response.body()
+                    if (scrapeResponse != null && scrapeResponse.isSuccess) {
+                        // 스크랩 추가 성공 시 화면에 반영
+                        updateScrapeCount(1)
+                    } else {
+                        Log.e(TAG, "Failed to add scrape: ${scrapeResponse?.message}")
+                    }
+                } else {
+                    Log.e(TAG, "Failed to add scrape: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<ScrapeResponse>, t: Throwable) {
+                Log.e(TAG, "Failed to add scrape: ${t.message}")
+            }
+        })
+    }
+
+    private fun subScrape() {
+        val boardId = intent.getIntExtra("boardId", -1)
+        val boardService = ApiClient.retrofit.create(BoardService::class.java)
+        val call = boardService.subScrape(boardId)
+        call.enqueue(object : Callback<ScrapeResponse> {
+            override fun onResponse(call: Call<ScrapeResponse>, response: Response<ScrapeResponse>) {
+                if (response.isSuccessful) {
+                    val scrapeResponse = response.body()
+                    if (scrapeResponse != null && scrapeResponse.isSuccess) {
+                        // 스크랩 삭제 성공 시 화면에 반영
+                        updateScrapeCount(-1)
+                    } else {
+                        Log.e(TAG, "Failed to sub scrape: ${scrapeResponse?.message}")
+                    }
+                } else {
+                    Log.e(TAG, "Failed to sub scrape: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<ScrapeResponse>, t: Throwable) {
+                Log.e(TAG, "Failed to sub scrape: ${t.message}")
             }
         })
     }
@@ -195,7 +254,6 @@ class ReadwriteActivity : AppCompatActivity() {
                     Log.e(TAG, "Failed to delete post: ${response.code()}")
                 }
             }
-
             override fun onFailure(call: Call<PostWriteResponseDto>, t: Throwable) {
                 Log.e(TAG, "Failed to delete post: ${t.message}")
             }
@@ -206,5 +264,11 @@ class ReadwriteActivity : AppCompatActivity() {
         val currentLikeCount = binding.favorCount.text.toString().toInt()
         binding.favorCount.text =(currentLikeCount + change).toString()
         isLiked = !isLiked // 버튼의 상태 변경
+    }
+    @SuppressLint("SetTextI18n")
+    private fun updateScrapeCount(change: Int) {
+        val currentScrapeCount = binding.bookmarkCount.text.toString().toInt()
+        binding.bookmarkCount.text = (currentScrapeCount + change).toString()
+        isLiked_book = !isLiked_book
     }
 }
