@@ -1,6 +1,7 @@
 package com.example.daon.Adapter
 
 data class YeeData(
+    val boardId: Int,
     val nickname: String,
     var title: String,
     val detail: String,

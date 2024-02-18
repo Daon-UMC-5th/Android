@@ -34,7 +34,7 @@ class YeeRVAdapter(private val dataList: ArrayList<YeeData>, private val listene
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val boardId = preferenceUtil.getPostId()
+        val currentItem = dataList[position]
 
         holder.nickname_.text = preferenceUtil.getUserNickname().toString()
         val titleText = dataList[position].title
@@ -60,7 +60,7 @@ class YeeRVAdapter(private val dataList: ArrayList<YeeData>, private val listene
         holder.bookmarkIcon_.setImageResource(R.drawable.bookmark)
         holder.bookmarkCount_.text = dataList[position].bookmarkCount
         holder.itemView.setOnClickListener {
-           listener.onItemClick(boardId)
+           listener.onItemClick(currentItem.boardId)
         }
     }
 

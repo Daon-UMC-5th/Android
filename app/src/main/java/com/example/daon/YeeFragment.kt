@@ -61,9 +61,26 @@ class YeeFragment : Fragment(), OnItemClickListener {
                 startActivity(intent)
             }
         }
-        getWiangPosts()
+        val bundle = Bundle()
+        val deleteBoardId = bundle.getInt("deleteboardId", -1)
+        val deleteBoardType = bundle.getString("deleteboardType", "")
 
+        getWiangPosts()
+        deleteItem(deleteBoardId,deleteBoardType)
         return binding.root
+    }
+    @SuppressLint("NotifyDataSetChanged")
+    private fun deleteItem(boardIdToDelete: Int, boardType: String){
+        val iterator = yeeitem.iterator()
+        while (iterator.hasNext()) {
+            val item = iterator.next()
+            if (item.boardId == boardIdToDelete) {
+                iterator.remove()
+                // 삭제된 아이템을 RecyclerView에 적용하기 위해 notifyDataSetChanged 호출
+                break
+            }
+        }
+        yeeRVAdapter.notifyDataSetChanged()
     }
     private fun getWiangPosts() {
         val boardService = com.example.daon.data.community.ApiClient.retrofit.create(
@@ -78,6 +95,7 @@ class YeeFragment : Fragment(), OnItemClickListener {
                         val post = postListCallResponseDto.result
                         val postDataList: List<YeeData> = post.map { post ->
                             YeeData(
+                                boardId = post.board_id,
                                 nickname = preferenceUtil.getUserNickname().toString(),
                                 detail = post.content,
                                 title = post.title,

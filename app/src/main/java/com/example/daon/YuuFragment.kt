@@ -80,6 +80,7 @@ class YuuFragment : Fragment(), OnItemClickListener {
                         val post = postListCallResponseDto.result
                         val postDataList: List<YeeData> = post.map { post ->
                             YeeData(
+                                post.board_id,
                                 nickname = preferenceUtil.getUserNickname().toString(),
                                 detail = post.content,
                                 title = post.title,

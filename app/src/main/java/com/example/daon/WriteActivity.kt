@@ -277,6 +277,7 @@ class WriteActivity : AppCompatActivity() {
                         // 게시글 작성 성공
                         val newPost = postWriteResponse.result
                         val newPostData  = YeeData(
+                            boardId = newPost.board_id,
                             nickname = preferenceUtil.getUserNickname().toString(), // 닉네임 설정 필요
                             detail = detail,
                             title = title,
