@@ -61,16 +61,15 @@
         android:id="@+id/login_btn"
         android:layout_width="328dp"
         android:layout_height="56dp"
-        android:layout_marginTop="21dp"
-        app:layout_constraintStart_toStartOf="@id/login_secret_et"
-        app:layout_constraintEnd_toEndOf="@id/login_secret_et"
-        app:layout_constraintTop_toBottomOf="@id/login_secret_et"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/uncheck_btnstyle"
         android:text="로그인"
-        style="?android:attr/borderlessButtonStyle"
         android:textColor="#AAAAAA"
         android:textSize="18sp"
-        android:background="@drawable/uncheck_btnstyle"
-        />
+        app:layout_constraintEnd_toEndOf="@id/login_secret_et"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/login_secret_et"
+        app:layout_constraintTop_toBottomOf="@id/login_secret_et" />
 
     <CheckBox
         android:id="@+id/login_check"
