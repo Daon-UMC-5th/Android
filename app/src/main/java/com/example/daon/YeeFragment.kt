@@ -13,13 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.daon.Adapter.OnItemClickListener
 import com.example.daon.Adapter.YeeData
-import com.example.daon.Adapter.GanRVAdapter
 import com.example.daon.Adapter.YeeRVAdapter
-import com.example.daon.community.ApiClient
-import com.example.daon.community.BoardService
-import com.example.daon.community.PostListCallResponseDto
-import com.example.daon.community.token.PreferenceUtil
 import com.example.daon.databinding.FragmentYeeBinding
+import com.example.daon.mypage_api.data.community.BoardService
+import com.example.daon.mypage_api.data.community.PostListCallResponseDto
+import com.example.daon.mypage_api.data.community.token.PreferenceUtil
 import retrofit2.Call
 import retrofit2.Response
 
@@ -68,7 +66,8 @@ class YeeFragment : Fragment(), OnItemClickListener {
         return binding.root
     }
     private fun getWiangPosts() {
-        val boardService = ApiClient.retrofit.create(BoardService::class.java)
+        val boardService = com.example.daon.mypage_api.data.community.ApiClient.retrofit.create(
+            BoardService::class.java)
         val call = boardService.getAllPosts("stomach", 0) // 위암 게시판의 종류를 나타내는 값입니다.
         call.enqueue(object : retrofit2.Callback<PostListCallResponseDto> {
             @SuppressLint("NotifyDataSetChanged", "SuspiciousIndentation")

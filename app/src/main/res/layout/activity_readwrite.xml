@@ -10,7 +10,7 @@
         android:id="@+id/write_back"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:src="@drawable/back"
+        android:src="@drawable/backto"
         android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"

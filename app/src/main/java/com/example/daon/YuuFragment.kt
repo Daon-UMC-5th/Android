@@ -5,20 +5,19 @@ import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.daon.Adapter.GanRVAdapter
 import com.example.daon.Adapter.OnItemClickListener
 import com.example.daon.Adapter.YeeData
-import com.example.daon.Adapter.GanRVAdapter
-import com.example.daon.community.ApiClient
-import com.example.daon.community.BoardService
-import com.example.daon.community.PostListCallResponseDto
-import com.example.daon.community.token.PreferenceUtil
 import com.example.daon.databinding.*
+import com.example.daon.mypage_api.data.community.BoardService
+import com.example.daon.mypage_api.data.community.PostListCallResponseDto
+import com.example.daon.mypage_api.data.community.token.PreferenceUtil
 import retrofit2.Call
 import retrofit2.Response
 
@@ -69,7 +68,8 @@ class YuuFragment : Fragment(), OnItemClickListener {
     }
     private fun getWiangPosts() {
         Log.d("ghkrdls","asfgksd")
-        val boardService = ApiClient.retrofit.create(BoardService::class.java)
+        val boardService = com.example.daon.mypage_api.data.community.ApiClient.retrofit.create(
+            BoardService::class.java)
         val call = boardService.getAllPosts("stomach", 0) // 위암 게시판의 종류를 나타내는 값입니다.
         call.enqueue(object : retrofit2.Callback<PostListCallResponseDto> {
             @SuppressLint("NotifyDataSetChanged", "SuspiciousIndentation")

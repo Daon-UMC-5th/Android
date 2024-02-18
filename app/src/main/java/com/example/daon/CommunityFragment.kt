@@ -1,24 +1,20 @@
 package com.example.daon
 
     import android.os.Bundle
-    import android.util.Log
-    import android.view.*
-    import androidx.fragment.app.Fragment
+    import android.view.LayoutInflater
+    import android.view.MenuItem
+    import android.view.View
+    import android.view.ViewGroup
     import android.widget.ImageView
-    import android.widget.Toast
     import androidx.core.view.GravityCompat
     import androidx.drawerlayout.widget.DrawerLayout
-    import com.example.daon.community.ApiClient
-    import com.example.daon.community.LikeResponse
-    import com.example.daon.community.token.PreferenceUtil
+    import androidx.fragment.app.Fragment
     import com.example.daon.databinding.FragmentCommunityBinding
+    import com.example.daon.mypage_api.data.community.token.PreferenceUtil
     import com.google.android.material.bottomnavigation.BottomNavigationView
     import com.google.android.material.navigation.NavigationView
-    import retrofit2.Call
-    import retrofit2.Callback
-    import retrofit2.Response
 
-    class CommunityFragment : Fragment() {
+class CommunityFragment : Fragment() {
         private lateinit var preferenceUtil: PreferenceUtil
         private var _binding: FragmentCommunityBinding? = null
         private val binding get() = _binding!!

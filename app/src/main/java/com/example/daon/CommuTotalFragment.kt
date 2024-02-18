@@ -2,18 +2,17 @@ package com.example.daon
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.daon.Adapter.TotalData
 import com.example.daon.Adapter.TotalRVAdapter
-import com.example.daon.community.ApiClient
-import com.example.daon.community.BoardService
-import com.example.daon.community.PostListCallResponseDto
 import com.example.daon.databinding.FragmentCommuTotalBinding
+import com.example.daon.mypage_api.data.community.BoardService
+import com.example.daon.mypage_api.data.community.PostListCallResponseDto
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,7 +37,8 @@ class CommuTotalFragment : Fragment() {
         totalRVAdapter = TotalRVAdapter(totalitem)
         binding.totalRv.adapter = totalRVAdapter
 
-        val service = ApiClient.retrofit.create(BoardService::class.java)
+        val service = com.example.daon.mypage_api.data.community.ApiClient.retrofit.create(
+            BoardService::class.java)
         val call = service.getAllAllPosts(0)
         call.enqueue(object : Callback<PostListCallResponseDto> {
             @SuppressLint("NotifyDataSetChanged")

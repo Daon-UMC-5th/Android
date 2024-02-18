@@ -1,5 +1,6 @@
 package com.example.daon
 
+import android.Manifest
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -15,22 +16,19 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import android.Manifest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.example.daon.Adapter.GanData
-import com.example.daon.Adapter.YeeData
 import com.example.daon.Adapter.GanRVAdapter
+import com.example.daon.Adapter.YeeData
 import com.example.daon.Adapter.YeeRVAdapter
-import com.example.daon.community.ApiClient
-import com.example.daon.community.PostWriteRequestDto
-import com.example.daon.community.PostWriteResponseDto
-import com.example.daon.community.token.PreferenceUtil
-import com.example.daon.community.token.UploadResponse
 import com.example.daon.databinding.ActivityWriteBinding
+import com.example.daon.mypage_api.data.community.PostWriteRequestDto
+import com.example.daon.mypage_api.data.community.PostWriteResponseDto
+import com.example.daon.mypage_api.data.community.token.PreferenceUtil
+import com.example.daon.mypage_api.data.community.token.UploadResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -245,7 +243,7 @@ class WriteActivity : AppCompatActivity() {
         val requestFile = byteArray.toRequestBody("image/*".toMediaTypeOrNull())
         val imagePart = MultipartBody.Part.createFormData("file", "image.jpg", requestFile)
 
-        ApiClient.boardService.uploadBoardImage(imagePart).enqueue(object : Callback<UploadResponse> {
+        com.example.daon.mypage_api.data.community.ApiClient.boardService.uploadBoardImage(imagePart).enqueue(object : Callback<UploadResponse> {
             override fun onResponse(call: Call<UploadResponse>, response: Response<UploadResponse>) {
                 if (response.isSuccessful) {
                     val uploadResponse = response.body()
@@ -267,7 +265,7 @@ class WriteActivity : AppCompatActivity() {
     private fun writePost(boardType: String, title: String, detail: String, imageUrl: String) {
         val requestDto = PostWriteRequestDto(title, detail, imageUrl)
 
-        val call = ApiClient.boardService.writePost(boardType, requestDto)
+        val call = com.example.daon.mypage_api.data.community.ApiClient.boardService.writePost(boardType, requestDto)
         call.enqueue(object : Callback<PostWriteResponseDto> {
             override fun onResponse(
                 call: Call<PostWriteResponseDto>,

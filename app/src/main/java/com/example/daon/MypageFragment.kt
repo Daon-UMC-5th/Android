@@ -10,9 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.daon.databinding.FragmentMypageBinding
-import com.example.daon.mypage_api.ApiClient
 import com.example.daon.mypage_api.MypageService
 import com.example.daon.mypage_api.UserListResponse
+import com.example.daon.mypage_api.data.community.ApiClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
