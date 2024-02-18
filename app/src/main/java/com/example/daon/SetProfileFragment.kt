@@ -13,12 +13,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.daon.conect.user.*
 import com.example.daon.data.community.ApiClient
+import com.example.daon.data.community.token.PreferenceUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class SetProfileFragment : Fragment() {
 
+    private lateinit var preferenceUtil: PreferenceUtil
     private lateinit var profileNameEditText: EditText
     private lateinit var profileNameCheckButton: ImageView
     private lateinit var profileNameIcon: ImageView
@@ -39,6 +41,8 @@ class SetProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_set_profile, container, false)
+
+        preferenceUtil = PreferenceUtil(requireContext())
 
         profileNameEditText = view.findViewById(R.id.profile_name_et)
         profileNameCheckButton = view.findViewById(R.id.profile_name_check)
@@ -204,20 +208,20 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
                     if (response.isSuccessful) {
                         val signUpResponse = response.body()
                         if (signUpResponse?.isSuccess == true) {
-                            showToast("자기소개가 성공적으로 전송되었습니다.")
+                            val nickname = profileNameEditText.text.toString()
+                            val intro = profileIntroEdittext.text.toString()
+                            preferenceUtil.saveUserNickname(nickname)
+                            preferenceUtil.saveUserIntro(intro)
                         } else {
                             // 서버에서 실패 응답을 받음
-                            showToast(signUpResponse?.message ?: "Unknown error")
                         }
                     } else {
                         // 서버와 통신 실패
-                        showToast("서버와의 통신에 실패하였습니다.")
                     }
                 }
 
                 override fun onFailure(call: Call<SignUpResponseDto>, t: Throwable) {
                     // 통신 오류
-                    showToast("통신 오류: ${t.message}")
                 }
             })
 

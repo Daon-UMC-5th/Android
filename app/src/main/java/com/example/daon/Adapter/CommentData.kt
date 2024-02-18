@@ -1,4 +1,4 @@
-package com.example.daon
+package com.example.daon.Adapter
 
 data class CommentData(
     val nickname: String,

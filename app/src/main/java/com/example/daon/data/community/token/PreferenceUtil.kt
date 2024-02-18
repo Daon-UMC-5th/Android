@@ -36,6 +36,12 @@ class PreferenceUtil(context: Context) {
     fun getUserNickname(): String? {
         return getString("user_nickname", null)
     }
+    fun saveUserIntro(userIntro: String) {
+        setString("user_intro", userIntro)
+    }
+    fun getUserIntro(): String? {
+        return getString("user_intro", null)
+    }
     fun savePostId(postId: Int) {
        prefs.edit().putInt("postId",postId).apply()
     }

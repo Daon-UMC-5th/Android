@@ -1,8 +1,10 @@
-package com.example.daon
+package com.example.daon.Adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.daon.R
 import com.example.daon.databinding.CommentItemBinding
 
 class CommentRVAdapter(private val dataList: ArrayList<CommentData>) : RecyclerView.Adapter<CommentRVAdapter.ViewHolder>(){
@@ -19,7 +21,7 @@ class CommentRVAdapter(private val dataList: ArrayList<CommentData>) : RecyclerV
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentRVAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = CommentItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
@@ -37,5 +39,11 @@ class CommentRVAdapter(private val dataList: ArrayList<CommentData>) : RecyclerV
     }
     override fun getItemCount(): Int {
         return dataList.size
+    }
+    @SuppressLint("NotifyDataSetChanged")
+    fun setData(newDataList: List<CommentData>) {
+        dataList.clear()
+        dataList.addAll(newDataList)
+        notifyDataSetChanged()
     }
 }
