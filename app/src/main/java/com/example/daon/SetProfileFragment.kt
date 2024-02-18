@@ -7,24 +7,15 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Button
-import android.widget.FrameLayout
-import android.widget.Toast
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.daon.R
+import com.example.daon.conect.user.*
+import com.example.daon.data.community.ApiClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import com.example.daon.conect.ApiClient
-import com.example.daon.conect.user.OverlapNicknameRequestDto
-import com.example.daon.conect.user.OverlapNicknameResponseDto
-import com.example.daon.conect.user.SignUpRequestDto
-import com.example.daon.conect.user.SignUpResponseDto
-import com.example.daon.conect.user.UserService
 
 class SetProfileFragment : Fragment() {
 

@@ -12,11 +12,10 @@ import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.example.daon.R
-import com.example.daon.conect.ApiClient
 import com.example.daon.conect.user.SignUpRequestDto
 import com.example.daon.conect.user.SignUpResponseDto
 import com.example.daon.conect.user.UserService
+import com.example.daon.data.community.ApiClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
