@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="276dp"
+    android:layout_height="196dp"
+    android:background="@drawable/border_dialog"
+    android:id="@+id/dialog_medical_check"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="확인이 왜 불가능한가요?"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="파일의 화질이 고르지 않아,\n텍스트 인식이 어려운 경우에는\n확인이 불가능 할 수 있습니다."
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="@id/text1"
+        app:layout_constraintTop_toBottomOf="@id/text1"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        />
+
+    <ImageView
+        android:id="@+id/okay"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:src="@drawable/certify_num_btn"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="176dp"
+        app:layout_constraintStart_toStartOf="@id/text2"
+        app:layout_constraintTop_toBottomOf="@id/text2"
+        />
+    
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
