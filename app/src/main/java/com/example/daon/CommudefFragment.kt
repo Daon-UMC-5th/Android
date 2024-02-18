@@ -82,7 +82,7 @@ class CommudefFragment : Fragment() {
     }
 
     private fun updateButtonState(button: Button, isSelected: Boolean) {
-        button.setBackgroundResource(if (isSelected) R.drawable.button_pressed else R.drawable.button_defalut)
+        button.setBackgroundResource(if (isSelected) R.drawable.button_pr else R.drawable.button_df)
         val textColorResId = if (isSelected) "#FFFFFF" else "#757575"
         button.setTextColor(Color.parseColor(textColorResId))
     }

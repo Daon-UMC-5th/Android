@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.daon.Adapter.TotalData
 import com.example.daon.Adapter.TotalRVAdapter
+import com.example.daon.data.community.BoardService
+import com.example.daon.data.community.PostListCallResponseDto
 import com.example.daon.databinding.FragmentCommuTotalBinding
-import com.example.daon.mypage_api.data.community.BoardService
-import com.example.daon.mypage_api.data.community.PostListCallResponseDto
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,7 +37,7 @@ class CommuTotalFragment : Fragment() {
         totalRVAdapter = TotalRVAdapter(totalitem)
         binding.totalRv.adapter = totalRVAdapter
 
-        val service = com.example.daon.mypage_api.data.community.ApiClient.retrofit.create(
+        val service = com.example.daon.data.community.ApiClient.retrofit.create(
             BoardService::class.java)
         val call = service.getAllAllPosts(0)
         call.enqueue(object : Callback<PostListCallResponseDto> {

@@ -1,6 +1,6 @@
 package com.example.daon.mypage_api
 
-import com.example.daon.conect.calendar.data.PostScrap
+import com.example.daon.data.PostScrap
 import com.google.gson.annotations.SerializedName
 
 data class PostScrapResponseDto(

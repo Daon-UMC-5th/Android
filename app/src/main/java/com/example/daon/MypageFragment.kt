@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import com.example.daon.databinding.FragmentMypageBinding
 import com.example.daon.mypage_api.MypageService
 import com.example.daon.mypage_api.UserListResponse
-import com.example.daon.mypage_api.data.community.ApiClient
+import com.example.daon.data.community.ApiClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -86,7 +86,7 @@ class MypageFragment : Fragment() {
     }
 
     private fun fetchUserInfoFromServer() {
-        val apiService = ApiClient.retrofit.create(MypageService::class.java)
+        val apiService = com.example.daon.data.community.ApiClient.retrofit.create(MypageService::class.java)
         val call = apiService.getUsers()
         call.enqueue(object : Callback<UserListResponse> {
             override fun onResponse(

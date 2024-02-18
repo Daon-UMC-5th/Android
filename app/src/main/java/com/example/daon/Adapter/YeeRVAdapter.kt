@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.daon.R
+import com.example.daon.data.community.token.PreferenceUtil
 import com.example.daon.databinding.PostItemBinding
-import com.example.daon.mypage_api.data.community.token.PreferenceUtil
 
 interface OnItemClickListener {
    fun onItemClick(boardId: Int)

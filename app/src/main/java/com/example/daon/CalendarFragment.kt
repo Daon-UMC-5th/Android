@@ -6,10 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.daon.community.token.*
+import com.example.daon.data.community.token.*
 import com.example.daon.databinding.FragmentCalendarBinding
-import com.example.daon.mypage_api.data.community.ApiClient
-import com.example.daon.mypage_api.data.community.token.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -43,7 +41,7 @@ class CalendarFragment : Fragment() {
             doctor_url = R.drawable.calendar.toString()
         )
 
-        val service = ApiClient.retrofit.create(DaonService::class.java)
+        val service = com.example.daon.data.community.ApiClient.retrofit.create(DaonService::class.java)
         val call = service.signUp(signUpRequestDto)
         val call2 = service.getAllUsers()
 

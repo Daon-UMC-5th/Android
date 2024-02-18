@@ -1,11 +1,11 @@
-package com.example.daon.mypage_api
+package com.example.daon.data.community
 
-import com.example.daon.data.PostComment
+import com.example.daon.data.community.data.PostListCall
 import com.google.gson.annotations.SerializedName
 
-data class PostCommentResponseDto(
+data class PostListCallResponseDto(
     @SerializedName("isSuccess") val isSuccess: Boolean,
     @SerializedName("code") val code: String,
     @SerializedName("message") val message: String,
-    @SerializedName("result") val result: PostComment
+    @SerializedName("result") val result: List<PostListCall>
 )

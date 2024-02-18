@@ -1,11 +1,11 @@
-package com.example.daon.mypage_api
+package com.example.daon.data.community.token
 
-import com.example.daon.data.User
+import com.example.daon.data.community.data.UploadResult
 import com.google.gson.annotations.SerializedName
 
-data class UserListResponse (
+data class UploadResponse(
     @SerializedName("isSuccess") val isSuccess: Boolean,
     @SerializedName("code") val code: Int,
     @SerializedName("message") val message: String,
-    @SerializedName("result") val result: com.example.daon.data.User
+    @SerializedName("result") val result: UploadResult
 )

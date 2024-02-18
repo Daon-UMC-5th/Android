@@ -22,7 +22,7 @@ import androidx.core.widget.addTextChangedListener
 import com.example.daon.databinding.ActivityEditProfileBinding
 import com.example.daon.mypage_api.ProfilechangeRequestDto
 import com.example.daon.mypage_api.ProfilechangeResponseDto
-import com.example.daon.mypage_api.data.community.ApiClient
+import com.example.daon.data.community.ApiClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -87,7 +87,7 @@ class Edit_ProfileActivity : AppCompatActivity() {
 
             val profileChangeRequestDto = ProfilechangeRequestDto(nickname, intro)
 
-            val call = ApiClient.Mypageservice.changeProfile(profileChangeRequestDto)
+            val call = com.example.daon.data.community.ApiClient.Mypageservice.changeProfile(profileChangeRequestDto)
             call.enqueue(object : Callback<ProfilechangeResponseDto> {
                 override fun onResponse(call: Call<ProfilechangeResponseDto>, response: Response<ProfilechangeResponseDto>) {
                     if (response.isSuccessful) {

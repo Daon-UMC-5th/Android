@@ -1,18 +1,18 @@
 package com.example.daon
 
-    import android.os.Bundle
-    import android.view.LayoutInflater
-    import android.view.MenuItem
-    import android.view.View
-    import android.view.ViewGroup
-    import android.widget.ImageView
-    import androidx.core.view.GravityCompat
-    import androidx.drawerlayout.widget.DrawerLayout
-    import androidx.fragment.app.Fragment
-    import com.example.daon.databinding.FragmentCommunityBinding
-    import com.example.daon.mypage_api.data.community.token.PreferenceUtil
-    import com.google.android.material.bottomnavigation.BottomNavigationView
-    import com.google.android.material.navigation.NavigationView
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
+import com.example.daon.data.community.token.PreferenceUtil
+import com.example.daon.databinding.FragmentCommunityBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 
 class CommunityFragment : Fragment() {
         private lateinit var preferenceUtil: PreferenceUtil
