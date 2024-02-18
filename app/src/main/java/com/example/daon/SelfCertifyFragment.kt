@@ -8,29 +8,18 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.daon.R
-import com.example.daon.conect.ApiClient
-import com.example.daon.conect.authorization.AuthorizationService
-import com.example.daon.conect.authorization.EmailCodeCheckRequestDto
-import com.example.daon.conect.authorization.EmailCodeCheckResponseDto
-import com.example.daon.conect.authorization.SmsCodeBodyRequestDto
-import com.example.daon.conect.authorization.SmsCodeBodyResponseDto
-import com.example.daon.conect.authorization.SmsCodeListCallRequestDto
-import com.example.daon.conect.authorization.SmsCodeListCallResponseDto
+import com.example.daon.conect.authorization.*
 import com.example.daon.conect.user.SignUpRequestDto
 import com.example.daon.conect.user.SignUpResponseDto
 import com.example.daon.conect.user.UserService
+import com.example.daon.data.community.ApiClient
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.Callback
+import retrofit2.Response
 
 class SelfCertifyFragment : Fragment() {
 

@@ -2,7 +2,6 @@ package com.example.daon
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +9,11 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.example.daon.R
-import com.example.daon.conect.ApiClient
+import androidx.fragment.app.Fragment
 import com.example.daon.conect.user.SignUpRequestDto
 import com.example.daon.conect.user.SignUpResponseDto
 import com.example.daon.conect.user.UserService
+import com.example.daon.data.community.ApiClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
