@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:id="@+id/fragment_membership"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MembershipFragment">
+
+    <ImageView
+        android:id="@+id/membership_back_btn"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/back_btn"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/membership_close_btn"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/close_btn"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/membership_back_btn"
+        />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="안녕하세요!\n회원 종류를 선택해주세요"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="56dp"
+        app:layout_constraintStart_toStartOf="@id/membership_back_btn"
+        app:layout_constraintTop_toBottomOf="@id/membership_back_btn"
+        />
+
+    <ImageView
+        android:id="@+id/membership_basic_btn"
+        android:layout_width="328dp"
+        android:layout_height="64dp"
+        android:src="@drawable/basic_mem"
+        android:layout_marginTop="84dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text"
+        />
+
+    <ImageView
+        android:id="@+id/membership_medical_btn"
+        android:layout_width="328dp"
+        android:layout_height="64dp"
+        android:src="@drawable/medical_mem"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/membership_basic_btn"
+        />
+
+    <Button
+        android:id="@+id/membership_next_btn"
+        android:layout_width="328dp"
+        android:layout_height="56dp"
+        android:background="@drawable/uncheck_btnstyle"
+        android:text="다음"
+        style="?android:attr/borderlessButtonStyle"
+        android:textColor="#AAAAAA"
+        android:textSize="18sp"
+        android:layout_marginTop="256dp"
+        app:layout_constraintTop_toBottomOf="@id/membership_medical_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
