@@ -7,11 +7,11 @@
         <deviceKey>
           <Key>
             <type value="VIRTUAL_DEVICE_PATH" />
-            <value value="C:\Users\star7\.android\avd\Daon_API_29_22.avd" />
+            <value value="C:\Users\star7\.android\avd\Daon_API_29_23.avd" />
           </Key>
         </deviceKey>
       </Target>
     </targetSelectedWithDropDown>
-    <timeTargetWasSelectedWithDropDown value="2024-02-18T11:09:24.532960100Z" />
+    <timeTargetWasSelectedWithDropDown value="2024-02-19T02:38:28.451348600Z" />
   </component>
 </project>
