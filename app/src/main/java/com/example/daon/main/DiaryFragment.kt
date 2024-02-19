@@ -114,7 +114,7 @@ class DiaryFragment : Fragment() {
         binding.diarySwitch.setOnClickListener{
             if(binding.diaryVp.currentItem == CALENDAR){
                 MyApplication.preferences.setDiaryStatement(DIARY_STATEMENT, DIARY_LIST)
-                ObjectAnimator.ofFloat(binding.switchSelected, "translationX", 240f).apply { start() }
+                ObjectAnimator.ofFloat(binding.switchSelected, "translationX", 180f).apply { start() }
                 binding.unselectedPrivate.setTextColor(Color.parseColor("#AAAAAA"))
                 binding.unselectedShare.setTextColor(Color.parseColor("#FFFFFF"))
                 initShareCalendar()

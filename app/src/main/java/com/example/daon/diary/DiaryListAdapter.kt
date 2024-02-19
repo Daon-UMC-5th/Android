@@ -4,10 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.daon.DiaryList
+import com.example.daon.conect.diary.data.DiaryGetPrivate
 import com.example.daon.databinding.DiaryListItemBinding
 
 class DiaryListAdapter(): RecyclerView.Adapter<DiaryListAdapter.DiaryListViewHolder>() {
-    private var listData = arrayListOf<DiaryList>()
+    private var listData = listOf<DiaryGetPrivate>()
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -17,8 +18,11 @@ class DiaryListAdapter(): RecyclerView.Adapter<DiaryListAdapter.DiaryListViewHol
     }
 
     override fun onBindViewHolder(holder: DiaryListAdapter.DiaryListViewHolder, position: Int) {
-        val diaryList: DiaryList=listData[position]
+        val diaryList: DiaryGetPrivate=listData[position]
         holder.bind(diaryList)
+    }
+    fun setList(listData: List<DiaryGetPrivate>){
+        this.listData = listData
     }
 
     override fun getItemCount(): Int {
@@ -26,13 +30,13 @@ class DiaryListAdapter(): RecyclerView.Adapter<DiaryListAdapter.DiaryListViewHol
     }
     inner class DiaryListViewHolder(private val binding: DiaryListItemBinding):
         RecyclerView.ViewHolder(binding.root){
-        fun bind(item: DiaryList){
-            binding.nickname.text = item.nickname
-            binding.time.text = item.time
+        fun bind(item: DiaryGetPrivate){
+            binding.nickname.text = item.userNickname
+            binding.time.text = item.createdAt
             binding.title.text = item.title
             binding.content.text = item.content
-            binding.image.setImageBitmap(item.image)
-            binding.heartCnt.text = item.heart.toString()
+//            binding.image.setImageBitmap(item.imageUrl)
+            binding.heartCnt.text = item.likesCount.toString()
         }
     }
 }

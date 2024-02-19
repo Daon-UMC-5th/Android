@@ -1,25 +1,39 @@
 package com.example.daon.diary
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import com.example.daon.EventDecorator
 import com.example.daon.MyApplication
-import com.example.daon.R
+import com.example.daon.conect.ApiClient
+import com.example.daon.conect.diary.DiaryGetOneResponseDto
+import com.example.daon.conect.diary.DiaryGetResponseDto
+import com.example.daon.conect.diary.data.DiaryGetOne
+import com.example.daon.conect.diary.data.DiaryGetPrivate
 import com.example.daon.databinding.FragmentDiaryCalendarBinding
 import com.example.daon.main.CalendarFragment
 import com.example.daon.main.DiaryFragment
 import com.prolificinteractive.materialcalendarview.CalendarDay
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.SimpleDateFormat
+import java.util.Collections
 import java.util.Date
 import java.util.Locale
 
 class DiaryCalendarFragment : Fragment() {
+    private var jwt: String = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMywiaWF0IjoxNzA3NzIwMDY2LCJleHAiOjE3MDgzMjQ4NjYsInN1YiI6InVzZXJJbmZvIn0.8oDPW4Z_Mifj7NwEbO517W9xprRGKbNSU5TUl6sjnc4"
     private var _binding: FragmentDiaryCalendarBinding? = null
+    private lateinit var data: List<DiaryGetPrivate>
     private val binding get() = _binding!!
+    private var selectedDate : String = ""
 
     private var year: Int = 0
     private var month: Int = 0
@@ -43,21 +57,25 @@ class DiaryCalendarFragment : Fragment() {
                         (CalendarDay.today().month+1).toString()+ "-" +
                         CalendarDay.today().day.toString()
             Log.i(CalendarFragment.TAG,today)
-            val selectedDate = "$year-$month-$day"
-
-            if(selectedDate == today){
-                // 오늘 색깔로 바꾸는 코드
+            if (month<10){
+                selectedDate =
+                    year.toString()+ "-0"+
+                            (month).toString()+ "-" +
+                            day.toString()
             }else{
-                // 다른 색깔로 바꾸는 코드
+                selectedDate =
+                    year.toString()+ "-"+
+                            month.toString()+ "-" +
+                            day.toString()
             }
+            callList(selectedDate)
             calendarStatementSave(year,month,day)
-            callList(year,month,day)
         }
         binding.fabPlus.setOnClickListener{
             val intent = Intent(activity, DiaryEditActivity::class.java)
-            intent.putExtra("year",year)
-            intent.putExtra("month",month)
-            intent.putExtra("day",day)
+            intent.putExtra("year",year)//CalendarDay.today().year)//year)
+            intent.putExtra("month",month)//CalendarDay.today().month)
+            intent.putExtra("day",day)//CalendarDay.today().day)
             startActivity(intent)
             activity?.finish()
         }
@@ -66,9 +84,6 @@ class DiaryCalendarFragment : Fragment() {
         MyApplication.preferences.setDate(DiaryFragment.DIARY_PRIVATE_YEAR,year)
         MyApplication.preferences.setDate(DiaryFragment.DIARY_PRIVATE_MONTH,month)
         MyApplication.preferences.setDate(DiaryFragment.DIARY_PRIVATE_DAY,day)
-    }
-    private fun callList(year:Int,month:Int,day:Int){
-        //백엔드에 날짜 보내주고 일기 받아오기
     }
     private fun initCalendar(){
         year = MyApplication.preferences.getDate(DiaryFragment.DIARY_PRIVATE_YEAR, CalendarDay.today().year)
@@ -79,8 +94,106 @@ class DiaryCalendarFragment : Fragment() {
         val date: Date = dateFormat.parse(dateString)
         binding.calendarView.selectedDate = CalendarDay.from(date)
         binding.calendarView.setCurrentDate(CalendarDay.from(date), true)
-//            binding.calendarView.selectedDate = CalendarDay.today()
-//            binding.calendarView.addDecorators(SaturdayDecorator(), SundayDecorator())
+        if (month<10){
+            selectedDate =
+                year.toString()+ "-0"+
+                        (month).toString()+ "-"
+        }else{
+            selectedDate =
+                year.toString()+ "-"+
+                        month.toString()+ "-"
+        }
+        callAllList(selectedDate)
+        calendarStatementSave(year,month,day)
+    }
+    private fun callAllList(date:String){
+        val call = ApiClient.diaryService.diaryGetPrivate(jwt)
+        call.enqueue(object : Callback<DiaryGetResponseDto> {
+            override fun onResponse(call: Call<DiaryGetResponseDto>, response: Response<DiaryGetResponseDto>) {
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    // 서버로부터 받은 응답을 처리합니다.
+                    // 예를 들어, 로그인 성공 여부에 따라 처리할 수 있습니다.
+                    if (body != null) {
+                        Log.i("dairyAllSuccess", body.toString())
+                        when (body.code) {
+                            200 -> {
+                                data = body.result
+                                initCalendarDate(body.result,date)
+                            }
+                            404 -> {
+                                showToast(body.message)
+                            }
+                            500 -> {
+                                showToast(body.message)
+                            }
+                        }
+                    }
+                } else {
+                    showToast("Failed to communicate with the server.")
+                    Log.i("dairyAllNot",response.body().toString())
+                }
+            }
+            override fun onFailure(call: Call<DiaryGetResponseDto>, t: Throwable) {
+                showToast("Network request failed. Error: ${t.message}")
+                Log.i("dairyAllFail",t.message.toString())
+            }
+        })
+    }
+    private fun initCalendarDate(result: List<DiaryGetPrivate>,date:String){
+        for(i in result){
+            if(i.createdAt.contains(date)){
+                binding.calendarView
+                    .addDecorator(
+                        EventDecorator(
+                            Color.parseColor("#1C734D"),
+                            Collections.singleton(CalendarDay.from(year, month-1, day)))
+                    )
+            }
+        }
+    }
+    private fun callList(date:String){
+        val call = ApiClient.diaryService.diaryGetOne(jwt,date)
+        call.enqueue(object : Callback<DiaryGetOneResponseDto> {
+            override fun onResponse(call: Call<DiaryGetOneResponseDto>, response: Response<DiaryGetOneResponseDto>) {
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    // 서버로부터 받은 응답을 처리합니다.
+                    // 예를 들어, 로그인 성공 여부에 따라 처리할 수 있습니다.
+                    if (body != null) {
+                        Log.i("dairyAllSuccess", body.toString())
+                        when (body.code) {
+                            200 -> {
+                                diaryInfoIntent(body.result,date)
+                            }
+                            404 -> {
+                                showToast(body.message)
+                            }
+                            500 -> {
+                                showToast(body.message)
+                            }
+                        }
+                    }
+                } else {
+                    showToast("Failed to communicate with the server.")
+                    Log.i("dairyAllNot",response.body().toString())
+                }
+            }
+            override fun onFailure(call: Call<DiaryGetOneResponseDto>, t: Throwable) {
+                showToast("Network request failed. Error: ${t.message}")
+                Log.i("dairyAllFail",t.message.toString())
+            }
+        })
+    }
+    private fun diaryInfoIntent(data:DiaryGetOne,date:String) {
+        val intent = Intent(requireContext(), DiaryInfoActivity::class.java)
+        intent.putExtra("data", data)
+        intent.putExtra("date", date)
+        startActivity(intent)
+        activity?.finish()
+    }
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
     override fun onDestroyView() {
         _binding = null

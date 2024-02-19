@@ -10,20 +10,29 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.daon.MainActivity
 import com.example.daon.R
+import com.example.daon.conect.ApiClient
+import com.example.daon.conect.diary.DiaryWriteRequestDto
+import com.example.daon.conect.diary.DiaryWriteResponseDto
 import com.example.daon.databinding.ActivityDiaryEditBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class DiaryEditActivity : AppCompatActivity() {
+    private var jwt: String = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMywiaWF0IjoxNzA3NzIwMDY2LCJleHAiOjE3MDgzMjQ4NjYsInN1YiI6InVzZXJJbmZvIn0.8oDPW4Z_Mifj7NwEbO517W9xprRGKbNSU5TUl6sjnc4"
     private lateinit var binding : ActivityDiaryEditBinding
     private var btnAble: Boolean = false
     private var selectedImageUri: Uri? = null
     private var imageBitmap: Bitmap? = null
     private var sharedPosition: String? = null
     private var saveSharedPosition: String? = null
+    private var selectedDate:String =""
     companion object {
         private const val REQUEST_IMAGE_CAPTURE = 1
     }
@@ -40,6 +49,17 @@ class DiaryEditActivity : AppCompatActivity() {
             (intent.getIntExtra("year",0)%100).toString()+ "년 "+
                     (intent.getIntExtra("month",0)).toString()+ "월 " +
                     intent.getIntExtra("day",0).toString() + "일"
+        if (intent.getIntExtra("month",0)<10){
+            selectedDate =
+                intent.getIntExtra("year",0).toString()+ "-0"+
+                        intent.getIntExtra("month",0).toString()+ "-" +
+                        intent.getIntExtra("day",0).toString()
+        }else{
+            selectedDate =
+                intent.getIntExtra("year",0).toString()+ "-"+
+                        intent.getIntExtra("month",0).toString()+ "-" +
+                        intent.getIntExtra("day",0).toString()
+        }
         binding.title.text = title
     }
     private fun clickListener(){
@@ -156,10 +176,50 @@ class DiaryEditActivity : AppCompatActivity() {
     }
     private fun saveBtnClick(){
         if(btnAble){
-            //저장로직
+            saveDiaryInfo()
         }else if(!btnAble){
             Toast.makeText(this,"사진을 첨부해주세요.",Toast.LENGTH_SHORT).show()
         }
+    }
+    private fun saveDiaryInfo(){
+        val diaryWriteRequestDto = DiaryWriteRequestDto(
+            isPrivate = ((if(sharedPosition=="private") 1 else 0)),
+            title = binding.diaryTitle.text.toString(),
+            content = binding.diaryContent.text.toString(),
+            imageUrl = ""
+        )
+        val call = ApiClient.diaryService.diaryWrite(jwt,selectedDate, diaryWriteRequestDto)
+        call.enqueue(object : Callback<DiaryWriteResponseDto> {
+            override fun onResponse(call: Call<DiaryWriteResponseDto>, response: Response<DiaryWriteResponseDto>) {
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    // 서버로부터 받은 응답을 처리합니다.
+                    // 예를 들어, 로그인 성공 여부에 따라 처리할 수 있습니다.
+                    if (body != null) {
+                        Log.i("diaryWriteSuccess", body.toString())
+                        when (body.code) {
+                            200 -> {
+                                onBackPressed()
+                            }
+                            400 -> {
+                                showToast(body.message)
+                            }
+                            500 -> {
+                                showToast(body.message)
+                            }
+                        }
+                    }
+                } else {
+                    showToast("Failed to communicate with the server.")
+                    Log.i("diaryWriteNot",response.toString())
+                }
+            }
+            override fun onFailure(call: Call<DiaryWriteResponseDto>, t: Throwable) {
+                showToast("Network request failed. Error: ${t.message}")
+                Log.i("diaryWriteFail",t.message.toString())
+            }
+        })
+        Log.i("saveClinic","------------")
     }
     inner class MyEditWatcher: TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int){
@@ -188,6 +248,9 @@ class DiaryEditActivity : AppCompatActivity() {
     }
     private fun content():Boolean{
         return binding.diaryContent.text.toString().trim().isNotEmpty()
+    }
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
     override fun onBackPressed() {
         super.onBackPressed()
