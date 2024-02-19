@@ -63,8 +63,10 @@
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:hint="   댓글을 입력하세요."
+            android:hint="댓글을 입력하세요."
             android:textSize="14sp"
+            android:paddingLeft="10dp"
+            android:imeOptions="actionDone"
             android:background="@drawable/comment_background"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>

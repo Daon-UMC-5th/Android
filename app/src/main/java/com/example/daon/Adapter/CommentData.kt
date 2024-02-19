@@ -1,6 +1,7 @@
 package com.example.daon.Adapter
 
 data class CommentData(
+    val comment_id: Int,
     val nickname: String,
     val intro: String,
     val icon: Int,
