@@ -35,6 +35,7 @@ class ReadwriteActivity : AppCompatActivity() {
 
         binding.commentBackground.setOnClickListener {
             val intent = Intent(this,CommentActivity::class.java)
+            intent.putExtra("boardid",boardId)
             startActivity(intent)
         }
         binding.favorBackground.setOnClickListener {

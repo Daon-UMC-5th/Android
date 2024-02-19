@@ -21,6 +21,13 @@ class StartActivity : AppCompatActivity() {
         val fragmentAgree = AgreeFragment()
 
         binding.startNaverBtn.setOnClickListener {
+            val url = "http://15.164.2.250/login/naver"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
+
+        }
+
+        binding.startKakaoBtn.setOnClickListener {
             val url = "http://15.164.2.250/login/kakao"
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)

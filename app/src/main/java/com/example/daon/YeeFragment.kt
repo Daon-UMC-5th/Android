@@ -48,7 +48,7 @@ class YeeFragment : Fragment(), OnItemClickListener {
         preferenceUtil = PreferenceUtil(requireContext())
         val isFavorite = preferenceUtil.getFavoriteState(R.id.item3)
         val imageView = binding.favoriteIcon
-        Log.d("상태", isFavorite.toString())
+
         if (isFavorite) {
             imageView.setImageResource(R.drawable.favorite_on)
         } else {

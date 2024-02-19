@@ -349,6 +349,7 @@ class JoinFragment : Fragment() {
             nextButton.setBackgroundResource(R.drawable.btnstyle)
             nextButton.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.white))
             nextButton.isEnabled = true
+
         } else {
             nextButton.setBackgroundResource(R.drawable.uncheck_btnstyle)
             nextButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray))
@@ -359,11 +360,7 @@ class JoinFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fun showToast(msg: String) {
-            toast?.cancel()
-            toast = Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT)
-            toast?.show()
-        }
+
 
         nextButton.setOnClickListener {
             if (nextButton.isEnabled) {
@@ -386,17 +383,17 @@ class JoinFragment : Fragment() {
                         if (response.isSuccessful) {
                             val signUpResponse = response.body()
                             if (signUpResponse?.isSuccess == true) {
-                                showToast("비밀번호가 성공적으로 전송되었습니다.")
+                                //showToast("비밀번호가 성공적으로 전송되었습니다.")
                             } else {
-                                showToast(signUpResponse?.message ?: "Unknown error")
+                                //showToast(signUpResponse?.message ?: "Unknown error")
                             }
                         } else {
-                            showToast("서버와의 통신에 실패하였습니다.")
+                            //showToast("서버와의 통신에 실패하였습니다.")
                         }
                     }
 
                     override fun onFailure(call: Call<SignUpResponseDto>, t: Throwable) {
-                        showToast("통신 오류: ${t.message}")
+                        //showToast("통신 오류: ${t.message}")
                     }
                 })
 

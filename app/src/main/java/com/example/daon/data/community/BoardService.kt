@@ -45,13 +45,13 @@ interface BoardService {
     fun subScrape(@Path("boardId") boardId: Int): Call<ScrapeResponse>
     // 댓글 작성하기
     @POST("/board/comment/post/{boardId}")
-    fun postComment(@Path("boardId") boardId: Int, @Body comment: CommentRequestDto): Call<CommentResponseDto>
+    fun postComment(@Path("boardId") boardId: Int, @Body comment: CommentRequestDto): Call<List<CommentResponseDto>>
     // 댓글 수정하기
     @PUT("/board/comment/put/{commentId}")
-    fun putComment(@Path("commentId") commentId: Int, @Body comment: CommentRequestDto): Call<CommentResponseDto>
+    fun putComment(@Path("commentId") commentId: Int, @Body comment: CommentRequestDto): Call<List<CommentResponseDto>>
     // 댓글 삭제하기
     @DELETE("/board/comment/delete/{commentId}")
-    fun deleteComment(@Path("commentId") commentId: Int, @Query("offset") offset: Int): Call<CommentResponseDto>
+    fun deleteComment(@Path("commentId") commentId: Int, @Query("offset") offset: Int): Call<List<CommentResponseDto>>
     // 댓글 가져오기
     @GET("/board/comment/get/{boardId}")
     fun getComments(@Path("boardId") boardId: Int, @Query("offset") offset: Int): Call<List<CommentResponseDto>>

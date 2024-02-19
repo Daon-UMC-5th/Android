@@ -13,12 +13,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.daon.conect.user.*
 import com.example.daon.data.community.ApiClient
+import com.example.daon.data.community.token.PreferenceUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class SetProfileFragment : Fragment() {
 
+    private lateinit var preferenceUtil: PreferenceUtil
     private lateinit var profileNameEditText: EditText
     private lateinit var profileNameCheckButton: ImageView
     private lateinit var profileNameIcon: ImageView
@@ -39,6 +41,8 @@ class SetProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_set_profile, container, false)
+
+        preferenceUtil = PreferenceUtil(requireContext())
 
         profileNameEditText = view.findViewById(R.id.profile_name_et)
         profileNameCheckButton = view.findViewById(R.id.profile_name_check)
@@ -112,39 +116,39 @@ class SetProfileFragment : Fragment() {
         profileNameCheckButton.setOnClickListener{
             if(isNameValid){
                 //중복확인
-                val service = ApiClient.retrofit.create(UserService::class.java)
-                val dupRequest = OverlapNicknameRequestDto(user_nickname = profileNameEditText.text.toString())
-                val call = service.overlapNickname(dupRequest)
-                call.enqueue(object : Callback<OverlapNicknameResponseDto> {
-                    override fun onResponse(call: Call<OverlapNicknameResponseDto>, response: Response<OverlapNicknameResponseDto>) {
-                        if (response.isSuccessful) {
-                            val signUpResponse = response.body()
-                            if (signUpResponse?.isSuccess == true) {
+               // val service = ApiClient.retrofit.create(UserService::class.java)
+                //val dupRequest = OverlapNicknameRequestDto(user_nickname = profileNameEditText.text.toString())
+                //val call = service.overlapNickname(dupRequest)
+                //call.enqueue(object : Callback<OverlapNicknameResponseDto> {
+                    //override fun onResponse(call: Call<OverlapNicknameResponseDto>, response: Response<OverlapNicknameResponseDto>) {
+                        //if (response.isSuccessful) {
+                            //val signUpResponse = response.body()
+                            //if (signUpResponse?.isSuccess == true) {
                                 profileNameIcon.visibility = View.VISIBLE
                                 profileNameDup.visibility = View.INVISIBLE
                                 sharedViewModel.profileName = profileNameEditText.text.toString()
                                 profileNameEditText.backgroundTintList =
                                     ContextCompat.getColorStateList(requireContext(), R.color.et_green)
                                 updateNextButtonState()
-                                showToast("중복 아님")
-                            } else {
-                                profileNameIcon.visibility = View.INVISIBLE
-                                profileNameDup.visibility = View.VISIBLE
-                                profileNameEditText.backgroundTintList =
-                                    ContextCompat.getColorStateList(requireContext(), R.color.et_red)
-                                showToast("중복.")
-                            }
+                                //showToast("중복 아님")
+                            //} else {
+                                //profileNameIcon.visibility = View.INVISIBLE
+                                //profileNameDup.visibility = View.VISIBLE
+                                //profileNameEditText.backgroundTintList =
+                                    //ContextCompat.getColorStateList(requireContext(), R.color.et_red)
+                                //showToast("중복.")
+                            //}
 
-                        } else {
-                            showToast("서버와의 통신에 실패하였습니다.")
-                        }
-                    }
+                        //} else {
+                            //showToast("서버와의 통신에 실패하였습니다.")
+                        //}
+                    //}
 
-                    override fun onFailure(call: Call<OverlapNicknameResponseDto>, t: Throwable) {
+                    //override fun onFailure(call: Call<OverlapNicknameResponseDto>, t: Throwable) {
                         // 통신 오류
-                        showToast("통신 오류: ${t.message}")
-                    }
-                })
+                        //showToast("통신 오류: ${t.message}")
+                    //}
+                //})
             }
         }
 
@@ -187,16 +191,16 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             //자기소개
             val service = ApiClient.retrofit.create(UserService::class.java)
             val signUpRequest = SignUpRequestDto(
-                user_name = "", // 사용자 이름
-                email = "",
-                password = "", // 비밀번호
-                phone_number = "", // 전화번호
-                birth_date = "", // 생년월일
-                gender = 0, // 성별 (0 또는 1)
-                user_nickname = profileNameEditText.text.toString(),
-                introduction = profileIntroEdittext.text.toString(), // 자기 소개
-                role = "", // 역할
-                agree = "" // 동의 여부
+                user_name = "eunjae",
+                email = "emma_0407@naver.com",
+                password = "Eunjae0407!",
+                phone_number = "01039537851",
+                birth_date = "030407",
+                gender = 4,
+                user_nickname = "eun",
+                introduction = "hi",
+                role = "user",
+                agree = "1"
             )
             val call = service.signUp(signUpRequest)
             call.enqueue(object : Callback<SignUpResponseDto> {
@@ -204,20 +208,20 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
                     if (response.isSuccessful) {
                         val signUpResponse = response.body()
                         if (signUpResponse?.isSuccess == true) {
-                            showToast("자기소개가 성공적으로 전송되었습니다.")
+                            val nickname = profileNameEditText.text.toString()
+                            val intro = profileIntroEdittext.text.toString()
+                            preferenceUtil.saveUserNickname(nickname)
+                            preferenceUtil.saveUserIntro(intro)
                         } else {
                             // 서버에서 실패 응답을 받음
-                            showToast(signUpResponse?.message ?: "Unknown error")
                         }
                     } else {
                         // 서버와 통신 실패
-                        showToast("서버와의 통신에 실패하였습니다.")
                     }
                 }
 
                 override fun onFailure(call: Call<SignUpResponseDto>, t: Throwable) {
                     // 통신 오류
-                    showToast("통신 오류: ${t.message}")
                 }
             })
 
