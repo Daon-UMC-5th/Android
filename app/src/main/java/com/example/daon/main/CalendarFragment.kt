@@ -255,16 +255,16 @@ class CalendarFragment : Fragment(){
         isFabOpen = !isFabOpen
 
     }
-    private fun setClinicBottomSheet(result: List<ClinicListCall>){
-        clinicAdapter.setData(result)
+    private fun setClinicBottomSheet(result: ClinicListCall){
+        clinicAdapter.setData(listOf(result))
         binding.clinicRv.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = clinicAdapter
             clinicAdapter.notifyDataSetChanged()
         }
     }
-    private fun setDoseBottomSheet(result: List<DoseListCall>){
-        doseAdapter.setData(result)
+    private fun setDoseBottomSheet(data:MutableList<DoseListCall>){//result: List<DoseListCall>){
+        doseAdapter.setData(data)
         binding.doseRv.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = doseAdapter
@@ -296,10 +296,10 @@ class CalendarFragment : Fragment(){
                                 initMonth(body.result)
                             }
                             404 -> {
-                                showToast(body.message)
+//                                showToast(body.message)
                             }
                             500 -> {
-                                showToast(body.message)
+//                                showToast(body.message)
                             }
                         }
                     }
@@ -309,8 +309,6 @@ class CalendarFragment : Fragment(){
                 }
             }
             override fun onFailure(call: Call<DoseMonthListResponseDto>, t: Throwable) {
-                showToast("Network request failed. Error: ${t.message}")
-                Log.i("monthFail",t.message.toString())
             }
         })
     }
@@ -353,6 +351,17 @@ class CalendarFragment : Fragment(){
 
     private fun callList(year:Int,month:Int,day:Int){
         var dateString: String = "$year-$month-$day"//MyApplication.preferences.getDate(CALENDAR_DATE,CalendarDay.today().toString())
+        if (month<10){
+            dateString =
+                year.toString()+ "-0"+
+                        (month).toString()+ "-" +
+                        day.toString()
+        }else{
+            dateString =
+                year.toString()+ "-"+
+                        month.toString()+ "-" +
+                        day.toString()
+        }
         initBody(dateString)
         initClinic(dateString)
         initAllDose(dateString)
@@ -373,10 +382,10 @@ class CalendarFragment : Fragment(){
                                 setBodyBottomSheet(body.result)
                             }
                             404 -> {
-                                showToast(body.message)
+//                                showToast(body.message)
                             }
                             500 -> {
-                                showToast(body.message)
+//                                showToast(body.message)
                             }
                         }
                     }
@@ -386,8 +395,6 @@ class CalendarFragment : Fragment(){
                 }
             }
             override fun onFailure(call: Call<BodyListCallResponseDto>, t: Throwable) {
-                showToast("Network request failed. Error: ${t.message}")
-                Log.i("initBodyFail",t.message.toString())
             }
         })
     }
@@ -407,10 +414,10 @@ class CalendarFragment : Fragment(){
                                 setClinicBottomSheet(body.result)
                             }
                             404 -> {
-                                showToast(body.message)
+//                                showToast(body.message)
                             }
                             500 -> {
-                                showToast(body.message)
+//                                showToast(body.message)
                             }
                         }
                     }
@@ -420,8 +427,6 @@ class CalendarFragment : Fragment(){
                 }
             }
             override fun onFailure(call: Call<ClinicListCallResponseDto>, t: Throwable) {
-                showToast("Network request failed. Error: ${t.message}")
-                Log.i("initClinicFail",t.message.toString())
             }
         })
     }
@@ -440,10 +445,10 @@ class CalendarFragment : Fragment(){
                                 initDose(body.result,dateString)
                             }
                             404 -> {
-                                showToast(body.message)
+//                                showToast(body.message)
                             }
                             500 -> {
-                                showToast(body.message)
+//                                showToast(body.message)
                             }
                         }
                     }
@@ -453,8 +458,6 @@ class CalendarFragment : Fragment(){
                 }
             }
             override fun onFailure(call: Call<DoseAllListCallResponseDto>, t: Throwable) {
-                showToast("Network request failed. Error: ${t.message}")
-                Log.i("getDoseAllFail",t.message.toString())
             }
         })
     }
@@ -491,32 +494,53 @@ class CalendarFragment : Fragment(){
 //                Log.i("doseFail",t.message.toString())
 //            }
 //        })
+        var doseList:MutableList<DoseListCall> = mutableListOf()
         for(i in data){
             if(i.timeOfDay=="아침, 점심, 저녁"){
-                getDose("morning", dateString,i.medicationId)
-                getDose("noon",dateString,i.medicationId)
-                getDose("evening",dateString,i.medicationId)
+                if(i.alarmedDate == dateString){
+                    doseList = getDose("morning", dateString,doseList,i.medicationId)
+                    doseList = getDose("noon",dateString,doseList,i.medicationId)
+                    doseList = getDose("evening",dateString,doseList,i.medicationId)
+                }
             }
             else if(i.timeOfDay == "아침, 점심"){
-                getDose("morning", dateString,i.medicationId)
-                getDose("noon",dateString,i.medicationId)
+                if(i.alarmedDate == dateString){
+                    doseList = getDose("morning", dateString,doseList,i.medicationId)
+                    doseList = getDose("noon",dateString,doseList,i.medicationId)
+                }
             }
             else if(i.timeOfDay== "아침, 저녁"){
-                getDose("morning", dateString,i.medicationId)
-                getDose("evening",dateString,i.medicationId)
+                if(i.alarmedDate == dateString){
+                    doseList = getDose("morning", dateString,doseList,i.medicationId)
+                    doseList = getDose("evening",dateString,doseList,i.medicationId)
+                }
             }
             else if(i.timeOfDay == "점심, 저녁"){
-                getDose("noon",dateString,i.medicationId)
-                getDose("evening",dateString,i.medicationId)
+                if(i.alarmedDate == dateString){
+                    doseList = getDose("noon",dateString,doseList,i.medicationId)
+                    doseList = getDose("evening",dateString,doseList,i.medicationId)
+                }
             }
-            else if(i.timeOfDay == "아침"){getDose("morning", dateString,i.medicationId)}
-            else if (i.timeOfDay == "점심"){ getDose("noon",dateString,i.medicationId)}
-            else if (i.timeOfDay == "저녁"){ getDose("evening",dateString,i.medicationId)}
+            else if(i.timeOfDay == "아침"){
+                if(i.alarmedDate == dateString){
+                    doseList = getDose("morning", dateString,doseList,i.medicationId)
+                }
+            }
+            else if (i.timeOfDay == "점심"){
+                if(i.alarmedDate == dateString){
+                    doseList = getDose("noon",dateString,doseList,i.medicationId)
+                }
+            }
+            else if (i.timeOfDay == "저녁"){
+                if(i.alarmedDate == dateString){
+                    doseList = getDose("evening",dateString,doseList,i.medicationId)
+                }
+            }
         }
-        setDoseBottomSheet(data)
+        setDoseBottomSheet(doseList)
     }
     //현재 getDoseNot
-    private fun getDose(date: String,dateString: String,id : Int){
+    private fun getDose(date: String,dateString: String,doseList:MutableList<DoseListCall>,id : Int):MutableList<DoseListCall>{
         val call = ApiClient.calendarService.doseListCall(jwt,id)
         call.enqueue(object : Callback<DoseListCallResponseDto> {
             override fun onResponse(call: Call<DoseListCallResponseDto>, response: Response<DoseListCallResponseDto>) {
@@ -531,10 +555,10 @@ class CalendarFragment : Fragment(){
                                 doseList.addAll(listOf( body.result))
                             }
                             404 -> {
-                                showToast(body.message)
+//                                showToast(body.message)
                             }
                             500 -> {
-                                showToast(body.message)
+//                                showToast(body.message)
                             }
                         }
                     }
@@ -544,10 +568,9 @@ class CalendarFragment : Fragment(){
                 }
             }
             override fun onFailure(call: Call<DoseListCallResponseDto>, t: Throwable) {
-                showToast("Network request failed. Error: ${t.message}")
-                Log.i("getDoseFail",t.message.toString())
             }
         })
+        return doseList
     }
     override fun onDestroyView() {
         _binding = null
