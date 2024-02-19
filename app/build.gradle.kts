@@ -15,7 +15,7 @@ android {
     defaultConfig {
         applicationId = "com.example.daon"
         minSdk = 21
-        targetSdk = 34
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
@@ -59,6 +59,20 @@ dependencies {
 
     implementation("com.github.prolificinteractive:material-calendarview:1.6.0")
     implementation("com.jakewharton.threetenabp:threetenabp:1.2.1")
+
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
+
+    implementation("com.google.android.material:material:1.4.0")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.6")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.6")
+    implementation("androidx.databinding:databinding-runtime:8.2.2")
+
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.10.0"))
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor")
+    implementation("com.google.code.gson:gson:2.8.9")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:(latest version)")
 
     implementation("androidx.viewpager2:viewpager2:1.0.0")
 
