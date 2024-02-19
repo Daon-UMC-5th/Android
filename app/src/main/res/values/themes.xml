@@ -12,9 +12,20 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+    </style>
         <!-- Customize your theme here. -->
+    <style name="CalendarWidgetHeader">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/black</item>
     </style>
     <style name="NavigationViewStyle">
         <item name="android:textStyle">bold</item>
+    </style>
+    <style name="CalendarWidgetWeek">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="CalendarWidgetDay">
+        <item name="android:textColor">@color/black</item>
     </style>
 </resources>

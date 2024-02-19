@@ -2,4 +2,6 @@
 
 <resources>
     <dimen name="edit_text_top_margin">56dp</dimen>
+    <dimen name="peek_height">200dp</dimen>
+    <dimen name="max_height">500dp</dimen>
 </resources>
