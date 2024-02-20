@@ -21,7 +21,7 @@ import retrofit2.Response
 
 class BodyActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBodyBinding
-    private var jwt: String = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMywiaWF0IjoxNzA3NzIwMDY2LCJleHAiOjE3MDgzMjQ4NjYsInN1YiI6InVzZXJJbmZvIn0.8oDPW4Z_Mifj7NwEbO517W9xprRGKbNSU5TUl6sjnc4"
+    private var jwt: String = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo4LCJpYXQiOjE3MDgzMjc2NTUsImV4cCI6MTcwODQxNDA1NSwic3ViIjoidXNlckluZm8ifQ.pYSvk8I5QDCVqFrZv88XhtomTN0M9LRNms64HNcB0V4"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBodyBinding.inflate(layoutInflater)

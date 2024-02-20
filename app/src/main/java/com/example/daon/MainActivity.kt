@@ -16,24 +16,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initBottomNavigation()
-
-        Mypage()
     }
 
-    private fun Mypage() {
-        val nick = intent.getStringExtra("nickname")
-        val intr = intent.getStringExtra("intro")
-        val bundle = Bundle()
-        bundle.putString("nick", nick)
-        bundle.putString("intr", intr)
-
-        val fragment = MypageFragment()
-        fragment.arguments = bundle
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.main_frm, fragment)
-            .commit()
-    }
 
     private fun initBottomNavigation() {
 
